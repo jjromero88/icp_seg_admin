@@ -1,0 +1,50 @@
+﻿using FluentValidation.Results;
+using PCM.SIP.ICP.SEG.Transversal.Common.Constants;
+
+namespace PCM.SIP.ICP.SEG.Transversal.Common.Generics
+{
+    public class ResponseUtil
+    {
+        public static PcmResponse BadRequest(IEnumerable<ValidationFailure>? errors = null, string? message = null)
+        {
+            return new PcmResponse { Code = (int)HttpStatusCodeEnum.BadRequest, Message = message ?? MessageConstant.BadRequest, Payload = errors };
+        }
+        public static PcmResponse InternalError(string? message = null)
+        {
+            return new PcmResponse { Code = (int)HttpStatusCodeEnum.InternalServerError, Message = string.IsNullOrEmpty(message) ? MessageConstant.InternalError : MessageConstant.InternalError + " " + message };
+        }
+        public static PcmResponse Ok(object payload, string? message)
+        {
+            return new PcmResponse { Code = (int)HttpStatusCodeEnum.OK, Message = message, Payload = payload };
+        }
+        public static PcmResponse Created(string? message = null)
+        {
+            return new PcmResponse { Code = (int)HttpStatusCodeEnum.Created, Message = message };
+        }
+        public static PcmResponse NoContent()
+        {
+            return new PcmResponse { Code = (int)HttpStatusCodeEnum.NoContent, Message = MessageConstant.NoContentForRequest };
+        }
+        public static PcmResponse Unauthorized()
+        {
+            return new PcmResponse { Code = (int)HttpStatusCodeEnum.Unauthorized, Message = MessageConstant.Unauthorized };
+        }
+        public static PcmResponse UnauthorizedHeaderNotFound()
+        {
+            return new PcmResponse { Code = (int)HttpStatusCodeEnum.UnauthorizedHeaderNotFound, Message = MessageConstant.UnauthorizedHeaderNotFound };
+        }
+        public static PcmResponse UnauthorizedTokenIncorrectFormat()
+        {
+            return new PcmResponse { Code = (int)HttpStatusCodeEnum.UnauthorizedTokenIncorrectFormat, Message = MessageConstant.UnauthorizedTokenIncorrectFormat };
+        }
+        public static PcmResponse UnauthorizedTokenNotFound()
+        {
+            return new PcmResponse { Code = (int)HttpStatusCodeEnum.UnauthorizedTokenNotFound, Message = MessageConstant.UnauthorizedTokenNotFound };
+        }
+        public static PcmResponse OkUnencrypted(object payload)
+        {
+            return new PcmResponse { Code = (int)HttpStatusCodeEnum.OK, Payload = payload };
+        }
+    }
+
+}
