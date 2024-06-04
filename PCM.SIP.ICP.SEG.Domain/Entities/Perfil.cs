@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PCM.SIP.ICP.SEG.Domain.Entities
 {
-    internal class Perfil: EntidadBase
+    public class Perfil: EntidadBase
     {
         public int perfil_id { get; set; }
         public string? codigo { get; set; }
