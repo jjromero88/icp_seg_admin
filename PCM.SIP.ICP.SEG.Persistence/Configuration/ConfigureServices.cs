@@ -4,7 +4,7 @@ using PCM.SIP.ICP.SEG.Aplicacion.Interface.Persistence;
 using PCM.SIP.ICP.SEG.Persistence.Repository;
 using PCM.SIP.ICP.SEG.Persistence.Repository.Base;
 
-namespace PCM.SIP.ICP.SEG.Persistence.Configuration
+namespace PCM.SIP.ICP.SEG.Persistence
 {
     public static class ConfigureServices
     {
