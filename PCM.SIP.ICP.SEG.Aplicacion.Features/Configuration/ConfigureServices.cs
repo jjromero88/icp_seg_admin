@@ -1,10 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using PCM.SIP.ICP.SEG.Aplicacion.Interface.Features;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using PCM.SIP.ICP.Transversal.UtilWeb.Authentication;
 
 namespace PCM.SIP.ICP.SEG.Aplicacion.Features
 {
@@ -12,7 +8,9 @@ namespace PCM.SIP.ICP.SEG.Aplicacion.Features
     {
         public static IServiceCollection AddApplicationServices(this IServiceCollection services)
         {
+            services.AddScoped<IAuthentication, Authentication>();
             services.AddScoped<IPerfilApplication, PerfilApplication>();
+            services.AddScoped<IUsuarioApplication, UsuarioApplication>();
 
             return services;
         }

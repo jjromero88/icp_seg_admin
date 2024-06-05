@@ -9,32 +9,36 @@ using PCM.SIP.ICP.SEG.Transversal.Common;
 using PCM.SIP.ICP.SEG.Transversal.Common.Constants;
 using PCM.SIP.ICP.SEG.Transversal.Common.Generics;
 using PCM.SIP.ICP.Transversal.Util.Encryptions;
+using PCM.SIP.ICP.Transversal.UtilWeb.Authentication;
 
-namespace PCM.SIP.ICP.SEG.Aplicacion.Features.Features
+namespace PCM.SIP.ICP.SEG.Aplicacion.Features
 {
     public class UsuarioApplication : IUsuarioApplication
     {
         private readonly IUnitOfWork _unitOfWork;
-        private readonly IMapper _mapper;
+        private readonly IMapper _mapper; 
+        private readonly IRedisCacheService _redisCacheService;
+        private readonly IAuthentication _authentication;
         private readonly IAppLogger<UsuarioApplication> _logger;
         private readonly UsuarioValidationManager _usuarioValidationManager;
-        private readonly IRedisCacheService _redisCacheService;
 
         public UsuarioApplication(
             IUnitOfWork unitOfWork,
             IMapper mapper,
+            IRedisCacheService redisCacheService,
+            IAuthentication authentication,
             IAppLogger<UsuarioApplication> logger,
-            UsuarioValidationManager usuarioValidationManager,
-            IRedisCacheService redisCacheService)
+            UsuarioValidationManager usuarioValidationManager)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
             _logger = logger;
             _usuarioValidationManager = usuarioValidationManager;
             _redisCacheService = redisCacheService;
+            _authentication = authentication;
         }
 
-        public PcmResponse Authenticate(Request<UsuarioDto> request)
+        public async Task<PcmResponse> Authenticate(Request<UsuarioDto> request)
         {
             try
             {
@@ -81,7 +85,7 @@ namespace PCM.SIP.ICP.SEG.Aplicacion.Features.Features
                 }
 
                 //instanciamos la clase que almacena los datos de la sesion de usuario
-                var usuarioSesion = new UsuarioSesion
+                var usuarioCacheSesion = new UsuarioCacheSesion
                 {
                     username = entidad.username,
                     authkey = authkey
@@ -91,22 +95,22 @@ namespace PCM.SIP.ICP.SEG.Aplicacion.Features.Features
                 var cacheKey = Guid.NewGuid().ToString();
 
                 //guardamos los datos de la sesion del usuario
-                _redisCacheService.SetAsync(cacheKey, usuarioSesion, 10, 10);
+                 await _redisCacheService.SetAsync(cacheKey, usuarioCacheSesion, 10, 10);
 
                 //generamos el token 
+                string token = await _authentication.BuildToken(entidad.username, cacheKey, 240);
 
+                //formamos el response de login
+                var responseLogin = new UsuarioLoginResponse()
+                {
+                    username = entidad.username,
+                    Token = token
+                };
 
-                //formamos el response de usuario
-                var usuarioResponse = _mapper.Map<UsuarioLoginResponse>(_mapper.Map<UsuarioDto>(entidad));
+                _logger.LogInformation(AuthenticateMessage.AuthenticateSuccess);
 
-
-
-
-
-
-                _logger.LogInformation(TransactionMessage.QuerySuccess);
                 return result.Data != null ? ResponseUtil.Ok(
-                    _mapper.Map<UsuarioLoginResponse>(_mapper.Map<UsuarioDto>(entidad)), result.Message ?? TransactionMessage.QuerySuccess
+                    responseLogin, AuthenticateMessage.AuthenticateSuccess
                     ) : ResponseUtil.NoContent();
             }
             catch (Exception ex)

@@ -38,13 +38,13 @@ namespace PCM.SIP.ICP.SEG.Infraestructure.Services
                 var result = await _distributedCache.GetAsync(key);
 
                 if (result == null)
-                    throw new Exception("Sesion expirada: No se encontro ningun valor en la sesión");
+                    throw new Exception("An unexpected error: No se encontro el valor en la caché");
 
                 return JsonSerializer.Deserialize<T>(result);
             }
             catch (Exception ex)
             {
-                throw new Exception("An unexpected error occurred while setting value in cache for key {Key}", ex);
+                throw new Exception("An unexpected error occurred while getting value in cache for key {Key}", ex);
             }
         }
 

@@ -16,7 +16,7 @@ GO
 
 CREATE OR ALTER   PROCEDURE [dbo].[USP_GET_USUARIO_LOGIN](
 	@username varchar(20),
-	@password varchar(15),
+	@password varchar(150),
 	@error bit = null output,
 	@message nvarchar(500) = null output
 )

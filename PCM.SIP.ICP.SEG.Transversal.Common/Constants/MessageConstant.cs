@@ -29,4 +29,8 @@ namespace PCM.SIP.ICP.SEG.Transversal.Common.Constants
         public const string GeneralSuccess = "Operacion exitosa.";
         public const string NoResults = "La consulta no obtuvo resultados.";
     }
+    public static class AuthenticateMessage
+    {
+        public const string AuthenticateSuccess = "Ingreso exitoso";
+    }
 }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PCM.SIP.ICP.SEG.Domain.Entities
 {
-    public class UsuarioSesion
+    public class UsuarioCacheSesion
     {
         public string? username { get; set; }
         public string? authkey { get; set; }

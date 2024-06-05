@@ -30,7 +30,7 @@ CREATE TABLE [dbo].[LOG_ACCESO](
 	[logacceso_id] [int] IDENTITY(1,1) NOT NULL,
 	[usuario_id] [int] NULL,
 	[username] [varchar](20) NULL,
-	[password] [varchar](15) NULL,
+	[password] [varchar](150) NULL,
 	[login_exitoso] [bit] NULL,
 	[login_fecha] [datetime] NULL,
 	[login_message] [varchar](500) NULL,
