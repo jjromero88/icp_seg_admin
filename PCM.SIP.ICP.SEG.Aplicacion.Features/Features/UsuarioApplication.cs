@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using System.Text.Json;
 using PCM.SIP.ICP.SEG.Aplicacion.Dto;
 using PCM.SIP.ICP.SEG.Aplicacion.Interface;
 using PCM.SIP.ICP.SEG.Aplicacion.Interface.Features;
@@ -10,13 +11,14 @@ using PCM.SIP.ICP.SEG.Transversal.Common.Constants;
 using PCM.SIP.ICP.SEG.Transversal.Common.Generics;
 using PCM.SIP.ICP.Transversal.Util.Encryptions;
 using PCM.SIP.ICP.Transversal.UtilWeb.Authentication;
+using PCM.SIP.ICP.SEG.Aplicacion.Dto.Dto;
 
 namespace PCM.SIP.ICP.SEG.Aplicacion.Features
 {
     public class UsuarioApplication : IUsuarioApplication
     {
         private readonly IUnitOfWork _unitOfWork;
-        private readonly IMapper _mapper; 
+        private readonly IMapper _mapper;
         private readonly IRedisCacheService _redisCacheService;
         private readonly IAuthentication _authentication;
         private readonly IAppLogger<UsuarioApplication> _logger;
@@ -42,8 +44,10 @@ namespace PCM.SIP.ICP.SEG.Aplicacion.Features
         {
             try
             {
+                //ejecutamos las validaciones
                 var validation = _usuarioValidationManager.Validate(_mapper.Map<UsuarioLoginRequest>(request.entidad));
 
+                //verificamos si ocurrio un error de validacion
                 if (!validation.IsValid)
                 {
                     _logger.LogError(Validation.InvalidMessage);
@@ -54,64 +58,44 @@ namespace PCM.SIP.ICP.SEG.Aplicacion.Features
                 var entidad = _mapper.Map<Usuario>(request.entidad);
 
                 // consumimos el metodo Authenticate
-                var result = _unitOfWork.Usuario.Authenticate(new Usuario { username = request.entidad.username?.Trim(), password = EncriptacionHelper.Encrypt(request.entidad.password?.Trim()) });
+                var result = _unitOfWork.Usuario.Authenticate(new Usuario { username = request.entidad.username?.Trim(), password = EncriptacionHelper.Encrypt(request.entidad.password?.Trim()) }, out string jsonUsuarioLogin);
 
+                //evaluamos si ocurrio un error de validacion desde base de datos
                 if (result.Error)
                 {
                     _logger.LogError(result.Message);
-                    return ResponseUtil.InternalError(message: result.Message);
+                    return ResponseUtil.BadRequest(message: result.Message);
                 }
 
-                //se genera el Authkey de la sesion
-                var authkey = CShrapEncryption.GenerateKey();
-
-                //verificamos que exista data
-                if (result.Data != null)
+                //verificamos que la variable de salida con informacion del usuario no este vacia
+                if (string.IsNullOrEmpty(jsonUsuarioLogin))
                 {
-                    entidad = new Usuario
-                    {
-                        SerialKey = string.IsNullOrEmpty(result.Data.usuario_id.ToString()) ? null : CShrapEncryption.EncryptString(result.Data.usuario_id.ToString(), authkey),
-                        username = result.Data.username,
-                        password = result.Data.password,
-                        interno = result.Data.interno,
-                        numdocumento = result.Data.numdocumento,
-                        apellido_paterno = result.Data.apellido_paterno,
-                        apellido_materno = result.Data.apellido_materno,
-                        nombres = result.Data.nombres,
-                        email = result.Data.email,
-                        telefono_movil = result.Data.telefono_movil,
-                        nombre_completo = result.Data.nombre_completo
-                    };
+                    _logger.LogError($"No se encontraron resultados en el Login con el usuario: {entidad.username}");
+                    return ResponseUtil.BadRequest(message: $"No se encontraron resultados en el Login con el usuario: {entidad.username}");
                 }
 
-                //instanciamos la clase que almacena los datos de la sesion de usuario
-                var usuarioCacheSesion = new UsuarioCacheSesion
-                {
-                    username = entidad.username,
-                    authkey = authkey
-                };
+                //deserializamos la informacion del usuario
+                var usuarioLogin = JsonSerializer.Deserialize<Usuario>(jsonUsuarioLogin);
 
-                //generamos la key de la cache
-                var cacheKey = Guid.NewGuid().ToString();
+                //generamos un id para la sesion 
+                var idsession = Guid.NewGuid().ToString();
 
-                //guardamos los datos de la sesion del usuario
-                 await _redisCacheService.SetAsync(cacheKey, usuarioCacheSesion, 10, 10);
+                //guardamos los datos obtenidos del usuario en redis cache
+                await _redisCacheService.SetAsync(idsession, usuarioLogin, 10, 5);
 
-                //generamos el token 
-                string token = await _authentication.BuildToken(entidad.username, cacheKey, 240);
+                //mapeamos la informacion del usuario para el response
+                var authenticateResponse = _mapper.Map<AuthenticateResponse>(usuarioLogin);
 
-                //formamos el response de login
-                var responseLogin = new UsuarioLoginResponse()
-                {
-                    username = entidad.username,
-                    Token = token
-                };
+                //seteamos el id de la sesion el cual representa la cachekey de la info del loginusuario en redis
+                authenticateResponse.idsession = idsession;
 
+                //registramos el log de la transaccion
                 _logger.LogInformation(AuthenticateMessage.AuthenticateSuccess);
 
-                return result.Data != null ? ResponseUtil.Ok(
-                    responseLogin, AuthenticateMessage.AuthenticateSuccess
-                    ) : ResponseUtil.NoContent();
+                //retornamos la informacion
+                return authenticateResponse != null ? ResponseUtil.Ok(
+                    authenticateResponse, AuthenticateMessage.AuthenticateSuccess
+                    ) : ResponseUtil.Unauthorized();
             }
             catch (Exception ex)
             {

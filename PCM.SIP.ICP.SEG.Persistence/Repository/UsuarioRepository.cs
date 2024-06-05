@@ -16,9 +16,10 @@ namespace PCM.SIP.ICP.SEG.Persistence.Repository
             _context = context;
         }
 
-        public Response<dynamic> Authenticate(Usuario entidad)
+        public Response<dynamic> Authenticate(Usuario entidad, out string jsonUsuarioLogin)
         {
             Response<dynamic> retorno = new Response<dynamic>();
+            jsonUsuarioLogin = string.Empty;
 
             try
             {
@@ -32,12 +33,14 @@ namespace PCM.SIP.ICP.SEG.Persistence.Repository
                     parameters.Add("password", entidad.password);
                     parameters.Add("error", dbType: DbType.Boolean, direction: ParameterDirection.Output);
                     parameters.Add("message", dbType: DbType.String, direction: ParameterDirection.Output, size: 500);
+                    parameters.Add("usuarioLogin", dbType: DbType.String, direction: ParameterDirection.Output, size: int.MaxValue);
 
                     var result = connection.QuerySingleOrDefault<dynamic>(query, param: parameters, commandType: CommandType.StoredProcedure);
 
-                    retorno.Data = result ?? new Perfil();
+                    retorno.Data = result ?? new Usuario();
                     retorno.Error = parameters.Get<bool?>("error") ?? false;
                     retorno.Message = parameters.Get<string>("message") ?? string.Empty;
+                    jsonUsuarioLogin = parameters.Get<string>("usuarioLogin") ?? string.Empty;
                 }
             }
             catch (Exception ex)

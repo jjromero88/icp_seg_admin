@@ -17,6 +17,7 @@ GO
 CREATE OR ALTER   PROCEDURE [dbo].[USP_GET_USUARIO_LOGIN](
 	@username varchar(20),
 	@password varchar(150),
+	@usuarioLogin nvarchar(max) = null output,
 	@error bit = null output,
 	@message nvarchar(500) = null output
 )
@@ -90,7 +91,13 @@ BEGIN
 	IF(@error = 0 and @usuario_id is not null)
 	BEGIN
 
+		declare 
+		@jsonUsuario varchar(max) = null,
+		@jsonPerfiles varchar(max) = null;
+
+
 		--obtenemos los datos del usuario
+		set @jsonUsuario = (
 		SELECT
 			  usuario_id
 			, username
@@ -107,7 +114,35 @@ BEGIN
 			[dbo].[USUARIO] AS T1 WITH(NOLOCK)
 		WHERE
 			T1.usuario_id = @usuario_id
-			and T1.interno = 1;
+			and T1.interno = 1
+		FOR JSON PATH, WITHOUT_ARRAY_WRAPPER
+		);
+
+
+		--buscamos los perfiles asociados del usuarios
+
+		set @jsonPerfiles = (
+			select
+				  t1.perfil_id
+				, t1.codigo
+				, t1.abreviatura
+				, t1.descripcion
+			from 
+				PERFIL as t1
+				inner join USUARIOPERFIL as t2 on t1.perfil_id = t2.perfil_id
+				inner join USUARIO as t3 on t2.usuario_id = t3.usuario_id
+			where
+					t1.estado = 1
+				and t2.estado = 1
+				and t3.usuario_id = @usuario_id
+			FOR JSON PATH, INCLUDE_NULL_VALUES
+		);
+
+		--agregamos la propiedad de modulos al json de usuario
+		SET @jsonUsuario = JSON_MODIFY(@jsonUsuario, '$.lista_perfiles', JSON_QUERY(@jsonPerfiles));
+
+		--seteamos el valor del json de salida
+		SET @usuarioLogin = @jsonUsuario;
 
 		--actualizamos el mensaje de salida
 		set @message = 'Acceso exitoso';

@@ -19,5 +19,6 @@ namespace PCM.SIP.ICP.SEG.Domain.Entities
         public string? email { get; set; }
         public string? telefono_movil { get; set; }
         public string? nombre_completo { get; set; }
+        public List<Perfil> lista_perfiles { get; set; } = new List<Perfil> { };
     }
 }
