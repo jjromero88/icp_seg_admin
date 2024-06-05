@@ -13,6 +13,8 @@ namespace PCM.SIP.ICP.SEG.Persistence
         {
             services.AddSingleton<DapperContext>();
             services.AddScoped<IPerfilRepository, PerfilRepository>();
+            services.AddScoped<IUsuarioRepository, UsuarioRepository>();
+
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             return services;
         }
