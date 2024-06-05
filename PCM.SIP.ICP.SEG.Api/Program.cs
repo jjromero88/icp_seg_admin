@@ -5,7 +5,9 @@ using PCM.SIP.ICP.SEG.Api.Modules.Mapper;
 using PCM.SIP.ICP.SEG.Api.Modules.Swagger;
 using PCM.SIP.ICP.SEG.Api.Modules.Validator;
 using PCM.SIP.ICP.SEG.Persistence;
+using PCM.SIP.ICP.SEG.Infraestructure;
 using PCM.SIP.ICP.SEG.Aplicacion.Features;
+using PCM.SIP.ICP.SEG.Api.Modules.Redis;
 
 var builder = WebApplication.CreateBuilder(args);
 var configuration = builder.Configuration;
@@ -16,11 +18,13 @@ builder.Services.AddMapper();
 builder.Services.AddControllers();
 builder.Services.AddFeature(configuration);
 builder.Services.AddPersistenceServices();
+builder.Services.AddInfraestructureServices();
 builder.Services.AddApplicationServices();
 builder.Services.AddInjection(configuration);
 builder.Services.AddAuthentication(configuration);
 builder.Services.AddValidator();
 builder.Services.AddSwagger();
+builder.Services.AddRedisCache(builder.Configuration);
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

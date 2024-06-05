@@ -2,6 +2,7 @@
 using PCM.SIP.ICP.SEG.Aplicacion.Dto;
 using PCM.SIP.ICP.SEG.Aplicacion.Interface;
 using PCM.SIP.ICP.SEG.Aplicacion.Interface.Features;
+using PCM.SIP.ICP.SEG.Aplicacion.Interface.Infraestructure;
 using PCM.SIP.ICP.SEG.Aplicacion.Validator;
 using PCM.SIP.ICP.SEG.Domain.Entities;
 using PCM.SIP.ICP.SEG.Transversal.Common;
@@ -17,17 +18,20 @@ namespace PCM.SIP.ICP.SEG.Aplicacion.Features.Features
         private readonly IMapper _mapper;
         private readonly IAppLogger<UsuarioApplication> _logger;
         private readonly UsuarioValidationManager _usuarioValidationManager;
+        private readonly IRedisCacheService _redisCacheService;
 
         public UsuarioApplication(
-            IUnitOfWork unitOfWork, 
-            IMapper mapper, 
-            IAppLogger<UsuarioApplication> logger, 
-            UsuarioValidationManager usuarioValidationManager)
+            IUnitOfWork unitOfWork,
+            IMapper mapper,
+            IAppLogger<UsuarioApplication> logger,
+            UsuarioValidationManager usuarioValidationManager,
+            IRedisCacheService redisCacheService)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
             _logger = logger;
             _usuarioValidationManager = usuarioValidationManager;
+            _redisCacheService = redisCacheService;
         }
 
         public PcmResponse Authenticate(Request<UsuarioDto> request)
@@ -75,7 +79,7 @@ namespace PCM.SIP.ICP.SEG.Aplicacion.Features.Features
                         nombre_completo = result.Data.nombre_completo
                     };
                 }
-                
+
                 //instanciamos la clase que almacena los datos de la sesion de usuario
                 var usuarioSesion = new UsuarioSesion
                 {
@@ -83,11 +87,11 @@ namespace PCM.SIP.ICP.SEG.Aplicacion.Features.Features
                     authkey = authkey
                 };
 
+                //generamos la key de la cache
+                var cacheKey = Guid.NewGuid().ToString();
+
                 //guardamos los datos de la sesion del usuario
-
-
-                //obtenemos el id de sesion de la cache
-
+                _redisCacheService.SetAsync(cacheKey, usuarioSesion, 10, 10);
 
                 //generamos el token 
 
@@ -95,7 +99,7 @@ namespace PCM.SIP.ICP.SEG.Aplicacion.Features.Features
                 //formamos el response de usuario
                 var usuarioResponse = _mapper.Map<UsuarioLoginResponse>(_mapper.Map<UsuarioDto>(entidad));
 
-             
+
 
 
 
