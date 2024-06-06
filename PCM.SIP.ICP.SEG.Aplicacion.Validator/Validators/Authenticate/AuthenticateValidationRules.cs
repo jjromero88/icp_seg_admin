@@ -8,6 +8,30 @@ using System.Threading.Tasks;
 
 namespace PCM.SIP.ICP.SEG.Aplicacion.Validator
 {
+    public class AuthenticateRequestValidator : AbstractValidator<AuthenticateRequest>
+    {
+        public AuthenticateRequestValidator()
+        {
+            RuleFor(u => u.username)
+               .IsNullOrWhiteSpace()
+               .WithMessage($"Debe ingresar el nombre de usuario")
+               .NotContainSqlInjection();
+
+            RuleFor(u => u.password)
+                .IsNullOrWhiteSpace()
+                .WithMessage($"Debe ingresar una contraseña")
+                .NotContainSqlInjection();
+
+            RuleFor(x => x.username)
+                    .MaximumLength(20)
+                    .WithMessage($"El nombre de usuario debe tener máximo 20 caracteres");
+
+            RuleFor(x => x.password)
+                    .MaximumLength(15)
+                    .WithMessage($"La contraseña debe tener máximo 15 caracteres");
+        }
+    }
+
     public class AuthorizeRequestValidator : AbstractValidator<AuthorizeRequest>
     {
         public AuthorizeRequestValidator()
@@ -29,5 +53,4 @@ namespace PCM.SIP.ICP.SEG.Aplicacion.Validator
                .WithMessage("La abreviatura debe tener máximo 10 caracteres");
         }
     }
-
 }

@@ -23,17 +23,9 @@ namespace PCM.SIP.ICP.SEG.Transversal.Mapper
                 .ForMember(destination => destination.telefono_movil, source => source.MapFrom(src => src.telefono_movil))
                 .ForMember(destination => destination.nombre_completo, source => source.MapFrom(src => src.nombre_completo));
 
-            CreateMap<UsuarioDto, UsuarioLoginRequest>().ReverseMap()
-                .ForMember(destination => destination.username, source => source.MapFrom(src => src.username))
-                .ForMember(destination => destination.password, source => source.MapFrom(src => src.password));
-
-            CreateMap<UsuarioDto, UsuarioLoginResponse>().ReverseMap()
-                .ForMember(destination => destination.SerialKey, source => source.MapFrom(src => src.SerialKey))
-                .ForMember(destination => destination.username, source => source.MapFrom(src => src.username))
-                .ForMember(destination => destination.numdocumento, source => source.MapFrom(src => src.numdocumento))
-                .ForMember(destination => destination.nombre_completo, source => source.MapFrom(src => src.nombrecompleto))
-                .ForMember(destination => destination.email, source => source.MapFrom(src => src.email))
-                .ForMember(destination => destination.Token, source => source.MapFrom(src => src.Token));
+            CreateMap<Usuario, AuthenticateRequest>().ReverseMap()
+               .ForMember(destination => destination.username, source => source.MapFrom(src => src.username))
+               .ForMember(destination => destination.password, source => source.MapFrom(src => src.password));
 
             CreateMap<Perfil, AuthenticatePerfil>().ReverseMap()
                 .ForMember(destination => destination.codigo, source => source.MapFrom(src => src.codigo))

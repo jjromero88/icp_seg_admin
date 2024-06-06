@@ -8,6 +8,7 @@ namespace PCM.SIP.ICP.SEG.Api.Modules.Validator
     {
         public static IServiceCollection AddValidator(this IServiceCollection services)
         {
+            services.AddTransient<IValidator<AuthenticateRequest>, AuthenticateRequestValidator>();
             services.AddTransient<IValidator<AuthorizeRequest>, AuthorizeRequestValidator>();
             services.AddTransient<AuthenticateValidationManager>();
 
@@ -15,9 +16,6 @@ namespace PCM.SIP.ICP.SEG.Api.Modules.Validator
             services.AddTransient<IValidator<PerfilInsertRequest>, PerfilInsertRequestValidator>();
             services.AddTransient<IValidator<PerfilUpdateRequest>, PerfilUpdateRequestValidator>();
             services.AddTransient<PerfilValidationManager>();
-
-            services.AddTransient<IValidator<UsuarioLoginRequest>, UsuarioLoginRequestValidator>();
-            services.AddTransient<UsuarioValidationManager>();
 
             return services;
         }

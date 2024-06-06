@@ -12,6 +12,7 @@ namespace PCM.SIP.ICP.SEG.Persistence
         public static IServiceCollection AddPersistenceServices(this IServiceCollection services)
         {
             services.AddSingleton<DapperContext>();
+            services.AddScoped<IAuthenticateRepository, AuthenticateRepository>();
             services.AddScoped<IPerfilRepository, PerfilRepository>();
             services.AddScoped<IUsuarioRepository, UsuarioRepository>();
 

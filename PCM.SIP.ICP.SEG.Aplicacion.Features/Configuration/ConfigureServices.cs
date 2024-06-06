@@ -9,6 +9,7 @@ namespace PCM.SIP.ICP.SEG.Aplicacion.Features
         public static IServiceCollection AddApplicationServices(this IServiceCollection services)
         {
             services.AddScoped<IAuthentication, Authentication>();
+            services.AddScoped<IAuthenticateApplication, AuthenticateApplication>();
             services.AddScoped<IPerfilApplication, PerfilApplication>();
             services.AddScoped<IUsuarioApplication, UsuarioApplication>();
 

@@ -7,14 +7,17 @@ namespace PCM.SIP.ICP.SEG.Persistence.Repository.Base
     {
         public IPerfilRepository Perfil { get; }
         public IUsuarioRepository Usuario { get; }
+        public IAuthenticateRepository Authenticate { get; }
 
         public UnitOfWork(
             IPerfilRepository perfil,
-            IUsuarioRepository usuario
+            IUsuarioRepository usuario,
+            IAuthenticateRepository authenticate
             )
         {
             Perfil = perfil;
             Usuario = usuario;
+            Authenticate = authenticate;
         }
 
         public void Dispose()

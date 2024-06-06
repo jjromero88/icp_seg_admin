@@ -22,20 +22,4 @@ namespace PCM.SIP.ICP.SEG.Aplicacion.Dto
         public string? Token { get; set; }
     }
 
-    public class UsuarioLoginRequest
-    {
-        public string? username { get; set; }
-        public string? password { get; set; }
-    }
-
-    public class UsuarioLoginResponse
-    {
-        public string? SerialKey { get; set; }
-        public string? username { get; set; }
-        public string? numdocumento { get; set; }
-        public string? nombrecompleto { get; set; }
-        public string? email { get; set; }
-        public string? Token { get; set; }
-    }
-
 }
