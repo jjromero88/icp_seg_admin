@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PCM.SIP.ICP.SEG.Aplicacion.Interface.Features;
 using PCM.SIP.ICP.SEG.Transversal.Common.Generics;
+using PCM.SIP.ICP.SEG.Api.Filters;
 
 namespace PCM.SIP.ICP.SEG.Api.Controllers
 {
@@ -22,6 +23,7 @@ namespace PCM.SIP.ICP.SEG.Api.Controllers
         }
 
         [HttpGet("GetSessionData")]
+        //[ServiceFilter(typeof(AuthorizationRequestAttribute))]
         [ProducesResponseType((int)HttpStatusCode.OK, Type = typeof(PcmResponse))]
         public async Task<ActionResult<PcmResponse>> GetSessionData([FromHeader(Name = "Authorization")] string token)
         {

@@ -8,6 +8,7 @@ using PCM.SIP.ICP.SEG.Persistence;
 using PCM.SIP.ICP.SEG.Infraestructure;
 using PCM.SIP.ICP.SEG.Aplicacion.Features;
 using PCM.SIP.ICP.SEG.Api.Modules.Redis;
+using PCM.SIP.ICP.SEG.Api.Filters;
 
 var builder = WebApplication.CreateBuilder(args);
 var configuration = builder.Configuration;
@@ -25,6 +26,9 @@ builder.Services.AddAuthentication(configuration);
 builder.Services.AddValidator();
 builder.Services.AddSwagger();
 builder.Services.AddRedisCache(builder.Configuration);
+
+// Se registra el ActionFilterAttribute en el Contenedor de Dependencias
+builder.Services.AddScoped<AuthorizationRequestAttribute>();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
