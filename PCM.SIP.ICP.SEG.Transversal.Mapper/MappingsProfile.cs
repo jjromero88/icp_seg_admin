@@ -34,6 +34,42 @@ namespace PCM.SIP.ICP.SEG.Transversal.Mapper
 
             #endregion
 
+
+            #region Perfil
+
+            CreateMap<Perfil, PerfilDto>().ReverseMap()
+                .ForMember(destination => destination.SerialKey, source => source.MapFrom(src => src.SerialKey))
+                .ForMember(destination => destination.codigo, source => source.MapFrom(src => src.codigo))
+                .ForMember(destination => destination.abreviatura, source => source.MapFrom(src => src.abreviatura))
+                .ForMember(destination => destination.descripcion, source => source.MapFrom(src => src.descripcion));
+
+            CreateMap<PerfilDto, PerfilIdRequest>().ReverseMap()
+                .ForMember(destination => destination.SerialKey, source => source.MapFrom(src => src.SerialKey));
+
+            CreateMap<PerfilDto, PerfilInsertRequest>().ReverseMap()
+                .ForMember(destination => destination.codigo, source => source.MapFrom(src => src.codigo))
+                .ForMember(destination => destination.abreviatura, source => source.MapFrom(src => src.abreviatura))
+                .ForMember(destination => destination.descripcion, source => source.MapFrom(src => src.descripcion));
+
+            CreateMap<PerfilDto, PerfilUpdateRequest>().ReverseMap()
+                .ForMember(destination => destination.SerialKey, source => source.MapFrom(src => src.SerialKey))
+                .ForMember(destination => destination.codigo, source => source.MapFrom(src => src.codigo))
+                .ForMember(destination => destination.abreviatura, source => source.MapFrom(src => src.abreviatura))
+                .ForMember(destination => destination.descripcion, source => source.MapFrom(src => src.descripcion));
+
+            CreateMap<PerfilDto, PerfilFilterRequest>().ReverseMap()
+                .ForMember(destination => destination.SerialKey, source => source.MapFrom(src => src.SerialKey))
+                .ForMember(destination => destination.filtro, source => source.MapFrom(src => src.filtro));
+
+            CreateMap<PerfilDto, PerfilResponse>().ReverseMap()
+                .ForMember(destination => destination.SerialKey, source => source.MapFrom(src => src.SerialKey))
+                .ForMember(destination => destination.codigo, source => source.MapFrom(src => src.codigo))
+                .ForMember(destination => destination.abreviatura, source => source.MapFrom(src => src.abreviatura))
+                .ForMember(destination => destination.descripcion, source => source.MapFrom(src => src.descripcion));
+
+            #endregion
+
+
             #region Usuario
 
             CreateMap<Usuario, UsuarioDto>().ReverseMap()
