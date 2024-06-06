@@ -8,6 +8,9 @@ namespace PCM.SIP.ICP.SEG.Api.Modules.Validator
     {
         public static IServiceCollection AddValidator(this IServiceCollection services)
         {
+            services.AddTransient<IValidator<AuthorizeRequest>, AuthorizeRequestValidator>();
+            services.AddTransient<AuthenticateValidationManager>();
+
             services.AddTransient<IValidator<PerfilIdRequest>, PerfilIdRequestValidator>();
             services.AddTransient<IValidator<PerfilInsertRequest>, PerfilInsertRequestValidator>();
             services.AddTransient<IValidator<PerfilUpdateRequest>, PerfilUpdateRequestValidator>();

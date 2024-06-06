@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PCM.SIP.ICP.SEG.Aplicacion.Dto.Dto
+namespace PCM.SIP.ICP.SEG.Aplicacion.Dto
 {
     public class AuthenticateRequest
     {
@@ -24,6 +24,20 @@ namespace PCM.SIP.ICP.SEG.Aplicacion.Dto.Dto
     {
         public string? codigo { get; set; }
         public string? descripcion { get; set; }
+    }
+
+    public class AuthorizeRequest
+    {
+        public string? idsession { get; set; }
+        public string? codigo_perfil { get; set; }
+    }
+
+    public class AuthorizeResponse
+    {
+        public string? token { get; set; }
+        public string? username { get; set; }
+        public string? perfil { get; set; }
+        public string? numdocumento { get; set; }
     }
 
 }

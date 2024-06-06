@@ -33,5 +33,17 @@ namespace PCM.SIP.ICP.SEG.Api.Controllers
 
             return await _usuarioApplication.Authenticate(new Request<UsuarioDto>() { entidad = _mapper.Map<UsuarioDto>(request) });
         }
+
+        [AllowAnonymous]
+        [HttpPost("Authorize")]
+        [ProducesResponseType((int)HttpStatusCode.OK, Type = typeof(PcmResponse))]
+        public async Task<ActionResult<PcmResponse>> Authorize([FromBody] AuthorizeRequest request)
+        {
+            if (request == null)
+                return BadRequest();
+
+            return await _usuarioApplication.Authorize(new Request<AuthorizeRequest>() { entidad = request });
+        }
+
     }
 }

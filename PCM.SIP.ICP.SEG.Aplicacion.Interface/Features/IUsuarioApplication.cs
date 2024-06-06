@@ -7,5 +7,6 @@ namespace PCM.SIP.ICP.SEG.Aplicacion.Interface.Features
     public interface IUsuarioApplication
     {
         Task<PcmResponse> Authenticate(Request<UsuarioDto> request);
+        Task<PcmResponse> Authorize(Request<AuthorizeRequest> request);
     }
 }

@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using PCM.SIP.ICP.SEG.Aplicacion.Dto;
-using PCM.SIP.ICP.SEG.Aplicacion.Dto.Dto;
 using PCM.SIP.ICP.SEG.Domain.Entities;
 
 namespace PCM.SIP.ICP.SEG.Transversal.Mapper
