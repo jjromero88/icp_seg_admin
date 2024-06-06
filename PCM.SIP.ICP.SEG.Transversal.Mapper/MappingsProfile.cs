@@ -23,6 +23,15 @@ namespace PCM.SIP.ICP.SEG.Transversal.Mapper
                 .ForMember(destination => destination.nombre_completo, source => source.MapFrom(src => src.nombre_completo))
                 .ForMember(destination => destination.lista_perfiles, source => source.MapFrom(src => src.lista_perfiles));
 
+            CreateMap<UsuarioCache, UsuarioCacheResponse>().ReverseMap()
+                .ForMember(destination => destination.authkey, source => source.MapFrom(src => src.authkey))
+                .ForMember(destination => destination.usuariokey, source => source.MapFrom(src => src.usuariokey))
+                .ForMember(destination => destination.perfilkey, source => source.MapFrom(src => src.perfilkey))
+                .ForMember(destination => destination.username, source => source.MapFrom(src => src.username))
+                .ForMember(destination => destination.perfil, source => source.MapFrom(src => src.perfil))
+                .ForMember(destination => destination.numdocumento, source => source.MapFrom(src => src.numdocumento))
+                .ForMember(destination => destination.nombre_completo, source => source.MapFrom(src => src.nombre_completo));
+
             #endregion
 
             #region Usuario

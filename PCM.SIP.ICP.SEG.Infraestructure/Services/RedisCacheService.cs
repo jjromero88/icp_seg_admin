@@ -14,6 +14,40 @@ namespace PCM.SIP.ICP.SEG.Infraestructure.Services
             _distributedCache = distributedCache;
         }
 
+        public void Set<T>(string key, T value, int absoluteExpiration, int slidingExpiration)
+        {
+            try
+            {
+                var serializeData = Encoding.UTF8.GetBytes(JsonSerializer.Serialize(value));
+                var options = new DistributedCacheEntryOptions()
+                            .SetAbsoluteExpiration(TimeSpan.FromMinutes(absoluteExpiration))
+                            .SetSlidingExpiration(TimeSpan.FromMinutes(slidingExpiration));
+
+                _distributedCache.Set(key, serializeData, options);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("An unexpected error occurred while setting value in cache for key {Key}", ex);
+            }
+        }
+
+        public T Get<T>(string key)
+        {
+            try
+            {
+                var result = _distributedCache.Get(key);
+
+                if (result == null)
+                    throw new Exception("An unexpected error: No se encontro el valor en la caché");
+
+                return JsonSerializer.Deserialize<T>(result);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("An unexpected error occurred while getting value in cache for key {Key}", ex);
+            }
+        }
+
         public async Task SetAsync<T>(string key, T value, int absoluteExpiration, int slidingExpiration)
         {
             try

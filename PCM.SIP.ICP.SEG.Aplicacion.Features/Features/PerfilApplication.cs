@@ -16,11 +16,13 @@ namespace PCM.SIP.ICP.SEG.Aplicacion.Features
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
         private readonly IAppLogger<PerfilApplication> _logger;
+        private readonly IPcmSessionApplication _pcmSessionApplication;
         private readonly PerfilValidationManager _perfilValidationManager;
 
         public PerfilApplication(
             IUnitOfWork unitOfWork,
             IMapper mapper,
+            IPcmSessionApplication pcmSessionApplication,
             IAppLogger<PerfilApplication> logger,
             PerfilValidationManager perfilValidationManager)
         {
@@ -28,6 +30,7 @@ namespace PCM.SIP.ICP.SEG.Aplicacion.Features
             _mapper = mapper;
             _logger = logger;
             _perfilValidationManager = perfilValidationManager;
+            _pcmSessionApplication = pcmSessionApplication;
         }
 
         public PcmResponse Insert(Request<PerfilDto> request)
@@ -43,7 +46,7 @@ namespace PCM.SIP.ICP.SEG.Aplicacion.Features
                 }
 
                 var entidad = _mapper.Map<Perfil>(request.entidad);
-                //entidad.usuario_reg = _pipolfySession.username;
+                entidad.usuario_reg = _pcmSessionApplication.UsuarioCache.username;
 
                 var result = _unitOfWork.Perfil.Insert(entidad);
 
@@ -77,8 +80,8 @@ namespace PCM.SIP.ICP.SEG.Aplicacion.Features
             {
                 var entidad = _mapper.Map<Perfil>(request.entidad);
 
-                //entidad.perfil_id = string.IsNullOrEmpty(request.entidad.SerialKey) ? 0 : Convert.ToInt32(CShrapEncryption.DecryptString(request.entidad.SerialKey, _pipolfySession.authkey));
-                //entidad.usuario_act = _pipolfySession.username;
+                entidad.perfil_id = string.IsNullOrEmpty(request.entidad.SerialKey) ? 0 : Convert.ToInt32(CShrapEncryption.DecryptString(request.entidad.SerialKey, _pcmSessionApplication.UsuarioCache.authkey));
+                entidad.usuario_act = _pcmSessionApplication.UsuarioCache.username;
 
                 var result = _unitOfWork.Perfil.Update(entidad);
 
@@ -112,8 +115,8 @@ namespace PCM.SIP.ICP.SEG.Aplicacion.Features
             {
                 var entidad = _mapper.Map<Perfil>(request.entidad);
 
-                //entidad.perfil_id = string.IsNullOrEmpty(request.entidad.SerialKey) ? 0 : Convert.ToInt32(CShrapEncryption.DecryptString(request.entidad.SerialKey, _pipolfySession.authkey));
-                //entidad.usuario_act = _pipolfySession.username;
+                entidad.perfil_id = string.IsNullOrEmpty(request.entidad.SerialKey) ? 0 : Convert.ToInt32(CShrapEncryption.DecryptString(request.entidad.SerialKey, _pcmSessionApplication.UsuarioCache.authkey));
+                entidad.usuario_act = _pcmSessionApplication.UsuarioCache.username;
 
                 var result = _unitOfWork.Perfil.Delete(entidad);
 
@@ -146,7 +149,7 @@ namespace PCM.SIP.ICP.SEG.Aplicacion.Features
                 }
 
                 var entidad = _mapper.Map<Perfil>(request.entidad);
-                //entidad.perfil_id = string.IsNullOrEmpty(request.entidad.SerialKey) ? 0 : Convert.ToInt32(CShrapEncryption.DecryptString(request.entidad.SerialKey, _pipolfySession.authkey));
+                entidad.perfil_id = string.IsNullOrEmpty(request.entidad.SerialKey) ? 0 : Convert.ToInt32(CShrapEncryption.DecryptString(request.entidad.SerialKey, _pcmSessionApplication.UsuarioCache.authkey));
 
                 var result = _unitOfWork.Perfil.GetById(entidad);
 
@@ -160,7 +163,7 @@ namespace PCM.SIP.ICP.SEG.Aplicacion.Features
                 {
                     entidad = new Perfil
                     {
-                        //SerialKey = string.IsNullOrEmpty(result.Data.perfil_id.ToString()) ? null : CShrapEncryption.EncryptString(result.Data.perfil_id.ToString(), _pipolfySession.authkey),
+                        SerialKey = string.IsNullOrEmpty(result.Data.perfil_id.ToString()) ? null : CShrapEncryption.EncryptString(result.Data.perfil_id.ToString(), _pcmSessionApplication.UsuarioCache.authkey),
                         codigo = result.Data.codigo,
                         abreviatura = result.Data.abreviatura,
                         descripcion = result.Data.descripcion,
@@ -190,7 +193,7 @@ namespace PCM.SIP.ICP.SEG.Aplicacion.Features
             {
                 var entidad = _mapper.Map<Perfil>(request.entidad);
 
-                //entidad.perfil_id = string.IsNullOrEmpty(request.entidad.SerialKey) ? 0 : Convert.ToInt32(CShrapEncryption.DecryptString(request.entidad.SerialKey, _pipolfySession.authkey));
+                entidad.perfil_id = string.IsNullOrEmpty(request.entidad.SerialKey) ? 0 : Convert.ToInt32(CShrapEncryption.DecryptString(request.entidad.SerialKey, _pcmSessionApplication.UsuarioCache.authkey));
 
                 var result = _unitOfWork.Perfil.GetList(entidad);
 
@@ -209,7 +212,7 @@ namespace PCM.SIP.ICP.SEG.Aplicacion.Features
                     {
                         Lista.Add(new Perfil()
                         {
-                            //SerialKey = string.IsNullOrEmpty(item.perfil_id.ToString()) ? null : CShrapEncryption.EncryptString(item.perfil_id.ToString(), _pipolfySession.authkey),
+                            SerialKey = string.IsNullOrEmpty(item.perfil_id.ToString()) ? null : CShrapEncryption.EncryptString(item.perfil_id.ToString(), _pcmSessionApplication.UsuarioCache.authkey),
                             codigo = item.codigo,
                             abreviatura = item.abreviatura,
                             descripcion = item.descripcion,
