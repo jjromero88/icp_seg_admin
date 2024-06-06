@@ -8,6 +8,23 @@ namespace PCM.SIP.ICP.SEG.Transversal.Mapper
     {
         public MappingsProfile()
         {
+            #region Authorizacion
+
+            CreateMap<Usuario, AuthenticateRequest>().ReverseMap()
+               .ForMember(destination => destination.username, source => source.MapFrom(src => src.username))
+               .ForMember(destination => destination.password, source => source.MapFrom(src => src.password));
+
+            CreateMap<Perfil, AuthenticatePerfil>().ReverseMap()
+                .ForMember(destination => destination.codigo, source => source.MapFrom(src => src.codigo))
+                .ForMember(destination => destination.descripcion, source => source.MapFrom(src => src.descripcion));
+
+            CreateMap<Usuario, AuthenticateResponse>().ReverseMap()
+                .ForMember(destination => destination.username, source => source.MapFrom(src => src.username))
+                .ForMember(destination => destination.nombre_completo, source => source.MapFrom(src => src.nombre_completo))
+                .ForMember(destination => destination.lista_perfiles, source => source.MapFrom(src => src.lista_perfiles));
+
+            #endregion
+
             #region Usuario
 
             CreateMap<Usuario, UsuarioDto>().ReverseMap()
@@ -22,19 +39,6 @@ namespace PCM.SIP.ICP.SEG.Transversal.Mapper
                 .ForMember(destination => destination.email, source => source.MapFrom(src => src.email))
                 .ForMember(destination => destination.telefono_movil, source => source.MapFrom(src => src.telefono_movil))
                 .ForMember(destination => destination.nombre_completo, source => source.MapFrom(src => src.nombre_completo));
-
-            CreateMap<Usuario, AuthenticateRequest>().ReverseMap()
-               .ForMember(destination => destination.username, source => source.MapFrom(src => src.username))
-               .ForMember(destination => destination.password, source => source.MapFrom(src => src.password));
-
-            CreateMap<Perfil, AuthenticatePerfil>().ReverseMap()
-                .ForMember(destination => destination.codigo, source => source.MapFrom(src => src.codigo))
-                .ForMember(destination => destination.descripcion, source => source.MapFrom(src => src.descripcion));
-
-            CreateMap<Usuario, AuthenticateResponse>().ReverseMap()
-                .ForMember(destination => destination.username, source => source.MapFrom(src => src.username))
-                .ForMember(destination => destination.nombre_completo, source => source.MapFrom(src => src.nombre_completo))
-                .ForMember(destination => destination.lista_perfiles, source => source.MapFrom(src => src.lista_perfiles));
 
             #endregion
         }
