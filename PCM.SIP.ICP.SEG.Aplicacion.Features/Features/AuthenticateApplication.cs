@@ -20,6 +20,7 @@ namespace PCM.SIP.ICP.SEG.Aplicacion.Features
         private readonly IMapper _mapper;
         private readonly IRedisCacheService _redisCacheService;
         private readonly IAuthentication _authentication;
+        private readonly IPcmSessionApplication _pcmSessionApplication;
         private readonly IAppLogger<UsuarioApplication> _logger;
         private readonly AuthenticateValidationManager _authenticateValidationManager;
 
@@ -27,7 +28,8 @@ namespace PCM.SIP.ICP.SEG.Aplicacion.Features
             IUnitOfWork unitOfWork, 
             IMapper mapper, 
             IRedisCacheService redisCacheService, 
-            IAuthentication authentication, 
+            IAuthentication authentication,
+            IPcmSessionApplication pcmSessionApplication,
             IAppLogger<UsuarioApplication> logger, 
             AuthenticateValidationManager authenticateValidationManager)
         {
@@ -37,6 +39,7 @@ namespace PCM.SIP.ICP.SEG.Aplicacion.Features
             _authentication = authentication;
             _logger = logger;
             _authenticateValidationManager = authenticateValidationManager;
+            _pcmSessionApplication = pcmSessionApplication;
         }
 
         public async Task<PcmResponse> Authenticate(Request<AuthenticateRequest> request)
@@ -193,5 +196,57 @@ namespace PCM.SIP.ICP.SEG.Aplicacion.Features
             }
         }
 
+        public async Task<PcmResponse> UsuarioAccesos()
+        {
+            try
+            {
+                // obtenemos las variables de sesion
+                string usuariokey = _pcmSessionApplication.UsuarioCache.usuariokey ?? string.Empty;
+                string perfilkey = _pcmSessionApplication.UsuarioCache.perfilkey ?? string.Empty;
+
+                //verificamos si retorna informacion de la caché
+                if (usuariokey == null || perfilkey == null)
+                {
+                    _logger.LogError("Sesion expirada");
+                    return ResponseUtil.BadRequest(message: "Su sesión ha expirado, vuelva a intentarlo");
+                }
+
+                // definimos la entidad
+                var entidad = new UsuarioPerfil();
+
+                // desencriptamos los id de perfil y usuario
+                entidad.usuario_id = string.IsNullOrEmpty(usuariokey) ? 0 : Convert.ToInt32(CShrapEncryption.DecryptString(usuariokey, _pcmSessionApplication.UsuarioCache.authkey));
+                entidad.perfil_id = string.IsNullOrEmpty(perfilkey) ? 0 : Convert.ToInt32(CShrapEncryption.DecryptString(perfilkey, _pcmSessionApplication.UsuarioCache.authkey));
+
+                // consultamos en bd por los accesos
+                var result = _unitOfWork.Authenticate.UsuarioAccesos(entidad, out string jsonUsuarioAccesos);
+
+                // evaluamos si ocurrio un error de validacion desde base de datos
+                if (result.Error)
+                {
+                    _logger.LogError(result.Message);
+                    return ResponseUtil.BadRequest(message: result.Message);
+                }
+
+                // deserializamos el json de salida al tipo SistemaOpcion
+                var usuarioAccesos = JsonSerializer.Deserialize<List<SistemaOpcion>>(jsonUsuarioAccesos);
+
+                // mapeamos el formato de respuesta
+                var accesosResponse = _mapper.Map<List<UsuarioAccesosResponse>>(usuarioAccesos);
+
+                //registramos el log de la transaccion
+                _logger.LogInformation(TransactionMessage.QuerySuccess);
+
+                //retornamos la informacion
+                return accesosResponse != null ? ResponseUtil.Ok(
+                    accesosResponse, AuthenticateMessage.AuthenticateSuccess
+                    ) : ResponseUtil.Unauthorized();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                return ResponseUtil.InternalError(message: ex.Message);
+            }
+        }
     }
 }

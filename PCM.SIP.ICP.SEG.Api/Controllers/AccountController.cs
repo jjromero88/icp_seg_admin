@@ -2,7 +2,9 @@
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using PCM.SIP.ICP.SEG.Api.Filters;
 using PCM.SIP.ICP.SEG.Aplicacion.Dto;
+using PCM.SIP.ICP.SEG.Aplicacion.Features;
 using PCM.SIP.ICP.SEG.Aplicacion.Interface.Features;
 using PCM.SIP.ICP.SEG.Transversal.Common;
 using PCM.SIP.ICP.SEG.Transversal.Common.Generics;
@@ -43,6 +45,14 @@ namespace PCM.SIP.ICP.SEG.Api.Controllers
                 return BadRequest();
 
             return await _authenticateApplication.Authorize(new Request<AuthorizeRequest>() { entidad = request });
+        }
+
+        [HttpGet("GetAccesos")]
+        [ServiceFilter(typeof(AuthorizationRequestAttribute))]
+        [ProducesResponseType((int)HttpStatusCode.OK, Type = typeof(PcmResponse))]
+        public async Task<ActionResult<PcmResponse>> UsuarioAccesos()
+        {
+            return await _authenticateApplication.UsuarioAccesos();
         }
 
     }

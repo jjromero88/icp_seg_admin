@@ -34,6 +34,18 @@ namespace PCM.SIP.ICP.SEG.Transversal.Mapper
 
             #endregion
 
+            #region SistemaOpcion
+
+            CreateMap<SistemaOpcion, UsuarioAccesosResponse>().ReverseMap()
+              .ForMember(destination => destination.codigo, source => source.MapFrom(src => src.codigo))
+              .ForMember(destination => destination.descripcion, source => source.MapFrom(src => src.descripcion))
+              .ForMember(destination => destination.abreviatura, source => source.MapFrom(src => src.abreviatura))
+              .ForMember(destination => destination.url_opcion, source => source.MapFrom(src => src.url_opcion))
+              .ForMember(destination => destination.icono_opcion, source => source.MapFrom(src => src.icono_opcion))
+              .ForMember(destination => destination.num_orden, source => source.MapFrom(src => src.num_orden))
+              .ForMember(destination => destination.ListaAccesos, source => source.MapFrom(src => src.ListaAccesos));
+
+            #endregion
 
             #region Perfil
 
@@ -68,7 +80,6 @@ namespace PCM.SIP.ICP.SEG.Transversal.Mapper
                 .ForMember(destination => destination.descripcion, source => source.MapFrom(src => src.descripcion));
 
             #endregion
-
 
             #region Usuario
 

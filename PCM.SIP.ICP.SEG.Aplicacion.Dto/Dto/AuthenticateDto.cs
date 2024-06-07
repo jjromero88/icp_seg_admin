@@ -40,4 +40,15 @@ namespace PCM.SIP.ICP.SEG.Aplicacion.Dto
         public string? numdocumento { get; set; }
     }
 
+    public class UsuarioAccesosResponse
+    {
+        public string? codigo { get; set; }
+        public string? descripcion { get; set; }
+        public string? abreviatura { get; set; }
+        public string? url_opcion { get; set; }
+        public string? icono_opcion { get; set; }
+        public string? num_orden { get; set; }
+        public List<UsuarioAccesosResponse>? ListaAccesos { get; set; }
+    }
+
 }

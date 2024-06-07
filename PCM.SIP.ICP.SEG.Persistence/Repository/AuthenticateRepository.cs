@@ -52,5 +52,39 @@ namespace PCM.SIP.ICP.SEG.Persistence.Repository
             return retorno;
         }
 
+        public Response<dynamic> UsuarioAccesos(UsuarioPerfil entidad, out string jsonUsuarioAccesos)
+        {
+            Response<dynamic> retorno = new Response<dynamic>();
+            jsonUsuarioAccesos = string.Empty;
+
+            try
+            {
+                using (var connection = _context.CreateConnection())
+                {
+                    var query = "dbo.USP_GET_USUARIO_ACCESOS";
+
+                    var parameters = new DynamicParameters();
+                    parameters.Add("usuario_id", entidad.usuario_id.Equals(0) ? (int?)null : entidad.usuario_id);
+                    parameters.Add("perfil_id", entidad.perfil_id.Equals(0) ? (int?)null : entidad.perfil_id);
+                    parameters.Add("error", dbType: DbType.Boolean, direction: ParameterDirection.Output);
+                    parameters.Add("message", dbType: DbType.String, direction: ParameterDirection.Output, size: 500);
+                    parameters.Add("usuarioAccesos", dbType: DbType.String, direction: ParameterDirection.Output, size: int.MaxValue);
+
+                    var result = connection.QuerySingleOrDefault<dynamic>(query, param: parameters, commandType: CommandType.StoredProcedure);
+
+                    retorno.Data = result ?? new Usuario();
+                    retorno.Error = parameters.Get<bool?>("error") ?? false;
+                    retorno.Message = parameters.Get<string>("message") ?? string.Empty;
+                    jsonUsuarioAccesos = parameters.Get<string>("usuarioAccesos") ?? string.Empty;
+                }
+            }
+            catch (Exception ex)
+            {
+                retorno.Error = true;
+                retorno.Message = ex.Message;
+            }
+
+            return retorno;
+        }
     }
 }

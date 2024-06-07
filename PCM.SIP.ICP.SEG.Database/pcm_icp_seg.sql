@@ -121,6 +121,7 @@ CREATE TABLE [dbo].[SISTEMAOPCION](
 	[descripcion] [varchar](150) NULL,
 	[num_orden] [int] NULL,
 	[url_opcion] [varchar](250) NULL,
+	[icono_opcion] [varchar](50) NULL,
 	[estado] [bit] NULL,
 	[usuario_reg] [varchar](20) NULL,
 	[fecha_reg] [datetime] NULL,
