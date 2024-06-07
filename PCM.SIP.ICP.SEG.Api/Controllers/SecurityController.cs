@@ -23,7 +23,6 @@ namespace PCM.SIP.ICP.SEG.Api.Controllers
         }
 
         [HttpGet("GetSessionData")]
-        //[ServiceFilter(typeof(AuthorizationRequestAttribute))]
         [ProducesResponseType((int)HttpStatusCode.OK, Type = typeof(PcmResponse))]
         public async Task<ActionResult<PcmResponse>> GetSessionData([FromHeader(Name = "Authorization")] string token)
         {
@@ -31,6 +30,13 @@ namespace PCM.SIP.ICP.SEG.Api.Controllers
                 return Unauthorized();
 
             return await _securityApplication.GetSessionData(token);
+        }
+
+        [HttpGet("ValidateToken")]
+        [ValidateTokenRequest]
+        public IActionResult Token()
+        {
+            return Ok();
         }
 
     }

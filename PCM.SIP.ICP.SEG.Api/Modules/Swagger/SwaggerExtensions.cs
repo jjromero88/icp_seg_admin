@@ -13,8 +13,8 @@ namespace PCM.SIP.ICP.SEG.Api.Modules.Swagger
                 c.SwaggerDoc("v1", new OpenApiInfo
                 {
                     Version = "v1",
-                    Title = "PIPOLFY.PERSONAL.API",
-                    Description = "Modulo de gestion de personal del sistema Pipolfy"
+                    Title = "PCM - Secretaria de Integridad Pública",
+                    Description = "Modulo de gestion de seguridad del sistema de Procesamiento Integrado del Indice de Capacidad Preventida frente a la Corrupción (ICP)"
                 });
 
                 var securityScheme = new OpenApiSecurityScheme
@@ -39,7 +39,7 @@ namespace PCM.SIP.ICP.SEG.Api.Modules.Swagger
                     { securityScheme, new List<string>() { } }
                 });
 
-                //c.AddServer(new OpenApiServer { Url = "http://localhost:7058" });
+                //c.AddServer(new OpenApiServer { Url = "http://localhost:5208" });
 
             });
 
