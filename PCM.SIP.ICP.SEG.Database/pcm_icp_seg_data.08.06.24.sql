@@ -1,6 +1,6 @@
 USE [pcm_icp_seg]
 GO
-/****** Object:  Table [dbo].[BLOQUEOUSUARIO]    Script Date: 7/06/2024 11:16:07 ******/
+/****** Object:  Table [dbo].[BLOQUEOUSUARIO]    Script Date: 8/06/2024 18:07:59 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -21,7 +21,7 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[LOG_ACCESO]    Script Date: 7/06/2024 11:16:07 ******/
+/****** Object:  Table [dbo].[LOG_ACCESO]    Script Date: 8/06/2024 18:07:59 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -45,7 +45,7 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[LOG_BLOQUEO]    Script Date: 7/06/2024 11:16:07 ******/
+/****** Object:  Table [dbo].[LOG_BLOQUEO]    Script Date: 8/06/2024 18:07:59 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -66,7 +66,7 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[PERFIL]    Script Date: 7/06/2024 11:16:07 ******/
+/****** Object:  Table [dbo].[PERFIL]    Script Date: 8/06/2024 18:07:59 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -87,7 +87,7 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[PERFILOPCION]    Script Date: 7/06/2024 11:16:07 ******/
+/****** Object:  Table [dbo].[PERFILOPCION]    Script Date: 8/06/2024 18:07:59 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -108,7 +108,7 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[SISTEMAOPCION]    Script Date: 7/06/2024 11:16:07 ******/
+/****** Object:  Table [dbo].[SISTEMAOPCION]    Script Date: 8/06/2024 18:07:59 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -133,7 +133,7 @@ CREATE TABLE [dbo].[SISTEMAOPCION](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[USUARIO]    Script Date: 7/06/2024 11:16:07 ******/
+/****** Object:  Table [dbo].[USUARIO]    Script Date: 8/06/2024 18:07:59 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -160,7 +160,7 @@ CREATE TABLE [dbo].[USUARIO](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[USUARIOPERFIL]    Script Date: 7/06/2024 11:16:07 ******/
+/****** Object:  Table [dbo].[USUARIOPERFIL]    Script Date: 8/06/2024 18:07:59 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -186,7 +186,7 @@ INSERT [dbo].[PERFIL] ([perfil_id], [codigo], [abreviatura], [descripcion], [est
 GO
 INSERT [dbo].[PERFIL] ([perfil_id], [codigo], [abreviatura], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (2, N'00002', N'Sectorista', N'Sectorista', 1, N'sys', CAST(N'2024-06-03T15:46:14.130' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PERFIL] ([perfil_id], [codigo], [abreviatura], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (3, N'00003', N'test upd', N'test perfil actualizado', 1, N'jjromero88', CAST(N'2024-06-06T15:01:15.197' AS DateTime), N'jjromero88', CAST(N'2024-06-06T15:02:09.500' AS DateTime))
+INSERT [dbo].[PERFIL] ([perfil_id], [codigo], [abreviatura], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (3, N'00003', N'test upd', N'test perfil actualizado', 0, N'jjromero88', CAST(N'2024-06-06T15:01:15.197' AS DateTime), N'jjromero88', CAST(N'2024-06-06T15:02:09.500' AS DateTime))
 GO
 SET IDENTITY_INSERT [dbo].[PERFIL] OFF
 GO
@@ -203,6 +203,12 @@ GO
 INSERT [dbo].[PERFILOPCION] ([perfilopcion_id], [perfil_id], [sistemaopcion_id], [habilitado], [estado], [usuario_reg], [fecha_reg], [usuactio_act], [fecha_act]) VALUES (5, 1, 5, 1, 1, N'sys', CAST(N'2024-06-06T17:35:15.320' AS DateTime), NULL, NULL)
 GO
 INSERT [dbo].[PERFILOPCION] ([perfilopcion_id], [perfil_id], [sistemaopcion_id], [habilitado], [estado], [usuario_reg], [fecha_reg], [usuactio_act], [fecha_act]) VALUES (6, 1, 6, 1, 1, N'sys', CAST(N'2024-06-06T17:35:20.537' AS DateTime), NULL, NULL)
+GO
+INSERT [dbo].[PERFILOPCION] ([perfilopcion_id], [perfil_id], [sistemaopcion_id], [habilitado], [estado], [usuario_reg], [fecha_reg], [usuactio_act], [fecha_act]) VALUES (7, 2, 1, 1, 1, N'sys', CAST(N'2024-06-08T16:58:40.597' AS DateTime), NULL, NULL)
+GO
+INSERT [dbo].[PERFILOPCION] ([perfilopcion_id], [perfil_id], [sistemaopcion_id], [habilitado], [estado], [usuario_reg], [fecha_reg], [usuactio_act], [fecha_act]) VALUES (8, 2, 2, 1, 1, N'sys', CAST(N'2024-06-08T16:59:28.403' AS DateTime), NULL, NULL)
+GO
+INSERT [dbo].[PERFILOPCION] ([perfilopcion_id], [perfil_id], [sistemaopcion_id], [habilitado], [estado], [usuario_reg], [fecha_reg], [usuactio_act], [fecha_act]) VALUES (9, 2, 3, 1, 1, N'sys', CAST(N'2024-06-08T16:59:32.850' AS DateTime), NULL, NULL)
 GO
 SET IDENTITY_INSERT [dbo].[PERFILOPCION] OFF
 GO
@@ -226,13 +232,17 @@ SET IDENTITY_INSERT [dbo].[USUARIO] ON
 GO
 INSERT [dbo].[USUARIO] ([usuario_id], [username], [password], [interno], [numdocumento], [apellido_paterno], [apellido_materno], [nombres], [email], [telefono_movil], [estado], [usuario_reg], [fecha_reg], [usuactio_act], [fecha_act]) VALUES (1, N'jjromero88', N'lol/SHDb+oG9d5VqbHBSUw==', 1, N'45338843', N'Romero', N'Lizano', N'Juan Jose', N'juanjor1988@gmail.com', N'961783736', 1, N'sys', CAST(N'2024-06-04T21:18:49.640' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[USUARIO] ([usuario_id], [username], [password], [interno], [numdocumento], [apellido_paterno], [apellido_materno], [nombres], [email], [telefono_movil], [estado], [usuario_reg], [fecha_reg], [usuactio_act], [fecha_act]) VALUES (2, N'jessicaarbi', N'lol/SHDb+oG9d5VqbHBSUw==', 1, N'45878854', N'Alvarez', N'Arbi', N'Jessica', N'jessicaarbi@gmail.com', N'999950863', 1, N'sys', CAST(N'2024-06-04T21:20:23.437' AS DateTime), NULL, NULL)
+INSERT [dbo].[USUARIO] ([usuario_id], [username], [password], [interno], [numdocumento], [apellido_paterno], [apellido_materno], [nombres], [email], [telefono_movil], [estado], [usuario_reg], [fecha_reg], [usuactio_act], [fecha_act]) VALUES (2, N'jessica01', N'lol/SHDb+oG9d5VqbHBSUw==', 1, N'45878854', N'Alvarez', N'Arbi', N'Jessica', N'jessicaarbi@gmail.com', N'999950863', 1, N'sys', CAST(N'2024-06-04T21:20:23.437' AS DateTime), NULL, NULL)
 GO
 SET IDENTITY_INSERT [dbo].[USUARIO] OFF
 GO
 SET IDENTITY_INSERT [dbo].[USUARIOPERFIL] ON 
 GO
 INSERT [dbo].[USUARIOPERFIL] ([usuarioperfil_id], [usuario_id], [perfil_id], [estado], [usuario_reg], [fecha_reg], [usuactio_act], [fecha_act]) VALUES (1, 1, 1, 1, N'sys', CAST(N'2024-06-04T21:44:11.230' AS DateTime), NULL, NULL)
+GO
+INSERT [dbo].[USUARIOPERFIL] ([usuarioperfil_id], [usuario_id], [perfil_id], [estado], [usuario_reg], [fecha_reg], [usuactio_act], [fecha_act]) VALUES (2, 2, 1, 1, N'sys', CAST(N'2024-06-08T17:00:05.097' AS DateTime), NULL, NULL)
+GO
+INSERT [dbo].[USUARIOPERFIL] ([usuarioperfil_id], [usuario_id], [perfil_id], [estado], [usuario_reg], [fecha_reg], [usuactio_act], [fecha_act]) VALUES (3, 2, 2, 1, N'sys', CAST(N'2024-06-08T17:00:24.947' AS DateTime), NULL, NULL)
 GO
 SET IDENTITY_INSERT [dbo].[USUARIOPERFIL] OFF
 GO
@@ -360,7 +370,7 @@ REFERENCES [dbo].[USUARIO] ([usuario_id])
 GO
 ALTER TABLE [dbo].[USUARIOPERFIL] CHECK CONSTRAINT [FK__USUARIOPE__usuar__4F7CD00D]
 GO
-/****** Object:  StoredProcedure [dbo].[USP_DEL_PERFIL]    Script Date: 7/06/2024 11:16:07 ******/
+/****** Object:  StoredProcedure [dbo].[USP_DEL_PERFIL]    Script Date: 8/06/2024 18:07:59 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -405,7 +415,7 @@ BEGIN
 END
 
 GO
-/****** Object:  StoredProcedure [dbo].[USP_GET_PERFIL]    Script Date: 7/06/2024 11:16:07 ******/
+/****** Object:  StoredProcedure [dbo].[USP_GET_PERFIL]    Script Date: 8/06/2024 18:07:59 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -452,7 +462,7 @@ BEGIN
 END
 
 GO
-/****** Object:  StoredProcedure [dbo].[USP_GET_USUARIO_ACCESOS]    Script Date: 7/06/2024 11:16:07 ******/
+/****** Object:  StoredProcedure [dbo].[USP_GET_USUARIO_ACCESOS]    Script Date: 8/06/2024 18:07:59 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -662,7 +672,7 @@ END
 
 
 GO
-/****** Object:  StoredProcedure [dbo].[USP_GET_USUARIO_LOGIN]    Script Date: 7/06/2024 11:16:07 ******/
+/****** Object:  StoredProcedure [dbo].[USP_GET_USUARIO_LOGIN]    Script Date: 8/06/2024 18:07:59 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -819,7 +829,7 @@ END
 
 
 GO
-/****** Object:  StoredProcedure [dbo].[USP_INS_PERFIL]    Script Date: 7/06/2024 11:16:07 ******/
+/****** Object:  StoredProcedure [dbo].[USP_INS_PERFIL]    Script Date: 8/06/2024 18:07:59 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -890,7 +900,7 @@ BEGIN
 END
 
 GO
-/****** Object:  StoredProcedure [dbo].[USP_SEL_PERFIL]    Script Date: 7/06/2024 11:16:07 ******/
+/****** Object:  StoredProcedure [dbo].[USP_SEL_PERFIL]    Script Date: 8/06/2024 18:07:59 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -932,7 +942,7 @@ BEGIN
 END
 
 GO
-/****** Object:  StoredProcedure [dbo].[USP_UPD_PERFIL]    Script Date: 7/06/2024 11:16:07 ******/
+/****** Object:  StoredProcedure [dbo].[USP_UPD_PERFIL]    Script Date: 8/06/2024 18:07:59 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
