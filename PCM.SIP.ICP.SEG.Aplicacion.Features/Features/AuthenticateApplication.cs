@@ -106,7 +106,6 @@ namespace PCM.SIP.ICP.SEG.Aplicacion.Features
             }
         }
 
-
         public async Task<PcmResponse> Authorize(Request<AuthorizeRequest> request)
         {
             try
