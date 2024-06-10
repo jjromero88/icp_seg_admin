@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
 
-namespace PCM.SIP.ICP.SEG.Transversal.Common.Common
+namespace PCM.SIP.ICP.SEG.Transversal.Common
 {
     public static class ApplicationKeys
     {
