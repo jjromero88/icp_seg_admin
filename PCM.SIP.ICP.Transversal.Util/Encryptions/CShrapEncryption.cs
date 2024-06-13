@@ -79,6 +79,22 @@ namespace PCM.SIP.ICP.Transversal.Util.Encryptions
                 return e.Message;
             }
         }
+        public static string DecryptArray(string listakeys, string passPhrase)
+        {
+            string result = null;
+
+            if (!string.IsNullOrEmpty(listakeys))
+            {
+                string[] arrSerialKey = listakeys.TrimEnd(',').Split(',');
+
+                for (int index = 0; index < arrSerialKey.Length; index++)
+                    result += DecryptString(arrSerialKey[index], passPhrase) + ',';
+
+                result = string.IsNullOrEmpty(result) ? null : result.TrimEnd(',');
+            }
+
+            return result;
+        }
         /*
         public static string EncryptString(string pstrToEncrypt, string pstrEncryptionKey)
         {

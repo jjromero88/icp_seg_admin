@@ -55,6 +55,11 @@ namespace PCM.SIP.ICP.SEG.Transversal.Mapper
                 .ForMember(destination => destination.abreviatura, source => source.MapFrom(src => src.abreviatura))
                 .ForMember(destination => destination.descripcion, source => source.MapFrom(src => src.descripcion));
 
+            CreateMap<Perfil, PerfilUsuarioResponse>().ReverseMap()
+                .ForMember(destination => destination.codigo, source => source.MapFrom(src => src.codigo))
+                .ForMember(destination => destination.abreviatura, source => source.MapFrom(src => src.abreviatura))
+                .ForMember(destination => destination.descripcion, source => source.MapFrom(src => src.descripcion));
+
             CreateMap<PerfilDto, PerfilIdRequest>().ReverseMap()
                 .ForMember(destination => destination.SerialKey, source => source.MapFrom(src => src.SerialKey));
 
@@ -92,6 +97,42 @@ namespace PCM.SIP.ICP.SEG.Transversal.Mapper
                 .ForMember(destination => destination.interno, source => source.MapFrom(src => src.interno))
                 .ForMember(destination => destination.numdocumento, source => source.MapFrom(src => src.numdocumento))
                 .ForMember(destination => destination.nombre_completo, source => source.MapFrom(src => src.nombre_completo));
+
+            CreateMap<UsuarioDto, UsuarioIdRequest>().ReverseMap()
+                .ForMember(destination => destination.SerialKey, source => source.MapFrom(src => src.SerialKey));
+
+            CreateMap<UsuarioDto, UsuarioInsertRequest>().ReverseMap()
+                .ForMember(destination => destination.personakey, source => source.MapFrom(src => src.personakey))
+                .ForMember(destination => destination.perfileskey, source => source.MapFrom(src => src.perfileskey))
+                .ForMember(destination => destination.username, source => source.MapFrom(src => src.username))
+                .ForMember(destination => destination.password, source => source.MapFrom(src => src.password))
+                .ForMember(destination => destination.interno, source => source.MapFrom(src => src.interno))
+                .ForMember(destination => destination.numdocumento, source => source.MapFrom(src => src.numdocumento))
+                .ForMember(destination => destination.nombre_completo, source => source.MapFrom(src => src.nombre_completo));
+
+            CreateMap<UsuarioDto, UsuarioUpdateRequest>().ReverseMap()
+                .ForMember(destination => destination.SerialKey, source => source.MapFrom(src => src.SerialKey))
+                .ForMember(destination => destination.personakey, source => source.MapFrom(src => src.personakey))
+                .ForMember(destination => destination.perfileskey, source => source.MapFrom(src => src.perfileskey))
+                .ForMember(destination => destination.username, source => source.MapFrom(src => src.username))
+                .ForMember(destination => destination.password, source => source.MapFrom(src => src.password))
+                .ForMember(destination => destination.interno, source => source.MapFrom(src => src.interno))
+                .ForMember(destination => destination.numdocumento, source => source.MapFrom(src => src.numdocumento))
+                .ForMember(destination => destination.nombre_completo, source => source.MapFrom(src => src.nombre_completo));
+
+            CreateMap<UsuarioDto, UsuarioFilterRequest>().ReverseMap()
+                .ForMember(destination => destination.SerialKey, source => source.MapFrom(src => src.SerialKey))
+                .ForMember(destination => destination.filtro, source => source.MapFrom(src => src.filtro));
+
+            CreateMap<UsuarioDto, UsuarioResponse>().ReverseMap()
+                .ForMember(destination => destination.SerialKey, source => source.MapFrom(src => src.SerialKey))
+                .ForMember(destination => destination.personakey, source => source.MapFrom(src => src.personakey))
+                .ForMember(destination => destination.username, source => source.MapFrom(src => src.username))
+                .ForMember(destination => destination.password, source => source.MapFrom(src => src.password))
+                .ForMember(destination => destination.interno, source => source.MapFrom(src => src.interno))
+                .ForMember(destination => destination.numdocumento, source => source.MapFrom(src => src.numdocumento))
+                .ForMember(destination => destination.nombre_completo, source => source.MapFrom(src => src.nombre_completo))
+                .ForMember(destination => destination.lista_perfiles, source => source.MapFrom(src => src.lista_perfiles));
 
             #endregion
         }

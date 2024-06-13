@@ -66,7 +66,7 @@ namespace PCM.SIP.ICP.SEG.Persistence.Repository
 
                     var parameters = new DynamicParameters();
 
-                    parameters.Add("usuario_id", entidad.usuario_id);
+                    parameters.Add("usuario_id", entidad.usuario_id.Equals(0) ? (int?)null : entidad.usuario_id);
                     parameters.Add("persona_id", entidad.persona_id);
                     parameters.Add("username", entidad.username);
                     parameters.Add("password", entidad.password);

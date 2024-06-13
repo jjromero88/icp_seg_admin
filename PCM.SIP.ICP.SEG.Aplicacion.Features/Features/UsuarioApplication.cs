@@ -47,6 +47,10 @@ namespace PCM.SIP.ICP.SEG.Aplicacion.Features
                 }
 
                 var entidad = _mapper.Map<Usuario>(request.entidad);
+
+                entidad.persona_id = string.IsNullOrEmpty(request.entidad.personakey) ? 0 : Convert.ToInt32(CShrapEncryption.DecryptString(request.entidad.personakey, _pcmSessionApplication.UsuarioCache.authkey));
+                entidad.perfiles_id = string.IsNullOrEmpty(request.entidad.perfileskey) ? null : CShrapEncryption.DecryptArray(request.entidad.perfileskey, _pcmSessionApplication.UsuarioCache.authkey);
+                entidad.password = string.IsNullOrEmpty(request.entidad.perfileskey) ? null : EncriptacionHelper.Encrypt(request.entidad.password?.Trim());
                 entidad.usuario_reg = _pcmSessionApplication.UsuarioCache.username;
 
                 var result = _unitOfWork.Usuario.Insert(entidad);
@@ -82,6 +86,9 @@ namespace PCM.SIP.ICP.SEG.Aplicacion.Features
                 var entidad = _mapper.Map<Usuario>(request.entidad);
 
                 entidad.usuario_id = string.IsNullOrEmpty(request.entidad.SerialKey) ? 0 : Convert.ToInt32(CShrapEncryption.DecryptString(request.entidad.SerialKey, _pcmSessionApplication.UsuarioCache.authkey));
+                entidad.persona_id = string.IsNullOrEmpty(request.entidad.personakey) ? 0 : Convert.ToInt32(CShrapEncryption.DecryptString(request.entidad.personakey, _pcmSessionApplication.UsuarioCache.authkey));
+                entidad.perfiles_id = string.IsNullOrEmpty(request.entidad.perfileskey) ? null : CShrapEncryption.DecryptArray(request.entidad.perfileskey, _pcmSessionApplication.UsuarioCache.authkey);
+                entidad.password = string.IsNullOrEmpty(request.entidad.perfileskey) ? null : EncriptacionHelper.Encrypt(request.entidad.password?.Trim());
                 entidad.usuario_act = _pcmSessionApplication.UsuarioCache.username;
 
                 var result = _unitOfWork.Usuario.Update(entidad);
@@ -164,10 +171,10 @@ namespace PCM.SIP.ICP.SEG.Aplicacion.Features
                 {
                     entidad = new Usuario
                     {
-                        SerialKey = string.IsNullOrEmpty(result.Data.usuario_id.ToString()) ? null : CShrapEncryption.EncryptString(result.Data.usuario_id.ToString(), _pcmSessionApplication.UsuarioCache.authkey),
-                        personakey = string.IsNullOrEmpty(result.Data.persona_id.ToString()) ? null : CShrapEncryption.EncryptString(result.Data.persona_id.ToString(), _pcmSessionApplication.UsuarioCache.authkey),
-                        username = result.Data.username,
-                        password = result.Data.password,
+                        SerialKey = string.IsNullOrEmpty(result.Data.usuario_id == null ? null : result.Data.usuario_id.ToString()) ? null : CShrapEncryption.EncryptString(result.Data.usuario_id.ToString(), _pcmSessionApplication.UsuarioCache.authkey),
+                        personakey = string.IsNullOrEmpty(result.Data.persona_id == null ? null : result.Data.persona_id.ToString()) ? null : CShrapEncryption.EncryptString(result.Data.persona_id.ToString(), _pcmSessionApplication.UsuarioCache.authkey),
+                        username = result.Data.username,                       
+                        password = string.IsNullOrEmpty(result.Data.password == null ? null : result.Data.password.ToString()) ? null : EncriptacionHelper.Decrypt(result.Data.password.ToString()),
                         numdocumento = result.Data.numdocumento,
                         nombre_completo = result.Data.nombre_completo,
                         interno = result.Data.interno,
@@ -181,7 +188,7 @@ namespace PCM.SIP.ICP.SEG.Aplicacion.Features
 
                 _logger.LogInformation(TransactionMessage.QuerySuccess);
                 return result.Data != null ? ResponseUtil.Ok(
-                    _mapper.Map<PerfilResponse>(_mapper.Map<PerfilDto>(entidad)), result.Message ?? TransactionMessage.QuerySuccess
+                    _mapper.Map<UsuarioResponse>(_mapper.Map<UsuarioDto>(entidad)), result.Message ?? TransactionMessage.QuerySuccess
                     ) : ResponseUtil.NoContent();
             }
             catch (Exception ex)
@@ -215,10 +222,10 @@ namespace PCM.SIP.ICP.SEG.Aplicacion.Features
                     {
                         Lista.Add(new Usuario()
                         {
-                            SerialKey = string.IsNullOrEmpty(item.usuario_id.ToString()) ? null : CShrapEncryption.EncryptString(item.usuario_id.ToString(), _pcmSessionApplication.UsuarioCache.authkey),
-                            personakey = string.IsNullOrEmpty(item.persona_id.ToString()) ? null : CShrapEncryption.EncryptString(item.persona_id.ToString(), _pcmSessionApplication.UsuarioCache.authkey),
+                            SerialKey = string.IsNullOrEmpty(item.usuario_id == null ? null : item.usuario_id.ToString()) ? null : CShrapEncryption.EncryptString(item.usuario_id.ToString(), _pcmSessionApplication.UsuarioCache.authkey),
+                            personakey = string.IsNullOrEmpty(item.persona_id == null ? null : item.persona_id.ToString()) ? null : CShrapEncryption.EncryptString(item.persona_id.ToString(), _pcmSessionApplication.UsuarioCache.authkey),
                             username = item.username,
-                            password = item.password,
+                            password = string.IsNullOrEmpty(item.password == null ? null : item.password.ToString()) ? null : EncriptacionHelper.Decrypt(item.password.ToString()),
                             numdocumento = item.numdocumento,
                             nombre_completo = item.nombre_completo,
                             interno = item.interno,
@@ -231,7 +238,7 @@ namespace PCM.SIP.ICP.SEG.Aplicacion.Features
 
                 _logger.LogInformation(TransactionMessage.QuerySuccess);
                 return result != null ? ResponseUtil.Ok(
-                    _mapper.Map<List<PerfilResponse>>(_mapper.Map<List<PerfilDto>>(Lista)),
+                    _mapper.Map<List<UsuarioResponse>>(_mapper.Map<List<UsuarioDto>>(Lista)),
                     result.Message ?? TransactionMessage.QuerySuccess
                     ) : ResponseUtil.NoContent();
             }

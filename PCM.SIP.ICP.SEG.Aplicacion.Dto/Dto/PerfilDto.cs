@@ -41,6 +41,12 @@ namespace PCM.SIP.ICP.SEG.Aplicacion.Dto
         public string? abreviatura { get; set; }
         public string? descripcion { get; set; }
     }
+    public class PerfilUsuarioResponse
+    {
+        public string? codigo { get; set; }
+        public string? abreviatura { get; set; }
+        public string? descripcion { get; set; }
+    }
     public class PerfilListResponse
     {
         public List<PerfilResponse>? Lista { get; set; }
