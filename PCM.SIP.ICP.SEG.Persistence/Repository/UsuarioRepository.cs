@@ -16,31 +16,33 @@ namespace PCM.SIP.ICP.SEG.Persistence.Repository
             _context = context;
         }
 
-        public Response<dynamic> Authenticate(Usuario entidad, out string jsonUsuarioLogin)
+        public Response Insert(Usuario entidad)
         {
-            Response<dynamic> retorno = new Response<dynamic>();
-            jsonUsuarioLogin = string.Empty;
+            Response retorno = new Response();
 
             try
             {
                 using (var connection = _context.CreateConnection())
                 {
-                    var query = "dbo.USP_GET_USUARIO_LOGIN";
+                    var query = "dbo.USP_INS_USUARIO";
 
                     var parameters = new DynamicParameters();
 
+                    parameters.Add("persona_id", entidad.persona_id);
                     parameters.Add("username", entidad.username);
                     parameters.Add("password", entidad.password);
+                    parameters.Add("numdocumento", entidad.numdocumento);
+                    parameters.Add("nombre_completo", entidad.nombre_completo);
+                    parameters.Add("interno", entidad.interno);
+                    parameters.Add("perfiles", entidad.perfiles_id);
+                    parameters.Add("usuario_reg", entidad.usuario_reg);
                     parameters.Add("error", dbType: DbType.Boolean, direction: ParameterDirection.Output);
                     parameters.Add("message", dbType: DbType.String, direction: ParameterDirection.Output, size: 500);
-                    parameters.Add("usuarioLogin", dbType: DbType.String, direction: ParameterDirection.Output, size: int.MaxValue);
 
-                    var result = connection.QuerySingleOrDefault<dynamic>(query, param: parameters, commandType: CommandType.StoredProcedure);
+                    var result = connection.Execute(query, param: parameters, commandType: CommandType.StoredProcedure);
 
-                    retorno.Data = result ?? new Usuario();
                     retorno.Error = parameters.Get<bool?>("error") ?? false;
                     retorno.Message = parameters.Get<string>("message") ?? string.Empty;
-                    jsonUsuarioLogin = parameters.Get<string>("usuarioLogin") ?? string.Empty;
                 }
             }
             catch (Exception ex)
@@ -52,29 +54,141 @@ namespace PCM.SIP.ICP.SEG.Persistence.Repository
             return retorno;
         }
 
-        public Response Insert(Usuario entidad)
-        {
-            throw new NotImplementedException();
-        }
-
         public Response Update(Usuario entidad)
         {
-            throw new NotImplementedException();
+            Response retorno = new Response();
+
+            try
+            {
+                using (var connection = _context.CreateConnection())
+                {
+                    var query = "dbo.USP_UPD_USUARIO";
+
+                    var parameters = new DynamicParameters();
+
+                    parameters.Add("usuario_id", entidad.usuario_id);
+                    parameters.Add("persona_id", entidad.persona_id);
+                    parameters.Add("username", entidad.username);
+                    parameters.Add("password", entidad.password);
+                    parameters.Add("numdocumento", entidad.numdocumento);
+                    parameters.Add("nombre_completo", entidad.nombre_completo);
+                    parameters.Add("interno", entidad.interno);
+                    parameters.Add("perfiles", entidad.perfiles_id);
+                    parameters.Add("usuario_act", entidad.usuario_act);
+                    parameters.Add("error", dbType: DbType.Boolean, direction: ParameterDirection.Output);
+                    parameters.Add("message", dbType: DbType.String, direction: ParameterDirection.Output, size: 500);
+
+                    var result = connection.Execute(query, param: parameters, commandType: CommandType.StoredProcedure);
+
+                    retorno.Error = parameters.Get<bool?>("error") ?? false;
+                    retorno.Message = parameters.Get<string>("message") ?? string.Empty;
+                }
+            }
+            catch (Exception ex)
+            {
+                retorno.Error = true;
+                retorno.Message = ex.Message;
+            }
+
+            return retorno;
         }
 
         public Response Delete(Usuario entidad)
         {
-            throw new NotImplementedException();
+            Response retorno = new Response();
+
+            try
+            {
+                using (var connection = _context.CreateConnection())
+                {
+                    var query = "dbo.USP_DEL_USUARIO";
+
+                    var parameters = new DynamicParameters();
+
+                    parameters.Add("usuario_id", entidad.usuario_id);
+                    parameters.Add("usuario_act", entidad.usuario_act);
+                    parameters.Add("error", dbType: DbType.Boolean, direction: ParameterDirection.Output);
+                    parameters.Add("message", dbType: DbType.String, direction: ParameterDirection.Output, size: 500);
+
+                    var result = connection.Execute(query, param: parameters, commandType: CommandType.StoredProcedure);
+
+                    retorno.Error = parameters.Get<bool?>("error") ?? false;
+                    retorno.Message = parameters.Get<string>("message") ?? string.Empty;
+                }
+            }
+            catch (Exception ex)
+            {
+                retorno.Error = true;
+                retorno.Message = ex.Message;
+            }
+
+            return retorno;
         }
 
         public Response<dynamic> GetById(Usuario entidad)
         {
-            throw new NotImplementedException();
+            Response<dynamic> retorno = new Response<dynamic>();
+
+            try
+            {
+                using (var connection = _context.CreateConnection())
+                {
+                    var query = "dbo.USP_GET_USUARIO";
+
+                    var parameters = new DynamicParameters();
+
+                    parameters.Add("usuario_id", entidad.usuario_id.Equals(0) ? (int?)null : entidad.usuario_id);
+                    parameters.Add("error", dbType: DbType.Boolean, direction: ParameterDirection.Output);
+                    parameters.Add("message", dbType: DbType.String, direction: ParameterDirection.Output, size: 500);
+
+                    var result = connection.QuerySingleOrDefault<dynamic>(query, param: parameters, commandType: CommandType.StoredProcedure);
+
+                    retorno.Data = result ?? new Perfil();
+                    retorno.Error = parameters.Get<bool?>("error") ?? false;
+                    retorno.Message = parameters.Get<string>("message") ?? string.Empty;
+                }
+            }
+            catch (Exception ex)
+            {
+                retorno.Error = true;
+                retorno.Message = ex.Message;
+            }
+
+            return retorno;
         }
 
         public Response<List<dynamic>> GetList(Usuario entidad)
         {
-            throw new NotImplementedException();
+            Response<List<dynamic>> retorno = new Response<List<dynamic>>();
+
+            try
+            {
+                using (var connection = _context.CreateConnection())
+                {
+                    var query = "dbo.USP_SEL_USUARIO";
+
+                    var parameters = new DynamicParameters();
+
+                    parameters.Add("usuario_id", entidad.usuario_id.Equals(0) ? (int?)null : entidad.usuario_id);
+                    parameters.Add("filtro", entidad.filtro);
+                    parameters.Add("error", dbType: DbType.Boolean, direction: ParameterDirection.Output);
+                    parameters.Add("message", dbType: DbType.String, direction: ParameterDirection.Output, size: 500);
+
+                    IEnumerable<dynamic> result = connection.Query<dynamic>(query, param: parameters, commandType: CommandType.StoredProcedure);
+                    List<dynamic> lista = result.ToList();
+
+                    retorno.Data = lista;
+                    retorno.Error = parameters.Get<bool?>("error") ?? false;
+                    retorno.Message = parameters.Get<string>("message") ?? string.Empty;
+                }
+            }
+            catch (Exception ex)
+            {
+                retorno.Error = true;
+                retorno.Message = ex.Message;
+            }
+
+            return retorno;
         }
     }
 }

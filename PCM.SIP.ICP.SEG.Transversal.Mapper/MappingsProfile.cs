@@ -86,6 +86,7 @@ namespace PCM.SIP.ICP.SEG.Transversal.Mapper
             CreateMap<Usuario, UsuarioDto>().ReverseMap()
                 .ForMember(destination => destination.SerialKey, source => source.MapFrom(src => src.SerialKey))
                 .ForMember(destination => destination.personakey, source => source.MapFrom(src => src.personakey))
+                .ForMember(destination => destination.perfileskey, source => source.MapFrom(src => src.perfileskey))
                 .ForMember(destination => destination.username, source => source.MapFrom(src => src.username))
                 .ForMember(destination => destination.password, source => source.MapFrom(src => src.password))
                 .ForMember(destination => destination.interno, source => source.MapFrom(src => src.interno))

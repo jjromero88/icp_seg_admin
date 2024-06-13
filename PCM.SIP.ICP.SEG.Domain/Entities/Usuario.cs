@@ -10,7 +10,9 @@ namespace PCM.SIP.ICP.SEG.Domain.Entities
     {
         public int usuario_id { get; set; }
         public int? persona_id { get; set; }
+        public string? perfiles_id { get; set; }
         public string? personakey { get; set; }
+        public string? perfileskey { get; set; }
         public string? username { get; set; }
         public string? password { get; set; }
         public string? numdocumento { get; set; }
