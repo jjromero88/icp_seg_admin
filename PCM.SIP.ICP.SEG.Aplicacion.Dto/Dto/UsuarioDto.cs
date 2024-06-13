@@ -53,7 +53,6 @@ namespace PCM.SIP.ICP.SEG.Aplicacion.Dto
         public string? SerialKey { get; set; }
         public string? personakey { get; set; }
         public string? username { get; set; }
-        public string? password { get; set; }
         public bool? interno { get; set; }
         public string? numdocumento { get; set; }
         public string? nombre_completo { get; set; }

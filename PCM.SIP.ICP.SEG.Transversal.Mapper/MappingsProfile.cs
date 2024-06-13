@@ -128,7 +128,6 @@ namespace PCM.SIP.ICP.SEG.Transversal.Mapper
                 .ForMember(destination => destination.SerialKey, source => source.MapFrom(src => src.SerialKey))
                 .ForMember(destination => destination.personakey, source => source.MapFrom(src => src.personakey))
                 .ForMember(destination => destination.username, source => source.MapFrom(src => src.username))
-                .ForMember(destination => destination.password, source => source.MapFrom(src => src.password))
                 .ForMember(destination => destination.interno, source => source.MapFrom(src => src.interno))
                 .ForMember(destination => destination.numdocumento, source => source.MapFrom(src => src.numdocumento))
                 .ForMember(destination => destination.nombre_completo, source => source.MapFrom(src => src.nombre_completo))
