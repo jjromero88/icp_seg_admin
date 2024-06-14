@@ -34,6 +34,7 @@ namespace PCM.SIP.ICP.SEG.Persistence.Repository
                     parameters.Add("numdocumento", entidad.numdocumento);
                     parameters.Add("nombre_completo", entidad.nombre_completo);
                     parameters.Add("interno", entidad.interno);
+                    parameters.Add("habilitado", entidad.habilitado);
                     parameters.Add("perfiles", entidad.perfiles_id);
                     parameters.Add("usuario_reg", entidad.usuario_reg);
                     parameters.Add("error", dbType: DbType.Boolean, direction: ParameterDirection.Output);
@@ -73,6 +74,7 @@ namespace PCM.SIP.ICP.SEG.Persistence.Repository
                     parameters.Add("numdocumento", entidad.numdocumento);
                     parameters.Add("nombre_completo", entidad.nombre_completo);
                     parameters.Add("interno", entidad.interno);
+                    parameters.Add("habilitado", entidad.habilitado);
                     parameters.Add("perfiles", entidad.perfiles_id);
                     parameters.Add("usuario_act", entidad.usuario_act);
                     parameters.Add("error", dbType: DbType.Boolean, direction: ParameterDirection.Output);
@@ -172,6 +174,8 @@ namespace PCM.SIP.ICP.SEG.Persistence.Repository
                     parameters.Add("usuario_id", entidad.usuario_id.Equals(0) ? (int?)null : entidad.usuario_id);
                     parameters.Add("persona_id", entidad.persona_id);
                     parameters.Add("numdocumento", entidad.numdocumento);
+                    parameters.Add("interno", entidad.interno);
+                    parameters.Add("habilitado", entidad.habilitado);
                     parameters.Add("filtro", entidad.filtro);
                     parameters.Add("error", dbType: DbType.Boolean, direction: ParameterDirection.Output);
                     parameters.Add("message", dbType: DbType.String, direction: ParameterDirection.Output, size: 500);

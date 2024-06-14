@@ -36,6 +36,10 @@ namespace PCM.SIP.ICP.SEG.Aplicacion.Validator
                 .NotNull()
                 .WithMessage("Debe indicar si es un usuario interno o externo");
 
+            RuleFor(u => u.habilitado)
+                .NotNull()
+                .WithMessage("Debe indicar si el usuario está habilitado o inhabilitado");
+
             RuleFor(u => u.numdocumento)
                 .IsNullOrWhiteSpace()
                 .WithMessage("Debe ingresar el numero de documento");
@@ -92,6 +96,10 @@ namespace PCM.SIP.ICP.SEG.Aplicacion.Validator
             RuleFor(u => u.interno)
                 .NotNull()
                 .WithMessage("Debe indicar si es un usuario interno o externo");
+
+            RuleFor(u => u.habilitado)
+                .NotNull()
+                .WithMessage("Debe indicar si el usuario está habilitado o inhabilitado");
 
             RuleFor(u => u.numdocumento)
                 .IsNullOrWhiteSpace()

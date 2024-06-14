@@ -18,6 +18,7 @@ namespace PCM.SIP.ICP.SEG.Domain.Entities
         public string? numdocumento { get; set; }
         public string? nombre_completo { get; set; }
         public bool? interno { get; set; }
+        public bool? habilitado { get; set; }
         public List<Perfil> lista_perfiles { get; set; } = new List<Perfil> { };
     }
 }
