@@ -1,6 +1,6 @@
 USE [pcm_icp_seg]
 GO
-/****** Object:  Table [dbo].[BLOQUEOUSUARIO]    Script Date: 8/06/2024 18:07:59 ******/
+/****** Object:  Table [dbo].[BLOQUEOUSUARIO]    Script Date: 14/06/2024 17:45:28 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -21,7 +21,7 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[LOG_ACCESO]    Script Date: 8/06/2024 18:07:59 ******/
+/****** Object:  Table [dbo].[LOG_ACCESO]    Script Date: 14/06/2024 17:45:28 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -45,7 +45,7 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[LOG_BLOQUEO]    Script Date: 8/06/2024 18:07:59 ******/
+/****** Object:  Table [dbo].[LOG_BLOQUEO]    Script Date: 14/06/2024 17:45:28 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -66,7 +66,7 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[PERFIL]    Script Date: 8/06/2024 18:07:59 ******/
+/****** Object:  Table [dbo].[PERFIL]    Script Date: 14/06/2024 17:45:28 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -87,7 +87,7 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[PERFILOPCION]    Script Date: 8/06/2024 18:07:59 ******/
+/****** Object:  Table [dbo].[PERFILOPCION]    Script Date: 14/06/2024 17:45:28 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -108,7 +108,7 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[SISTEMAOPCION]    Script Date: 8/06/2024 18:07:59 ******/
+/****** Object:  Table [dbo].[SISTEMAOPCION]    Script Date: 14/06/2024 17:45:28 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -133,26 +133,24 @@ CREATE TABLE [dbo].[SISTEMAOPCION](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[USUARIO]    Script Date: 8/06/2024 18:07:59 ******/
+/****** Object:  Table [dbo].[USUARIO]    Script Date: 14/06/2024 17:45:28 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[USUARIO](
 	[usuario_id] [int] IDENTITY(1,1) NOT NULL,
+	[persona_id] [int] NULL,
 	[username] [varchar](20) NULL,
 	[password] [varchar](150) NULL,
-	[interno] [bit] NULL,
 	[numdocumento] [varchar](20) NULL,
-	[apellido_paterno] [varchar](100) NULL,
-	[apellido_materno] [varchar](100) NULL,
-	[nombres] [varchar](100) NULL,
-	[email] [varchar](150) NULL,
-	[telefono_movil] [varchar](20) NULL,
+	[nombre_completo] [varchar](100) NULL,
+	[interno] [bit] NULL,
+	[habilitado] [bit] NULL,
 	[estado] [bit] NULL,
 	[usuario_reg] [varchar](20) NULL,
 	[fecha_reg] [datetime] NULL,
-	[usuactio_act] [varchar](20) NULL,
+	[usuario_act] [varchar](20) NULL,
 	[fecha_act] [datetime] NULL,
  CONSTRAINT [PK__USUARIO__2ED7D2AF33C5DD61] PRIMARY KEY CLUSTERED 
 (
@@ -160,7 +158,7 @@ CREATE TABLE [dbo].[USUARIO](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[USUARIOPERFIL]    Script Date: 8/06/2024 18:07:59 ******/
+/****** Object:  Table [dbo].[USUARIOPERFIL]    Script Date: 14/06/2024 17:45:28 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -172,7 +170,7 @@ CREATE TABLE [dbo].[USUARIOPERFIL](
 	[estado] [bit] NULL,
 	[usuario_reg] [varchar](20) NULL,
 	[fecha_reg] [datetime] NULL,
-	[usuactio_act] [varchar](20) NULL,
+	[usuario_act] [varchar](20) NULL,
 	[fecha_act] [datetime] NULL,
 PRIMARY KEY CLUSTERED 
 (
@@ -230,19 +228,19 @@ SET IDENTITY_INSERT [dbo].[SISTEMAOPCION] OFF
 GO
 SET IDENTITY_INSERT [dbo].[USUARIO] ON 
 GO
-INSERT [dbo].[USUARIO] ([usuario_id], [username], [password], [interno], [numdocumento], [apellido_paterno], [apellido_materno], [nombres], [email], [telefono_movil], [estado], [usuario_reg], [fecha_reg], [usuactio_act], [fecha_act]) VALUES (1, N'jjromero88', N'lol/SHDb+oG9d5VqbHBSUw==', 1, N'45338843', N'Romero', N'Lizano', N'Juan Jose', N'juanjor1988@gmail.com', N'961783736', 1, N'sys', CAST(N'2024-06-04T21:18:49.640' AS DateTime), NULL, NULL)
+INSERT [dbo].[USUARIO] ([usuario_id], [persona_id], [username], [password], [numdocumento], [nombre_completo], [interno], [habilitado], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (9, 12, N'jjromero88', N'tZ72XkenUqJgv9rpKkF+Pg==', N'45338843', N'Juan Jose Romero Lizano', 1, 1, 1, N'jjromero88', CAST(N'2024-06-13T20:30:27.310' AS DateTime), N'jjromero88', CAST(N'2024-06-14T17:22:06.420' AS DateTime))
 GO
-INSERT [dbo].[USUARIO] ([usuario_id], [username], [password], [interno], [numdocumento], [apellido_paterno], [apellido_materno], [nombres], [email], [telefono_movil], [estado], [usuario_reg], [fecha_reg], [usuactio_act], [fecha_act]) VALUES (2, N'jessica01', N'lol/SHDb+oG9d5VqbHBSUw==', 1, N'45878854', N'Alvarez', N'Arbi', N'Jessica', N'jessicaarbi@gmail.com', N'999950863', 1, N'sys', CAST(N'2024-06-04T21:20:23.437' AS DateTime), NULL, NULL)
+INSERT [dbo].[USUARIO] ([usuario_id], [persona_id], [username], [password], [numdocumento], [nombre_completo], [interno], [habilitado], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (10, 13, N'jessica01', N'4iNc0zv67AZAaiKPzpJpjA==', N'09012254', N'Jessica Alvarez Arbi', 1, 1, 1, N'jjromero88', CAST(N'2024-06-14T15:55:27.667' AS DateTime), N'jjromero88', CAST(N'2024-06-14T17:38:51.907' AS DateTime))
 GO
 SET IDENTITY_INSERT [dbo].[USUARIO] OFF
 GO
 SET IDENTITY_INSERT [dbo].[USUARIOPERFIL] ON 
 GO
-INSERT [dbo].[USUARIOPERFIL] ([usuarioperfil_id], [usuario_id], [perfil_id], [estado], [usuario_reg], [fecha_reg], [usuactio_act], [fecha_act]) VALUES (1, 1, 1, 1, N'sys', CAST(N'2024-06-04T21:44:11.230' AS DateTime), NULL, NULL)
+INSERT [dbo].[USUARIOPERFIL] ([usuarioperfil_id], [usuario_id], [perfil_id], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (12, 9, 1, 1, N'jjromero88', CAST(N'2024-06-13T20:30:27.313' AS DateTime), N'jjromero88', CAST(N'2024-06-14T17:22:06.423' AS DateTime))
 GO
-INSERT [dbo].[USUARIOPERFIL] ([usuarioperfil_id], [usuario_id], [perfil_id], [estado], [usuario_reg], [fecha_reg], [usuactio_act], [fecha_act]) VALUES (2, 2, 1, 1, N'sys', CAST(N'2024-06-08T17:00:05.097' AS DateTime), NULL, NULL)
+INSERT [dbo].[USUARIOPERFIL] ([usuarioperfil_id], [usuario_id], [perfil_id], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (13, 10, 2, 1, N'jjromero88', CAST(N'2024-06-14T15:55:27.670' AS DateTime), N'jjromero88', CAST(N'2024-06-14T17:38:51.907' AS DateTime))
 GO
-INSERT [dbo].[USUARIOPERFIL] ([usuarioperfil_id], [usuario_id], [perfil_id], [estado], [usuario_reg], [fecha_reg], [usuactio_act], [fecha_act]) VALUES (3, 2, 2, 1, N'sys', CAST(N'2024-06-08T17:00:24.947' AS DateTime), NULL, NULL)
+INSERT [dbo].[USUARIOPERFIL] ([usuarioperfil_id], [usuario_id], [perfil_id], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (21, 10, 1, 1, N'jjromero88', CAST(N'2024-06-14T17:38:28.657' AS DateTime), N'jjromero88', CAST(N'2024-06-14T17:38:51.907' AS DateTime))
 GO
 SET IDENTITY_INSERT [dbo].[USUARIOPERFIL] OFF
 GO
@@ -370,7 +368,7 @@ REFERENCES [dbo].[USUARIO] ([usuario_id])
 GO
 ALTER TABLE [dbo].[USUARIOPERFIL] CHECK CONSTRAINT [FK__USUARIOPE__usuar__4F7CD00D]
 GO
-/****** Object:  StoredProcedure [dbo].[USP_DEL_PERFIL]    Script Date: 8/06/2024 18:07:59 ******/
+/****** Object:  StoredProcedure [dbo].[USP_DEL_PERFIL]    Script Date: 14/06/2024 17:45:28 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -415,7 +413,54 @@ BEGIN
 END
 
 GO
-/****** Object:  StoredProcedure [dbo].[USP_GET_PERFIL]    Script Date: 8/06/2024 18:07:59 ******/
+/****** Object:  StoredProcedure [dbo].[USP_DEL_USUARIO]    Script Date: 14/06/2024 17:45:28 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE     PROCEDURE [dbo].[USP_DEL_USUARIO](
+	@usuario_id int = NULL,
+	@usuario_act varchar(20) = NULL,
+	@error BIT = NULL OUTPUT,
+	@message NVARCHAR(500) = NULL OUTPUT
+)
+AS
+BEGIN
+	SET @error = 0;
+
+	-- validamos si existe el usuario que desea eliminar
+	IF NOT EXISTS(SELECT TOP(1) t1.* FROM [dbo].USUARIO AS t1 WITH(NOLOCK) WHERE t1.usuario_id = @usuario_id) 
+	BEGIN
+		SET @error = 1;
+		SET @message = 'El usuario que desea Eliminar no existe';
+	END
+	
+	IF(@error = 0)
+	BEGIN
+
+		--Se elimina el perfil actualizando sus datos de auditoria
+		UPDATE 
+		[dbo].USUARIO
+		SET 
+		estado = 0,
+		usuario_act = @usuario_act
+		WHERE
+		usuario_id = @usuario_id;
+
+		-- desactivamos los perfiles asociados al usuario
+		UPDATE USUARIOPERFIL SET estado = 0, usuario_act = @usuario_act, fecha_act = GETDATE() where usuario_id = @usuario_id and estado = 1;
+
+		-- setemos el mensaje de salida
+		set @message = 'Información eliminada satisfactoriamente';
+
+	END
+
+
+END
+
+GO
+/****** Object:  StoredProcedure [dbo].[USP_GET_PERFIL]    Script Date: 14/06/2024 17:45:28 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -462,7 +507,58 @@ BEGIN
 END
 
 GO
-/****** Object:  StoredProcedure [dbo].[USP_GET_USUARIO_ACCESOS]    Script Date: 8/06/2024 18:07:59 ******/
+/****** Object:  StoredProcedure [dbo].[USP_GET_USUARIO]    Script Date: 14/06/2024 17:45:28 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE     PROCEDURE [dbo].[USP_GET_USUARIO](
+	@usuario_id INT,
+	@error BIT = NULL OUTPUT,
+	@message NVARCHAR(500) = NULL OUTPUT
+)
+AS
+BEGIN
+
+	set @error = 0
+
+	-- validamos si existe el usuario que desea consultar
+	IF NOT EXISTS(SELECT TOP(1) t1.* FROM [dbo].USUARIO AS t1 WITH(NOLOCK) WHERE t1.usuario_id = @usuario_id) 
+	BEGIN
+		SET @error = 1;
+		SET @message = 'El usuario que desea consultar no existe';
+	END
+	
+	IF(@error = 0)
+	BEGIN
+		SELECT
+			T1.usuario_id,
+			T1.persona_id, 
+			T1.username, 
+			T1.password, 
+			T1.numdocumento, 
+			T1.nombre_completo, 
+			T1.interno,
+			T1.habilitado,
+			T1.estado, 
+			T1.usuario_reg, 
+			T1.fecha_reg, 
+			T1.usuario_act, 
+			T1.fecha_act 
+		FROM 
+			[dbo].USUARIO  T1 WITH(NOLOCK)
+		WHERE
+			T1.usuario_id = @usuario_id;
+
+		set @message = 'Consulta exitosa';
+	END
+
+
+END
+
+GO
+/****** Object:  StoredProcedure [dbo].[USP_GET_USUARIO_ACCESOS]    Script Date: 14/06/2024 17:45:28 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -672,7 +768,7 @@ END
 
 
 GO
-/****** Object:  StoredProcedure [dbo].[USP_GET_USUARIO_LOGIN]    Script Date: 8/06/2024 18:07:59 ******/
+/****** Object:  StoredProcedure [dbo].[USP_GET_USUARIO_LOGIN]    Script Date: 14/06/2024 17:45:28 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -723,6 +819,13 @@ BEGIN
 		BEGIN
 			set @error = 1;
 			set @message = 'El usuario ingresado no existe';
+		END
+
+		--verifica que el usuario no este deshabilitado
+		IF EXISTS (SELECT TOP 1 * FROM USUARIO AS t1 WITH(NOLOCK) WHERE t1.usuario_id = @usuario_id AND t1.habilitado = 0)
+		BEGIN
+			set @error = 1;
+			set @message = 'El usuario ingresado no se encuentra activo';
 		END
 
 		--verifivar que la contraseña de usuario sea la correcta
@@ -776,12 +879,7 @@ BEGIN
 			, password
 			, interno
 			, numdocumento
-			, apellido_paterno
-			, apellido_materno
-			, nombres
-			, email
-			, telefono_movil
-			,CONCAT(T1.nombres,' ',T1.apellido_paterno,' ',T1.apellido_materno) AS nombre_completo
+			, nombre_completo
 		FROM 
 			[dbo].[USUARIO] AS T1 WITH(NOLOCK)
 		WHERE
@@ -829,7 +927,7 @@ END
 
 
 GO
-/****** Object:  StoredProcedure [dbo].[USP_INS_PERFIL]    Script Date: 8/06/2024 18:07:59 ******/
+/****** Object:  StoredProcedure [dbo].[USP_INS_PERFIL]    Script Date: 14/06/2024 17:45:28 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -900,7 +998,108 @@ BEGIN
 END
 
 GO
-/****** Object:  StoredProcedure [dbo].[USP_SEL_PERFIL]    Script Date: 8/06/2024 18:07:59 ******/
+/****** Object:  StoredProcedure [dbo].[USP_INS_USUARIO]    Script Date: 14/06/2024 17:45:28 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE   PROCEDURE [dbo].[USP_INS_USUARIO]
+	@persona_id int = null,
+	@username varchar(20) = null,
+	@password varchar(150) = null,
+	@numdocumento varchar(20) = null,
+	@nombre_completo varchar(100) = null,
+	@interno bit = null,
+	@habilitado bit = null,
+	@perfiles varchar(max) = null,
+	@usuario_reg varchar(20) = null,
+	@error BIT = null OUTPUT,
+	@message NVARCHAR(500) = null OUTPUT
+AS
+BEGIN
+	
+	--Inicializa como false
+	SET @error = 0;
+
+	-- validamos si el nombre de usuario ya existe
+	IF EXISTS(SELECT TOP(1) t1.* FROM [dbo].[USUARIO] AS t1 WITH(NOLOCK) WHERE t1.ESTADO = 1 AND  TRIM(LOWER(@username)) = TRIM(LOWER(t1.username))) 
+	BEGIN
+		SET @error = 1;
+		SET @message = 'Ya existe un usuario con el nombre ' + TRIM(LOWER(@username));
+	END
+
+	-- validamos si existe un usuario para el mismo persona_id
+	IF EXISTS(SELECT TOP(1) t1.* FROM [dbo].[USUARIO] AS t1 WITH(NOLOCK) WHERE t1.ESTADO = 1 AND  @persona_id = T1.persona_id) 
+	BEGIN
+		SET @error = 1;
+		SET @message = 'La persona que intenta registrar ya tiene un usuario asociado';
+	END
+
+	-- validamos si existe un usuario con el mismo numero de documento asociado
+	IF EXISTS(SELECT TOP(1) t1.* FROM [dbo].[USUARIO] AS t1 WITH(NOLOCK) WHERE t1.ESTADO = 1 AND  TRIM(LOWER(@numdocumento)) = TRIM(LOWER(t1.numdocumento))) 
+	BEGIN
+		SET @error = 1;
+		SET @message = 'Ya existe un usuario registrado con el número de documento ' + TRIM(LOWER(@numdocumento));
+	END
+
+	-- validamos la cantidad de digitos del usuario
+	IF ((select LEN(TRIM(@username))) < 5)
+	BEGIN
+		SET @error = 1;
+		SET @message = 'El nombre de usuario debe tener como mínimo 5 digitos';
+	END
+
+	-- validamos que tenga por lo menos un perfil
+	IF( (select COUNT(*) from string_split(@perfiles, ',')) <= 0 )
+	BEGIN
+		SET @error = 1;
+		SET @message = 'Debe seleccionar un perfil como mínimo';
+	END
+ 
+	IF(@error = 0) 
+	BEGIN
+
+		Declare @usuario_id int = null;
+
+		INSERT INTO dbo.USUARIO(
+			persona_id,
+			username,
+			password,
+			numdocumento,
+			nombre_completo,
+			interno,
+			habilitado,
+			usuario_reg,
+			fecha_reg
+		)
+		VALUES (
+			@persona_id,
+			TRIM(LOWER(@username)),
+			TRIM(@password),
+			TRIM(@numdocumento),
+			TRIM(@nombre_completo),
+			@interno,
+			@habilitado,
+			case when @usuario_reg is null then 'sys' else @usuario_reg end,
+			GETDATE()
+		);
+
+		-- seteamos el id del usuario recien insertado
+		set @usuario_id = @@IDENTITY;
+
+		-- insertamos los perfiles del usuario en UsuarioPerfil
+		insert into dbo.USUARIOPERFIL
+		(usuario_id, perfil_id, estado, usuario_reg, fecha_reg)
+		select @usuario_id, value, 1, @usuario_reg, GETDATE() from string_split(@perfiles, ',')
+
+		-- setemos el mensaje de salida
+		set @message = 'Información registrada satisfactoriamente';
+
+	END
+END
+
+GO
+/****** Object:  StoredProcedure [dbo].[USP_SEL_PERFIL]    Script Date: 14/06/2024 17:45:28 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -930,6 +1129,7 @@ BEGIN
 	FROM 
 		[dbo].PERFIL  T1 WITH(NOLOCK)
 	WHERE
+		(T1.estado = 1) AND
 		(@perfil_id IS NULL OR T1.perfil_id = @perfil_id) AND
 		(@FILTRO IS NULL OR (RTRIM(LTRIM(ISNULL(T1.codigo, ''))) + ' ' +
 			RTRIM(LTRIM(ISNULL(T1.abreviatura, ''))) + ' ' +
@@ -942,7 +1142,71 @@ BEGIN
 END
 
 GO
-/****** Object:  StoredProcedure [dbo].[USP_UPD_PERFIL]    Script Date: 8/06/2024 18:07:59 ******/
+/****** Object:  StoredProcedure [dbo].[USP_SEL_USUARIO]    Script Date: 14/06/2024 17:45:28 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE     PROCEDURE [dbo].[USP_SEL_USUARIO](
+	@usuario_id int = null,
+	@persona_id int = null,
+	@numdocumento varchar(20) = null,
+	@filtro varchar(max) = null,
+	@habilitado bit = null,
+	@interno bit = null,
+	@error BIT = NULL OUTPUT,
+	@message NVARCHAR(500) = NULL OUTPUT
+)
+AS
+BEGIN
+
+	set @error = 0;
+
+	SELECT
+		T1.usuario_id,
+		T1.persona_id, 
+		T1.username, 
+		T1.password, 
+		T1.numdocumento, 
+		T1.nombre_completo, 
+		T1.interno,
+		T1.habilitado,
+		T1.estado, 
+		T1.usuario_reg, 
+		T1.fecha_reg, 
+		T1.usuario_act, 
+		T1.fecha_act,
+		(SELECT 
+				P.codigo,
+				P.descripcion,
+				P.abreviatura
+			FROM  [dbo].USUARIOPERFIL UP
+			JOIN  [dbo].PERFIL P ON UP.perfil_id = P.perfil_id
+			WHERE  UP.usuario_id = T1.usuario_id AND UP.estado = 1
+			FOR JSON PATH
+		) AS json_perfiles
+	FROM 
+		[dbo].USUARIO  T1 WITH(NOLOCK)
+	WHERE
+		(T1.estado = 1) AND
+		(@usuario_id IS NULL OR T1.usuario_id = @usuario_id) AND
+		(@persona_id IS NULL OR T1.persona_id = @persona_id) AND
+		(@interno IS NULL OR T1.interno = @interno) AND
+		(@habilitado IS NULL OR T1.habilitado = @habilitado) AND
+		(@numdocumento IS NULL OR TRIM(T1.numdocumento) = TRIM(@numdocumento)) AND
+		(@FILTRO IS NULL OR (RTRIM(LTRIM(ISNULL(T1.username, ''))) + ' ' +
+			RTRIM(LTRIM(ISNULL(T1.nombre_completo, ''))) + ' ' +
+			RTRIM(LTRIM(ISNULL(T1.numdocumento, '')))) LIKE '%' + @filtro + '%' COLLATE Latin1_General_CI_AI);
+
+		-- seteamos mensaje de salida
+		set @message = 'Consulta exitosa';
+
+
+END
+ 
+GO
+/****** Object:  StoredProcedure [dbo].[USP_UPD_PERFIL]    Script Date: 14/06/2024 17:45:28 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1001,6 +1265,134 @@ BEGIN
 			fecha_act = GETDATE()
 		where
 			perfil_id = @perfil_id;
+
+		-- setemos el mensaje de salida
+		set @message = 'Información actualizada satisfactoriamente';
+
+	END
+END
+
+GO
+/****** Object:  StoredProcedure [dbo].[USP_UPD_USUARIO]    Script Date: 14/06/2024 17:45:28 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE      PROCEDURE [dbo].[USP_UPD_USUARIO]
+	@usuario_id int = null,
+	@persona_id int = null,
+	@username varchar(20) = null,
+	@password varchar(150) = null,
+	@numdocumento varchar(20) = null,
+	@nombre_completo varchar(100) = null,
+	@interno bit = null,
+	@habilitado bit = null,
+	@perfiles varchar(max) = null,
+	@usuario_act varchar(20) = NULL,
+	@error BIT = NULL OUTPUT,
+	@message NVARCHAR(500) = NULL OUTPUT
+AS
+BEGIN
+	
+	--Inicializa como false
+	SET @error = 0;
+
+	-- validamos si existe el usuario que desea actualizar
+	IF NOT EXISTS(SELECT TOP(1) t1.* FROM [dbo].USUARIO AS t1 WITH(NOLOCK) WHERE t1.ESTADO = 1 AND  @usuario_id = t1.usuario_id) 
+	BEGIN
+		SET @error = 1;
+		SET @message = 'El usuario que intenta actualizar no existe';
+	END
+
+	-- validamos si el nombre de usuario ya existe
+	IF EXISTS(SELECT TOP(1) t1.* FROM [dbo].[USUARIO] AS t1 WITH(NOLOCK) WHERE t1.ESTADO = 1 AND  TRIM(LOWER(@username)) = TRIM(LOWER(t1.username)) and t1.usuario_id <> @usuario_id) 
+	BEGIN
+		SET @error = 1;
+		SET @message = 'Ya existe un usuario con el nombre ' + TRIM(LOWER(@username));
+	END
+
+	-- validamos si existe un usuario para el mismo persona_id
+	IF EXISTS(SELECT TOP(1) t1.* FROM [dbo].[USUARIO] AS t1 WITH(NOLOCK) WHERE t1.ESTADO = 1 AND  @persona_id = T1.persona_id and t1.usuario_id <> @usuario_id) 
+	BEGIN
+		SET @error = 1;
+		SET @message = 'La persona que intenta registrar ya tiene un usuario asociado';
+	END
+
+	-- validamos si existe un usuario con el mismo numero de documento asociado
+	IF EXISTS(SELECT TOP(1) t1.* FROM [dbo].[USUARIO] AS t1 WITH(NOLOCK) WHERE t1.ESTADO = 1 AND  TRIM(LOWER(@numdocumento)) = TRIM(LOWER(t1.numdocumento)) and t1.usuario_id <> @usuario_id)
+	BEGIN
+		SET @error = 1;
+		SET @message = 'Ya existe un usuario registrado con el número de documento ' + TRIM(LOWER(@numdocumento));
+	END
+
+	-- validamos la cantidad de digitos del usuario
+	IF ((select LEN(TRIM(@username))) < 5)
+	BEGIN
+		SET @error = 1;
+		SET @message = 'El nombre de usuario debe tener como mínimo 5 digitos';
+	END
+
+	-- validamos que tenga por lo menos un perfil
+	IF( (select COUNT(*) from string_split(@perfiles, ',')) <= 0 )
+	BEGIN
+		SET @error = 1;
+		SET @message = 'Debe seleccionar un perfil como mínimo';
+	END
+
+ 
+	IF(@error = 0) 
+	BEGIN
+		
+		-- 1. actualizamos la informacion del usuario
+		
+		UPDATE dbo.USUARIO
+		set 
+			persona_id = @persona_id,
+			username = TRIM(LOWER(@username)),
+			password = TRIM(@password),
+			numdocumento = TRIM(@numdocumento),
+			nombre_completo = TRIM(@nombre_completo),
+			interno = @interno,
+			habilitado = @habilitado,
+			usuario_act = @usuario_act,
+			fecha_act = GETDATE()
+		where
+			usuario_id = @usuario_id;
+
+
+		-- 2. actualizamos los perfiles del usuario
+
+		--Desactivamos los perfiles actuales del usuario
+		update USUARIOPERFIL SET estado = 0, FECHA_ACT = GETDATE(), usuario_act = @usuario_act WHERE usuario_id = @usuario_id;
+
+		--Declaramos una tabla temporal
+		DECLARE @UsuarioPerfil TABLE
+		(usuario_id int, perfil_id int)
+
+		--insertamos los perfiles en la tabla temporal
+		insert into @UsuarioPerfil (usuario_id, perfil_id)
+		select @usuario_id, value from string_split(@perfiles, ',');
+
+		--2.1 Insertamos los perfiles nuevos
+		insert into dbo.USUARIOPERFIL
+		(usuario_id, perfil_id, estado, usuario_reg, fecha_act)
+		select 
+		@usuario_id, T2.perfil_id, 1, @usuario_act, GETDATE()
+		FROM
+		dbo.USUARIOPERFIL AS T1 WITH(NOLOCK)
+		RIGHT JOIN @UsuarioPerfil T2 ON T1.usuario_id = T2.usuario_id  AND T1.perfil_id = T2.perfil_id
+		WHERE	T1.usuario_id IS NULL AND T1.perfil_id IS NULL
+
+		-- 2.2 Actualizamos los perfiles de usuario que ya existian
+		UPDATE T1
+		SET 				  
+		  T1.usuario_id = T2.usuario_id
+		, T1.perfil_id = T2.perfil_id
+		, T1.usuario_act = @usuario_act
+		, T1.ESTADO = 1
+		, T1.FECHA_ACT = GETDATE()
+		FROM dbo.USUARIOPERFIL AS T1 WITH(NOLOCK)
+		INNER JOIN @UsuarioPerfil AS T2 ON T1.usuario_id = T2.usuario_id  AND T1.perfil_id = T2.perfil_id
 
 		-- setemos el mensaje de salida
 		set @message = 'Información actualizada satisfactoriamente';
