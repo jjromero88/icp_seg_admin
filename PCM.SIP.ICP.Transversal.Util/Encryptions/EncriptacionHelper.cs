@@ -113,59 +113,8 @@ namespace PCM.SIP.ICP.Transversal.Util.Encryptions
             }
         }
 
-        /// <summary>
-        /// Encripta cualquier texto usando el algoridmo Rijndael.
-        /// </summary>
-        /// <param name="rawText">texto a encryptar</param>
-        /// <returns>Array de bytes con el texto encriptado</returns>
-        public static byte[] EncryptToByte(string rawText)
-        {
-            var rijndaelCipher = new RijndaelManaged();
-            byte[] rawTextData = Encoding.UTF8.GetBytes(rawText);
-
-            Rfc2898DeriveBytes secretKey = GetSecretKey();
-
-
-            using (var encryptor = rijndaelCipher.CreateEncryptor(secretKey.GetBytes(32), secretKey.GetBytes(16)))
-            {
-                using (var memoryStream = new MemoryStream())
-                {
-                    using (var cryptoStream = new CryptoStream(memoryStream, encryptor, CryptoStreamMode.Write))
-                    {
-                        cryptoStream.Write(rawTextData, 0, rawTextData.Length);
-                        cryptoStream.FlushFinalBlock();
-                        return memoryStream.ToArray();
-                    }
-                }
-            }
-        }
-
-        /// <summary>
-        /// Encripta cualquier texto usando el algoridmo Rijndael.
-        /// </summary>
-        /// <param name="rawByte">array de bytes a encryptar</param>
-        /// <returns>Array de bytes con el texto encriptado</returns>
-        public static byte[] EncryptToByte(byte[] rawByte)
-        {
-            var rijndaelCipher = new RijndaelManaged();
-
-            Rfc2898DeriveBytes secretKey = GetSecretKey();
-
-
-            using (var encryptor = rijndaelCipher.CreateEncryptor(secretKey.GetBytes(32), secretKey.GetBytes(16)))
-            {
-                using (var memoryStream = new MemoryStream())
-                {
-                    using (var cryptoStream = new CryptoStream(memoryStream, encryptor, CryptoStreamMode.Write))
-                    {
-                        cryptoStream.Write(rawByte, 0, rawByte.Length);
-                        cryptoStream.FlushFinalBlock();
-                        return memoryStream.ToArray();
-                    }
-                }
-            }
-        }
-
+    
+ 
         /// <summary>
         /// Desencripta un texto previamente encriptado con el algoritmo Rijndael.
         /// </summary>
@@ -199,77 +148,10 @@ namespace PCM.SIP.ICP.Transversal.Util.Encryptions
             }
         }
 
-        public static string ToHex(byte[] bytes)
-        {
-            char[] c = new char[bytes.Length * 2];
+      
 
-            byte b;
 
-            for (int bx = 0, cx = 0; bx < bytes.Length; ++bx, ++cx)
-            {
-                b = ((byte)(bytes[bx] >> 4));
-                c[cx] = (char)(b > 9 ? b + 0x37 + 0x20 : b + 0x30);
-
-                b = ((byte)(bytes[bx] & 0x0F));
-                c[++cx] = (char)(b > 9 ? b + 0x37 + 0x20 : b + 0x30);
-            }
-
-            return new string(c);
-        }
-
-        public static byte[] HexToBytes(string str)
-        {
-            if (str.Length == 0 || str.Length % 2 != 0)
-                return new byte[0];
-
-            byte[] buffer = new byte[str.Length / 2];
-            char c;
-            for (int bx = 0, sx = 0; bx < buffer.Length; ++bx, ++sx)
-            {
-                // Convert first half of byte
-                c = str[sx];
-                buffer[bx] = (byte)((c > '9' ? (c > 'Z' ? (c - 'a' + 10) : (c - 'A' + 10)) : (c - '0')) << 4);
-
-                // Convert second half of byte
-                c = str[++sx];
-                buffer[bx] |= (byte)(c > '9' ? (c > 'Z' ? (c - 'a' + 10) : (c - 'A' + 10)) : (c - '0'));
-            }
-
-            return buffer;
-        }
-
-        /// <summary>
-        /// Desencripta un texto previamente encriptado con el algoritmo Rijndael.
-        /// </summary>
-        /// <param name="encryptByte">Array de bytes del texto encriptado a desencriptar.</param>
-        /// <returns>Texto desencriptado.</returns>
-        public static string Decrypt(byte[] encryptByte)
-        {
-            try
-            {
-                var rijndaelCipher = new RijndaelManaged();
-
-                Rfc2898DeriveBytes secretKey = GetSecretKey();
-
-                using (ICryptoTransform decryptor = rijndaelCipher.CreateDecryptor(secretKey.GetBytes(32), secretKey.GetBytes(16)))
-                {
-                    using (var memoryStream = new MemoryStream(encryptByte))
-                    {
-                        using (var cryptoStream = new CryptoStream(memoryStream, decryptor, CryptoStreamMode.Read))
-                        {
-                            var plainText = new byte[encryptByte.Length];
-                            int decryptedCount = cryptoStream.Read(plainText, 0, plainText.Length);
-                            return Encoding.UTF8.GetString(plainText, 0, decryptedCount);
-                        }
-                    }
-                }
-            }
-            catch
-            {
-                return null;
-            }
-        }
-
+      
 
         private static Rfc2898DeriveBytes GetSecretKey()
         {
@@ -280,22 +162,7 @@ namespace PCM.SIP.ICP.Transversal.Util.Encryptions
             return secretKey;
         }
 
-        public static string DecryptArray(string listakeys, string token)
-        {
-            string result = null;
-
-            if (!string.IsNullOrEmpty(listakeys))
-            {
-                string[] arrSerialKey = listakeys.TrimEnd(',').Split(',');
-
-                for (int index = 0; index < arrSerialKey.Length; index++)
-                    result += CShrapEncryption.DecryptString(arrSerialKey[index], token) + ',';
-
-                result = string.IsNullOrEmpty(result) ? null : result.TrimEnd(',');
-            }
-
-            return result;
-        }
+        
 
     }
 

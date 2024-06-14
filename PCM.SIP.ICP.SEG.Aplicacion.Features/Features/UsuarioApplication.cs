@@ -50,7 +50,7 @@ namespace PCM.SIP.ICP.SEG.Aplicacion.Features
 
                 entidad.persona_id = string.IsNullOrEmpty(request.entidad.personakey) ? 0 : Convert.ToInt32(CShrapEncryption.DecryptString(request.entidad.personakey, _pcmSessionApplication.UsuarioCache.authkey));
                 entidad.perfiles_id = string.IsNullOrEmpty(request.entidad.perfileskey) ? null : CShrapEncryption.DecryptArray(request.entidad.perfileskey, _pcmSessionApplication.UsuarioCache.authkey);
-                entidad.password = string.IsNullOrEmpty(request.entidad.perfileskey) ? null : EncriptacionHelper.Encrypt(request.entidad.password?.Trim());
+                entidad.password = string.IsNullOrEmpty(request.entidad.password) ? null : EncriptacionHelper.Encrypt(request.entidad.password?.Trim());
                 entidad.usuario_reg = _pcmSessionApplication.UsuarioCache.username;
 
                 var result = _unitOfWork.Usuario.Insert(entidad);
@@ -88,7 +88,7 @@ namespace PCM.SIP.ICP.SEG.Aplicacion.Features
                 entidad.usuario_id = string.IsNullOrEmpty(request.entidad.SerialKey) ? 0 : Convert.ToInt32(CShrapEncryption.DecryptString(request.entidad.SerialKey, _pcmSessionApplication.UsuarioCache.authkey));
                 entidad.persona_id = string.IsNullOrEmpty(request.entidad.personakey) ? 0 : Convert.ToInt32(CShrapEncryption.DecryptString(request.entidad.personakey, _pcmSessionApplication.UsuarioCache.authkey));
                 entidad.perfiles_id = string.IsNullOrEmpty(request.entidad.perfileskey) ? null : CShrapEncryption.DecryptArray(request.entidad.perfileskey, _pcmSessionApplication.UsuarioCache.authkey);
-                entidad.password = string.IsNullOrEmpty(request.entidad.perfileskey) ? null : EncriptacionHelper.Encrypt(request.entidad.password?.Trim());
+                entidad.password = string.IsNullOrEmpty(request.entidad.password) ? null : EncriptacionHelper.Encrypt(request.entidad.password?.Trim());
                 entidad.usuario_act = _pcmSessionApplication.UsuarioCache.username;
 
                 var result = _unitOfWork.Usuario.Update(entidad);
@@ -177,6 +177,7 @@ namespace PCM.SIP.ICP.SEG.Aplicacion.Features
                         numdocumento = result.Data.numdocumento,
                         nombre_completo = result.Data.nombre_completo,
                         interno = result.Data.interno,
+                        password = EncriptacionHelper.Decrypt(result.Data.password),
                         estado = result.Data.estado,
                         usuario_reg = result.Data.usuario_reg,
                         fecha_reg = result.Data.fecha_reg,
@@ -228,6 +229,7 @@ namespace PCM.SIP.ICP.SEG.Aplicacion.Features
                             numdocumento = item.numdocumento,
                             nombre_completo = item.nombre_completo,
                             interno = item.interno,
+                            password = EncriptacionHelper.Decrypt(item.password),
                             lista_perfiles = string.IsNullOrEmpty(item.json_perfiles) ? new List<Perfil>() : JsonSerializer.Deserialize<List<Perfil>>(item.json_perfiles),
                             usuario_reg = item.usuario_reg,
                             fecha_reg = item.fecha_reg
