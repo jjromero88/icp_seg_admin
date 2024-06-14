@@ -131,6 +131,7 @@ namespace PCM.SIP.ICP.SEG.Transversal.Mapper
                 .ForMember(destination => destination.interno, source => source.MapFrom(src => src.interno))
                 .ForMember(destination => destination.numdocumento, source => source.MapFrom(src => src.numdocumento))
                 .ForMember(destination => destination.nombre_completo, source => source.MapFrom(src => src.nombre_completo))
+                .ForMember(destination => destination.password, source => source.MapFrom(src => src.password))
                 .ForMember(destination => destination.lista_perfiles, source => source.MapFrom(src => src.lista_perfiles));
 
             #endregion
