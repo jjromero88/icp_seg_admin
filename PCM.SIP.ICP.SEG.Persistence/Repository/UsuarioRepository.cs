@@ -170,6 +170,8 @@ namespace PCM.SIP.ICP.SEG.Persistence.Repository
                     var parameters = new DynamicParameters();
 
                     parameters.Add("usuario_id", entidad.usuario_id.Equals(0) ? (int?)null : entidad.usuario_id);
+                    parameters.Add("persona_id", entidad.persona_id);
+                    parameters.Add("numdocumento", entidad.numdocumento);
                     parameters.Add("filtro", entidad.filtro);
                     parameters.Add("error", dbType: DbType.Boolean, direction: ParameterDirection.Output);
                     parameters.Add("message", dbType: DbType.String, direction: ParameterDirection.Output, size: 500);

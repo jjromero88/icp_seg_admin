@@ -46,6 +46,8 @@ namespace PCM.SIP.ICP.SEG.Aplicacion.Dto
     public class UsuarioFilterRequest
     {
         public string? SerialKey { get; set; }
+        public string? personakey { get; set; }
+        public string? numdocumento { get; set; }
         public string? filtro { get; set; }
     }
     public class UsuarioResponse

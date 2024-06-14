@@ -204,6 +204,7 @@ namespace PCM.SIP.ICP.SEG.Aplicacion.Features
                 var entidad = _mapper.Map<Usuario>(request.entidad);
 
                 entidad.usuario_id = string.IsNullOrEmpty(request.entidad.SerialKey) ? 0 : Convert.ToInt32(CShrapEncryption.DecryptString(request.entidad.SerialKey, _pcmSessionApplication.UsuarioCache.authkey));
+                entidad.persona_id = string.IsNullOrEmpty(request.entidad.personakey) ? null : Convert.ToInt32(CShrapEncryption.DecryptString(request.entidad.personakey, _pcmSessionApplication.UsuarioCache.authkey));
 
                 var result = _unitOfWork.Usuario.GetList(entidad);
 

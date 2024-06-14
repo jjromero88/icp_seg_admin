@@ -15,6 +15,7 @@ namespace PCM.SIP.ICP.SEG.Transversal.Common.Constants
         Unauthorized = 401,
         NotFound = 404,
         Conflict = 409,
+        ValidationError = 422,
         InternalServerError = 500,
         UnauthorizedHeaderNotFound = 5001,
         UnauthorizedTokenIncorrectFormat = 5003,
