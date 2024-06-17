@@ -222,6 +222,19 @@ namespace PCM.SIP.ICP.SEG.Aplicacion.Features
                 {
                     foreach (var item in result.Data)
                     {
+                        List<Perfil> ListaPerfiles = new List<Perfil>();
+                        var perfilesDeserialize = string.IsNullOrEmpty(item.json_perfiles) ? new List<Perfil>() : JsonSerializer.Deserialize<List<Perfil>>(item.json_perfiles);
+
+                        foreach (var perfil in perfilesDeserialize) {
+                            ListaPerfiles.Add(new Perfil()
+                            {
+                                SerialKey = string.IsNullOrEmpty(perfil.perfil_id == null ? null : perfil.perfil_id.ToString()) ? null : CShrapEncryption.EncryptString(perfil.perfil_id.ToString(), _pcmSessionApplication.UsuarioCache.authkey),
+                                codigo = perfil.codigo,
+                                abreviatura = perfil.abreviatura,
+                                descripcion = perfil.descripcion
+                            });
+                        };
+
                         Lista.Add(new Usuario()
                         {
                             SerialKey = string.IsNullOrEmpty(item.usuario_id == null ? null : item.usuario_id.ToString()) ? null : CShrapEncryption.EncryptString(item.usuario_id.ToString(), _pcmSessionApplication.UsuarioCache.authkey),
@@ -232,7 +245,7 @@ namespace PCM.SIP.ICP.SEG.Aplicacion.Features
                             interno = item.interno,
                             habilitado = item.habilitado,
                             password = EncriptacionHelper.Decrypt(item.password),
-                            lista_perfiles = string.IsNullOrEmpty(item.json_perfiles) ? new List<Perfil>() : JsonSerializer.Deserialize<List<Perfil>>(item.json_perfiles),
+                            lista_perfiles = ListaPerfiles,
                             usuario_reg = item.usuario_reg,
                             fecha_reg = item.fecha_reg
                         });

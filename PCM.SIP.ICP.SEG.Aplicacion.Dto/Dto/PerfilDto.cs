@@ -43,6 +43,7 @@ namespace PCM.SIP.ICP.SEG.Aplicacion.Dto
     }
     public class PerfilUsuarioResponse
     {
+        public string? SerialKey { get; set; }
         public string? codigo { get; set; }
         public string? abreviatura { get; set; }
         public string? descripcion { get; set; }

@@ -56,6 +56,7 @@ namespace PCM.SIP.ICP.SEG.Transversal.Mapper
                 .ForMember(destination => destination.descripcion, source => source.MapFrom(src => src.descripcion));
 
             CreateMap<Perfil, PerfilUsuarioResponse>().ReverseMap()
+                .ForMember(destination => destination.SerialKey, source => source.MapFrom(src => src.SerialKey))
                 .ForMember(destination => destination.codigo, source => source.MapFrom(src => src.codigo))
                 .ForMember(destination => destination.abreviatura, source => source.MapFrom(src => src.abreviatura))
                 .ForMember(destination => destination.descripcion, source => source.MapFrom(src => src.descripcion));
