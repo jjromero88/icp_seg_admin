@@ -47,6 +47,20 @@ namespace PCM.SIP.ICP.SEG.Transversal.Mapper
 
             #endregion
 
+            #region PerfilOpcion
+
+            CreateMap<PerfilOpcion, PerfilOpcionDto>().ReverseMap()
+               .ForMember(destination => destination.SerialKey, source => source.MapFrom(src => src.SerialKey))
+               .ForMember(destination => destination.perfilkey, source => source.MapFrom(src => src.perfilkey))
+               .ForMember(destination => destination.sistemaopcionkey, source => source.MapFrom(src => src.sistemaopcionkey))
+               .ForMember(destination => destination.habilitado, source => source.MapFrom(src => src.habilitado));
+
+            CreateMap<PerfilOpcionDto, PerfilOpcionFilterRequest>().ReverseMap()
+                .ForMember(destination => destination.perfilkey, source => source.MapFrom(src => src.perfilkey));
+
+
+            #endregion
+
             #region Perfil
 
             CreateMap<Perfil, PerfilDto>().ReverseMap()

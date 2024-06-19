@@ -22,6 +22,9 @@ namespace PCM.SIP.ICP.SEG.Api.Modules.Validator
             services.AddTransient<IValidator<PerfilUpdateRequest>, PerfilUpdateRequestValidator>();
             services.AddTransient<PerfilValidationManager>();
 
+            services.AddTransient<IValidator<PerfilOpcionFilterRequest>, PerfilOpcionFilterRequestValidator>();
+            services.AddTransient<PerfilOpcionValidationManager>();
+
             return services;
         }
     }

@@ -15,6 +15,7 @@ namespace PCM.SIP.ICP.SEG.Persistence
             services.AddScoped<IAuthenticateRepository, AuthenticateRepository>();
             services.AddScoped<IPerfilRepository, PerfilRepository>();
             services.AddScoped<IUsuarioRepository, UsuarioRepository>();
+            services.AddScoped<IPerfilOpcionRepository, PerfilOpcionRepository>();
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             return services;

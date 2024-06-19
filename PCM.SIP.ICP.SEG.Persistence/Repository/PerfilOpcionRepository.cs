@@ -1,0 +1,52 @@
+﻿using Dapper;
+using PCM.SIP.ICP.SEG.Aplicacion.Interface.Persistence;
+using PCM.SIP.ICP.SEG.Domain.Entities;
+using PCM.SIP.ICP.SEG.Persistence.Context;
+using PCM.SIP.ICP.SEG.Transversal.Common;
+using System.Data;
+
+namespace PCM.SIP.ICP.SEG.Persistence.Repository
+{
+    public class PerfilOpcionRepository : IPerfilOpcionRepository
+    {
+        private readonly DapperContext _context;
+
+        public PerfilOpcionRepository(DapperContext context)
+        {
+            _context = context;
+        }
+
+        public Response<List<dynamic>> GetList(PerfilOpcion entidad, out string jsonSistemaOpciones)
+        {
+            Response<List<dynamic>> retorno = new Response<List<dynamic>>();
+            jsonSistemaOpciones = string.Empty;
+            try
+            {
+                using (var connection = _context.CreateConnection())
+                {
+                    var query = "dbo.USP_SEL_PERFILOPCION";
+
+                    var parameters = new DynamicParameters();
+
+                    parameters.Add("perfil_id", entidad.perfil_id.Equals(0) ? (int?)null : entidad.perfil_id);
+                    parameters.Add("error", dbType: DbType.Boolean, direction: ParameterDirection.Output);
+                    parameters.Add("message", dbType: DbType.String, direction: ParameterDirection.Output, size: 500);
+                    parameters.Add("jsonSistemaOpciones", dbType: DbType.String, direction: ParameterDirection.Output, size: int.MaxValue);
+
+                    IEnumerable<dynamic> result = connection.Query<dynamic>(query, param: parameters, commandType: CommandType.StoredProcedure);
+
+                    jsonSistemaOpciones = parameters.Get<string>("jsonSistemaOpciones") ?? string.Empty;
+                    retorno.Error = parameters.Get<bool?>("error") ?? false;
+                    retorno.Message = parameters.Get<string>("message") ?? string.Empty;
+                }
+            }
+            catch (Exception ex)
+            {
+                retorno.Error = true;
+                retorno.Message = ex.Message;
+            }
+
+            return retorno;
+        }
+    }
+}
