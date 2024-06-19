@@ -28,7 +28,6 @@ namespace PCM.SIP.ICP.SEG.Persistence.Repository
 
                     var parameters = new DynamicParameters();
 
-                    parameters.Add("opciones_id", entidad.opciones_id);
                     parameters.Add("codigo", entidad.codigo);
                     parameters.Add("abreviatura", entidad.abreviatura);
                     parameters.Add("descripcion", entidad.descripcion);
@@ -64,7 +63,6 @@ namespace PCM.SIP.ICP.SEG.Persistence.Repository
                     var parameters = new DynamicParameters();
 
                     parameters.Add("perfil_id", entidad.perfil_id);
-                    parameters.Add("opciones_id", entidad.opciones_id);
                     parameters.Add("codigo", entidad.codigo);
                     parameters.Add("abreviatura", entidad.abreviatura);
                     parameters.Add("descripcion", entidad.descripcion);

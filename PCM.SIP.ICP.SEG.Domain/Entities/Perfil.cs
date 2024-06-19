@@ -9,8 +9,6 @@ namespace PCM.SIP.ICP.SEG.Domain.Entities
     public class Perfil: EntidadBase
     {
         public int perfil_id { get; set; }
-        public string? opciones_id { get; set; }
-        public string[]? opcioneskey { get; set; }
         public string? codigo { get; set; }
         public string? abreviatura { get; set; }
         public string? descripcion { get; set; }

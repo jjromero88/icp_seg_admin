@@ -16,10 +16,6 @@ namespace PCM.SIP.ICP.SEG.Aplicacion.Validator
     {
         public PerfilInsertRequestValidator()
         {
-            RuleFor(u => u.opcioneskey)
-             .Must(opciones => opciones != null && opciones.Any())
-             .WithMessage("Debe seleccionar por lo menos una opcion");
-
             RuleFor(u => u.codigo)
                 .IsNullOrWhiteSpace()
                 .WithMessage("Debe ingresar un codigo");
@@ -52,10 +48,6 @@ namespace PCM.SIP.ICP.SEG.Aplicacion.Validator
             RuleFor(u => u.SerialKey)
                 .IsNullOrWhiteSpace()
                   .WithMessage("Debe ingresar el Id del Tipo de documento");
-
-            RuleFor(u => u.opcioneskey)
-             .Must(opciones => opciones != null && opciones.Any())
-             .WithMessage("Debe seleccionar por lo menos una opcion");
 
             RuleFor(u => u.codigo)
                 .IsNullOrWhiteSpace()

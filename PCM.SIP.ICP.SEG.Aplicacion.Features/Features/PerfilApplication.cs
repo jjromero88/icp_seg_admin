@@ -47,7 +47,6 @@ namespace PCM.SIP.ICP.SEG.Aplicacion.Features
 
                 var entidad = _mapper.Map<Perfil>(request.entidad);
 
-                entidad.opciones_id = string.IsNullOrEmpty(string.Join(",", request.entidad?.opcioneskey)) ? null : CShrapEncryption.DecryptArray(string.Join(",", request.entidad?.opcioneskey), _pcmSessionApplication.UsuarioCache.authkey);
                 entidad.usuario_reg = _pcmSessionApplication.UsuarioCache.username;
 
                 var result = _unitOfWork.Perfil.Insert(entidad);
@@ -83,7 +82,6 @@ namespace PCM.SIP.ICP.SEG.Aplicacion.Features
                 var entidad = _mapper.Map<Perfil>(request.entidad);
 
                 entidad.perfil_id = string.IsNullOrEmpty(request.entidad.SerialKey) ? 0 : Convert.ToInt32(CShrapEncryption.DecryptString(request.entidad.SerialKey, _pcmSessionApplication.UsuarioCache.authkey));
-                entidad.opciones_id = string.IsNullOrEmpty(string.Join(",", request.entidad?.opcioneskey)) ? null : CShrapEncryption.DecryptArray(string.Join(",", request.entidad?.opcioneskey), _pcmSessionApplication.UsuarioCache.authkey);
                 entidad.usuario_act = _pcmSessionApplication.UsuarioCache.username;
 
                 var result = _unitOfWork.Perfil.Update(entidad);
