@@ -11,6 +11,7 @@ namespace PCM.SIP.ICP.SEG.Domain.Entities
         public int perfilopcion_id { get; set; }
         public int? perfil_id { get; set; }
         public int? sistemaopcion_id { get; set; }
+        public string? sistemaopciones_id { get; set; }
         public string? perfilkey { get; set; }
         public string? sistemaopcionkey { get; set; }
         public bool? habilitado { get; set; }

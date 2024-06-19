@@ -16,6 +16,39 @@ namespace PCM.SIP.ICP.SEG.Persistence.Repository
             _context = context;
         }
 
+        public Response Insert(PerfilOpcion entidad)
+        {
+            Response retorno = new Response();
+
+            try
+            {
+                using (var connection = _context.CreateConnection())
+                {
+                    var query = "dbo.USP_INS_PERFILOPCION";
+
+                    var parameters = new DynamicParameters();
+
+                    parameters.Add("perfil_id", entidad.perfil_id);
+                    parameters.Add("sistemaopciones_id", entidad.sistemaopciones_id);
+                    parameters.Add("usuario_reg", entidad.usuario_reg);
+                    parameters.Add("error", dbType: DbType.Boolean, direction: ParameterDirection.Output);
+                    parameters.Add("message", dbType: DbType.String, direction: ParameterDirection.Output, size: 500);
+
+                    var result = connection.Execute(query, param: parameters, commandType: CommandType.StoredProcedure);
+
+                    retorno.Error = parameters.Get<bool?>("error") ?? false;
+                    retorno.Message = parameters.Get<string>("message") ?? string.Empty;
+                }
+            }
+            catch (Exception ex)
+            {
+                retorno.Error = true;
+                retorno.Message = ex.Message;
+            }
+
+            return retorno;
+        }
+
         public Response<List<dynamic>> GetList(PerfilOpcion entidad, out string jsonSistemaOpciones)
         {
             Response<List<dynamic>> retorno = new Response<List<dynamic>>();

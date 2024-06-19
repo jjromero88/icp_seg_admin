@@ -27,4 +27,9 @@ namespace PCM.SIP.ICP.SEG.Aplicacion.Dto
         public bool? habilitado { get; set; }
         public List<PerfilOpcionResponseDto>? ListaAccesos { get; set; }
     }
+    public class PerfilOpcionInsertRequest
+    {
+        public string? perfilkey { get; set; }
+        public string? sistemaopcionkey { get; set; }
+    }
 }

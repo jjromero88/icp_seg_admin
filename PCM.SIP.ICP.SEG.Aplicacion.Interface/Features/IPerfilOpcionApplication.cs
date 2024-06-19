@@ -6,6 +6,7 @@ namespace PCM.SIP.ICP.SEG.Aplicacion.Interface.Features
 {
     public interface IPerfilOpcionApplication
     {
+        PcmResponse Insert(Request<PerfilOpcionDto> request);
         PcmResponse GetList(Request<PerfilOpcionDto> request);
     }
 }

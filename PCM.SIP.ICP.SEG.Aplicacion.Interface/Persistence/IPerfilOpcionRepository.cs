@@ -5,6 +5,7 @@ namespace PCM.SIP.ICP.SEG.Aplicacion.Interface.Persistence
 {
     public interface IPerfilOpcionRepository
     {
+        Response Insert(PerfilOpcion entidad);
         Response<List<dynamic>> GetList(PerfilOpcion entidad, out string jsonSistemaOpciones);
     }
 }

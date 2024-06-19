@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using System.Text.Json;
 using PCM.SIP.ICP.SEG.Aplicacion.Dto;
 using PCM.SIP.ICP.SEG.Aplicacion.Interface;
 using PCM.SIP.ICP.SEG.Aplicacion.Interface.Features;
@@ -8,7 +9,6 @@ using PCM.SIP.ICP.SEG.Transversal.Common;
 using PCM.SIP.ICP.SEG.Transversal.Common.Constants;
 using PCM.SIP.ICP.SEG.Transversal.Common.Generics;
 using PCM.SIP.ICP.Transversal.Util.Encryptions;
-using System.Text.Json;
 
 namespace PCM.SIP.ICP.SEG.Aplicacion.Features
 {
@@ -32,6 +32,42 @@ namespace PCM.SIP.ICP.SEG.Aplicacion.Features
             _logger = logger;
             _pcmSessionApplication = pcmSessionApplication;
             _perfilOpcionValidationManager = perfilOpcionValidationManager;
+        }
+
+        public PcmResponse Insert(Request<PerfilOpcionDto> request)
+        {
+            try
+            {
+                var validation = _perfilOpcionValidationManager.Validate(_mapper.Map<PerfilOpcionInsertRequest>(request.entidad));
+
+                if (!validation.IsValid)
+                {
+                    _logger.LogError(Validation.InvalidMessage);
+                    return ResponseUtil.BadRequest(validation.Errors != null ? validation.Errors : null, Validation.InvalidMessage);
+                }
+
+                var entidad = _mapper.Map<PerfilOpcion>(request.entidad);
+
+                entidad.perfil_id = string.IsNullOrEmpty(request.entidad.perfilkey) ? null : Convert.ToInt32(CShrapEncryption.DecryptString(request.entidad.perfilkey, _pcmSessionApplication.UsuarioCache.authkey));
+                entidad.sistemaopciones_id = string.IsNullOrEmpty(request.entidad.sistemaopcionkey) ? null : CShrapEncryption.DecryptArray(request.entidad.sistemaopcionkey, _pcmSessionApplication.UsuarioCache.authkey);
+                entidad.usuario_reg = _pcmSessionApplication.UsuarioCache.username;
+
+                var result = _unitOfWork.PerfilOpcion.Insert(entidad);
+
+                if (result.Error)
+                {
+                    _logger.LogError(result.Message);
+                    return ResponseUtil.BadRequest(message: result.Message);
+                }
+
+                _logger.LogInformation(result.Message ?? TransactionMessage.SaveSuccess);
+                return ResponseUtil.Created(message: TransactionMessage.SaveSuccess);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                return ResponseUtil.InternalError(message: ex.Message);
+            }
         }
 
         public PcmResponse GetList(Request<PerfilOpcionDto> request)

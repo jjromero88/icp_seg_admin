@@ -8,6 +8,7 @@ using PCM.SIP.ICP.SEG.Aplicacion.Interface.Features;
 using PCM.SIP.ICP.SEG.Transversal.Common.Generics;
 using PCM.SIP.ICP.SEG.Transversal.Common;
 using System.Net;
+using PCM.SIP.ICP.SEG.Domain.Entities;
 
 namespace PCM.SIP.ICP.SEG.Api.Controllers
 {
@@ -34,6 +35,17 @@ namespace PCM.SIP.ICP.SEG.Api.Controllers
                 return BadRequest();
 
             return _perfilOpcionApplication.GetList(new Request<PerfilOpcionDto>() { entidad = _mapper.Map<PerfilOpcionDto>(request) });
+        }
+
+        [HttpPost("Insert")]
+        [ServiceFilter(typeof(AuthorizationRequestAttribute))]
+        [ProducesResponseType((int)HttpStatusCode.OK, Type = typeof(PcmResponse))]
+        public ActionResult<PcmResponse> Insert([FromBody] PerfilOpcionInsertRequest request)
+        {
+            if (request == null)
+                return BadRequest();
+
+            return _perfilOpcionApplication.Insert(new Request<PerfilOpcionDto>() { entidad = _mapper.Map<PerfilOpcionDto>(request) });
         }
 
     }
