@@ -8,6 +8,7 @@ namespace PCM.SIP.ICP.SEG.Aplicacion.Dto
 {
     public class PerfilDto : EntidadBase
     {
+        public string[]? opcioneskey { get; set; }
         public string? codigo { get; set; }
         public string? abreviatura { get; set; }
         public string? descripcion { get; set; }
@@ -18,12 +19,14 @@ namespace PCM.SIP.ICP.SEG.Aplicacion.Dto
     }
     public class PerfilInsertRequest
     {
+        public string[]? opcioneskey { get; set; }
         public string? codigo { get; set; }
         public string? abreviatura { get; set; }
         public string? descripcion { get; set; }
     }
     public class PerfilUpdateRequest
     {
+        public string[]? opcioneskey { get; set; }
         public string? SerialKey { get; set; }
         public string? codigo { get; set; }
         public string? abreviatura { get; set; }

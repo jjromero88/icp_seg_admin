@@ -51,6 +51,7 @@ namespace PCM.SIP.ICP.SEG.Transversal.Mapper
 
             CreateMap<Perfil, PerfilDto>().ReverseMap()
                 .ForMember(destination => destination.SerialKey, source => source.MapFrom(src => src.SerialKey))
+                .ForMember(destination => destination.opcioneskey, source => source.MapFrom(src => src.opcioneskey))
                 .ForMember(destination => destination.codigo, source => source.MapFrom(src => src.codigo))
                 .ForMember(destination => destination.abreviatura, source => source.MapFrom(src => src.abreviatura))
                 .ForMember(destination => destination.descripcion, source => source.MapFrom(src => src.descripcion));
@@ -65,11 +66,13 @@ namespace PCM.SIP.ICP.SEG.Transversal.Mapper
                 .ForMember(destination => destination.SerialKey, source => source.MapFrom(src => src.SerialKey));
 
             CreateMap<PerfilDto, PerfilInsertRequest>().ReverseMap()
+                .ForMember(destination => destination.opcioneskey, source => source.MapFrom(src => src.opcioneskey))
                 .ForMember(destination => destination.codigo, source => source.MapFrom(src => src.codigo))
                 .ForMember(destination => destination.abreviatura, source => source.MapFrom(src => src.abreviatura))
                 .ForMember(destination => destination.descripcion, source => source.MapFrom(src => src.descripcion));
 
             CreateMap<PerfilDto, PerfilUpdateRequest>().ReverseMap()
+                .ForMember(destination => destination.opcioneskey, source => source.MapFrom(src => src.opcioneskey))
                 .ForMember(destination => destination.SerialKey, source => source.MapFrom(src => src.SerialKey))
                 .ForMember(destination => destination.codigo, source => source.MapFrom(src => src.codigo))
                 .ForMember(destination => destination.abreviatura, source => source.MapFrom(src => src.abreviatura))
