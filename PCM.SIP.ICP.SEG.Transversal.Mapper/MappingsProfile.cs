@@ -36,14 +36,40 @@ namespace PCM.SIP.ICP.SEG.Transversal.Mapper
 
             #region SistemaOpcion
 
+            CreateMap<SistemaOpcion, SistemaOpcionDto>().ReverseMap()
+            .ForMember(destination => destination.padrekey, source => source.MapFrom(src => src.padrekey))
+            .ForMember(destination => destination.perfilkey, source => source.MapFrom(src => src.perfilkey))
+            .ForMember(destination => destination.codigo, source => source.MapFrom(src => src.codigo))
+            .ForMember(destination => destination.descripcion, source => source.MapFrom(src => src.descripcion))
+            .ForMember(destination => destination.abreviatura, source => source.MapFrom(src => src.abreviatura))
+            .ForMember(destination => destination.url_opcion, source => source.MapFrom(src => src.url_opcion))
+            .ForMember(destination => destination.icono_opcion, source => source.MapFrom(src => src.icono_opcion))
+            .ForMember(destination => destination.num_orden, source => source.MapFrom(src => src.num_orden))
+            .ForMember(destination => destination.ListaAccesos, source => source.MapFrom(src => src.ListaAccesos));
+
             CreateMap<SistemaOpcion, UsuarioAccesosResponse>().ReverseMap()
-              .ForMember(destination => destination.codigo, source => source.MapFrom(src => src.codigo))
-              .ForMember(destination => destination.descripcion, source => source.MapFrom(src => src.descripcion))
-              .ForMember(destination => destination.abreviatura, source => source.MapFrom(src => src.abreviatura))
-              .ForMember(destination => destination.url_opcion, source => source.MapFrom(src => src.url_opcion))
-              .ForMember(destination => destination.icono_opcion, source => source.MapFrom(src => src.icono_opcion))
-              .ForMember(destination => destination.num_orden, source => source.MapFrom(src => src.num_orden))
-              .ForMember(destination => destination.ListaAccesos, source => source.MapFrom(src => src.ListaAccesos));
+            .ForMember(destination => destination.codigo, source => source.MapFrom(src => src.codigo))
+            .ForMember(destination => destination.descripcion, source => source.MapFrom(src => src.descripcion))
+            .ForMember(destination => destination.abreviatura, source => source.MapFrom(src => src.abreviatura))
+            .ForMember(destination => destination.url_opcion, source => source.MapFrom(src => src.url_opcion))
+            .ForMember(destination => destination.icono_opcion, source => source.MapFrom(src => src.icono_opcion))
+            .ForMember(destination => destination.num_orden, source => source.MapFrom(src => src.num_orden))
+            .ForMember(destination => destination.ListaAccesos, source => source.MapFrom(src => src.ListaAccesos));
+
+            CreateMap<SistemaOpcionDto, SistemaOpcionPadresRequest>().ReverseMap()
+            .ForMember(destination => destination.perfilkey, source => source.MapFrom(src => src.perfilkey));
+
+            CreateMap<SistemaOpcionDto, SistemaOpcionHijosRequest>().ReverseMap()
+            .ForMember(destination => destination.perfilkey, source => source.MapFrom(src => src.perfilkey))
+            .ForMember(destination => destination.padrekey, source => source.MapFrom(src => src.padrekey));
+
+            CreateMap<SistemaOpcionDto, SistemaOpcionPadresResponse>().ReverseMap()
+           .ForMember(destination => destination.SerialKey, source => source.MapFrom(src => src.SerialKey))
+           .ForMember(destination => destination.descripcion, source => source.MapFrom(src => src.descripcion));
+
+            CreateMap<SistemaOpcionDto, SistemaOpcionHijosResponse>().ReverseMap()
+           .ForMember(destination => destination.SerialKey, source => source.MapFrom(src => src.SerialKey))
+           .ForMember(destination => destination.descripcion, source => source.MapFrom(src => src.descripcion));
 
             #endregion
 

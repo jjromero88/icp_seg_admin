@@ -17,6 +17,7 @@ namespace PCM.SIP.ICP.SEG.Aplicacion.Features
             services.AddScoped<IPerfilApplication, PerfilApplication>();
             services.AddScoped<IUsuarioApplication, UsuarioApplication>();
             services.AddScoped<IPerfilOpcionApplication, PerfilOpcionApplication>();
+            services.AddScoped<ISistemaOpcionApplication, SistemaOpcionApplication>();
 
             return services;
         }

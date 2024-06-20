@@ -10,6 +10,9 @@ namespace PCM.SIP.ICP.SEG.Domain.Entities
     {
         public int sistemaopcion_id { get; set; }
         public int? padre_id { get; set; }
+        public int? perfil_id { get; set; }
+        public string? padrekey { get; set; }
+        public string? perfilkey { get; set; }
         public string? codigo { get; set; }
         public string? abreviatura { get; set; }
         public string? descripcion { get; set; }
