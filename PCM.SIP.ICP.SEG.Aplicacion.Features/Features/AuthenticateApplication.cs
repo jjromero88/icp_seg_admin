@@ -25,12 +25,12 @@ namespace PCM.SIP.ICP.SEG.Aplicacion.Features
         private readonly AuthenticateValidationManager _authenticateValidationManager;
 
         public AuthenticateApplication(
-            IUnitOfWork unitOfWork, 
-            IMapper mapper, 
-            IRedisCacheService redisCacheService, 
+            IUnitOfWork unitOfWork,
+            IMapper mapper,
+            IRedisCacheService redisCacheService,
             IAuthentication authentication,
             IPcmSessionApplication pcmSessionApplication,
-            IAppLogger<UsuarioApplication> logger, 
+            IAppLogger<UsuarioApplication> logger,
             AuthenticateValidationManager authenticateValidationManager)
         {
             _unitOfWork = unitOfWork;
@@ -143,6 +143,19 @@ namespace PCM.SIP.ICP.SEG.Aplicacion.Features
                     return ResponseUtil.BadRequest(message: "El perfil seleccionado no ha sido encontrado, vuelva a intentarlo");
                 }
 
+                //obtenemos los permisos que tiene el usuario por opcio del sistema
+                var result = _unitOfWork.Authenticate.UsuarioPermisos(new UsuarioPerfil { usuario_id = usuario.usuario_id, perfil_id = perfil.perfil_id }, out string jsonPermisos);
+
+                // verificamos que no haya ocurrido un error
+                if (result.Error)
+                {
+                    _logger.LogError(result.Message);
+                    return ResponseUtil.BadRequest(message: result.Message);
+                }
+
+                //deserializamos la lista de opciones y permisos
+                var usuarioPermisos = JsonSerializer.Deserialize<List<OpcionPermisos>>(jsonPermisos);
+
                 //generamos la llave de encriptacion para la sesion
                 var authkey = CShrapEncryption.GenerateKey();
 
@@ -158,7 +171,8 @@ namespace PCM.SIP.ICP.SEG.Aplicacion.Features
                     username = usuario.username,
                     perfil = perfil.descripcion,
                     numdocumento = usuario.numdocumento,
-                    nombre_completo = usuario.nombre_completo
+                    nombre_completo = usuario.nombre_completo,
+                    usuario_permisos = usuarioPermisos
                 };
 
                 //definimos los tiempos de expiracion de la sesion en minutos

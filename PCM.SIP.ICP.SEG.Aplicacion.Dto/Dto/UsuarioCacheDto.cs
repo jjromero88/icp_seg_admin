@@ -16,4 +16,11 @@ namespace PCM.SIP.ICP.SEG.Aplicacion.Dto
         public string? numdocumento { get; set; }
         public string? nombre_completo { get; set; }
     }
+    public class UsuarioCacheSesion
+    {      
+        public string? username { get; set; }
+        public string? perfil { get; set; }
+        public string? numdocumento { get; set; }
+        public string? nombre_completo { get; set; }
+    }
 }

@@ -8,5 +8,6 @@ namespace PCM.SIP.ICP.SEG.Aplicacion.Interface.Persistence
     {
         Response<dynamic> Authenticate(Usuario entidad, out string jsonUsuarioLogin);
         Response<dynamic> UsuarioAccesos(UsuarioPerfil entidad, out string jsonUsuarioAccesos);
+        Response<dynamic> UsuarioPermisos(UsuarioPerfil entidad, out string jsonPermisos);
     }
 }

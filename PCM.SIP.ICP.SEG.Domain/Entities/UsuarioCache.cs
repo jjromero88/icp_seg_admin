@@ -15,5 +15,6 @@ namespace PCM.SIP.ICP.SEG.Domain.Entities
         public string? perfil {  get; set; }
         public string? numdocumento { get; set; }
         public string? nombre_completo { get; set; }
+        public List<OpcionPermisos>? usuario_permisos { get; set; }
     }
 }
