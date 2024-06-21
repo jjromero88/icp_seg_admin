@@ -31,6 +31,7 @@ namespace PCM.SIP.ICP.SEG.Persistence.Repository
                     parameters.Add("codigo", entidad.codigo);
                     parameters.Add("abreviatura", entidad.abreviatura);
                     parameters.Add("descripcion", entidad.descripcion);
+                    parameters.Add("interno", entidad.interno);
                     parameters.Add("usuario_reg", entidad.usuario_reg);
                     parameters.Add("error", dbType: DbType.Boolean, direction: ParameterDirection.Output);
                     parameters.Add("message", dbType: DbType.String, direction: ParameterDirection.Output, size: 500);
@@ -66,6 +67,7 @@ namespace PCM.SIP.ICP.SEG.Persistence.Repository
                     parameters.Add("codigo", entidad.codigo);
                     parameters.Add("abreviatura", entidad.abreviatura);
                     parameters.Add("descripcion", entidad.descripcion);
+                    parameters.Add("interno", entidad.interno);
                     parameters.Add("usuario_act", entidad.usuario_act);
                     parameters.Add("error", dbType: DbType.Boolean, direction: ParameterDirection.Output);
                     parameters.Add("message", dbType: DbType.String, direction: ParameterDirection.Output, size: 500);

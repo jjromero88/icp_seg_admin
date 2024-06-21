@@ -168,6 +168,7 @@ namespace PCM.SIP.ICP.SEG.Aplicacion.Features
                         codigo = result.Data.codigo,
                         abreviatura = result.Data.abreviatura,
                         descripcion = result.Data.descripcion,
+                        interno = result.Data.interno,
                         estado = result.Data.estado,
                         usuario_reg = result.Data.usuario_reg,
                         fecha_reg = result.Data.fecha_reg,
@@ -217,6 +218,7 @@ namespace PCM.SIP.ICP.SEG.Aplicacion.Features
                             codigo = item.codigo,
                             abreviatura = item.abreviatura,
                             descripcion = item.descripcion,
+                            interno = item.interno,
                             usuario_reg = item.usuario_reg,
                             fecha_reg = item.fecha_reg
                         });

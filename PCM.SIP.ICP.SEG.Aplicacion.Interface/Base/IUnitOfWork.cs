@@ -9,5 +9,6 @@ namespace PCM.SIP.ICP.SEG.Aplicacion.Interface
         IUsuarioRepository Usuario { get; }
         IPerfilOpcionRepository PerfilOpcion { get; }
         ISistemaOpcionRepository SistemaOpcion { get; }
+        IPermisosRepository Permisos { get; }
     }
 }

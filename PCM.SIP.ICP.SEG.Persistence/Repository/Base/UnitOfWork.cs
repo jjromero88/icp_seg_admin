@@ -10,13 +10,15 @@ namespace PCM.SIP.ICP.SEG.Persistence.Repository.Base
         public IAuthenticateRepository Authenticate { get; }
         public IPerfilOpcionRepository PerfilOpcion { get; }
         public ISistemaOpcionRepository SistemaOpcion { get; }
+        public IPermisosRepository Permisos { get; }
 
         public UnitOfWork(
             IPerfilRepository perfil,
             IUsuarioRepository usuario,
             IAuthenticateRepository authenticate,
             IPerfilOpcionRepository perfilOpcion,
-            ISistemaOpcionRepository sistemaOpcion
+            ISistemaOpcionRepository sistemaOpcion,
+            IPermisosRepository permisos
             )
         {
             Perfil = perfil;
@@ -24,6 +26,7 @@ namespace PCM.SIP.ICP.SEG.Persistence.Repository.Base
             Authenticate = authenticate;
             PerfilOpcion = perfilOpcion;
             SistemaOpcion = sistemaOpcion;
+            Permisos = permisos;
         }
 
         public void Dispose()

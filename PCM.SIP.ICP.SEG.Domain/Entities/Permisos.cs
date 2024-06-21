@@ -12,6 +12,6 @@ namespace PCM.SIP.ICP.SEG.Domain.Entities
         public string? codigo { get; set; }
         public string? nombre { get; set; }
         public string? descripcion { get; set; }
-        public bool? habilitado { get; set; }
+        public bool? habilitado { get; set; } = false;
     }
 }

@@ -11,6 +11,7 @@ namespace PCM.SIP.ICP.SEG.Aplicacion.Dto
         public string? codigo { get; set; }
         public string? abreviatura { get; set; }
         public string? descripcion { get; set; }
+        public bool? interno { get; set; }
     }
     public class PerfilIdRequest
     {
@@ -21,6 +22,7 @@ namespace PCM.SIP.ICP.SEG.Aplicacion.Dto
         public string? codigo { get; set; }
         public string? abreviatura { get; set; }
         public string? descripcion { get; set; }
+        public bool? interno { get; set; }
     }
     public class PerfilUpdateRequest
     {
@@ -28,6 +30,7 @@ namespace PCM.SIP.ICP.SEG.Aplicacion.Dto
         public string? codigo { get; set; }
         public string? abreviatura { get; set; }
         public string? descripcion { get; set; }
+        public bool? interno { get; set; }
     }
     public class PerfilFilterRequest
     {
@@ -40,6 +43,7 @@ namespace PCM.SIP.ICP.SEG.Aplicacion.Dto
         public string? codigo { get; set; }
         public string? abreviatura { get; set; }
         public string? descripcion { get; set; }
+        public bool? interno { get; set; }
     }
     public class PerfilUsuarioResponse
     {
