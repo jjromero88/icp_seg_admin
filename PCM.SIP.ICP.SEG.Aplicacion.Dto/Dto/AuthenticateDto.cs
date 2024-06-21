@@ -51,4 +51,15 @@ namespace PCM.SIP.ICP.SEG.Aplicacion.Dto
         public List<UsuarioAccesosResponse>? ListaAccesos { get; set; }
     }
 
+    public class UsuarioPermisosrequest
+    {
+        public string? token { get; set; }
+        public string? codigo_opcion { get; set; }
+    }
+
+    public class UsuarioPermisosResponse
+    {
+        public string[]? permisos { get; set; }
+    }
+
 }

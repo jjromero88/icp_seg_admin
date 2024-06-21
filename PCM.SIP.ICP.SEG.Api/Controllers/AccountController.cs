@@ -55,5 +55,16 @@ namespace PCM.SIP.ICP.SEG.Api.Controllers
             return await _authenticateApplication.UsuarioAccesos();
         }
 
+        [HttpGet("GetPermisos")]
+        [ServiceFilter(typeof(AuthorizationRequestAttribute))]
+        [ProducesResponseType((int)HttpStatusCode.OK, Type = typeof(PcmResponse))]
+        public async Task<ActionResult<PcmResponse>> GetPermisos([FromHeader(Name = "Authorization")] string token, string codigo_opcion)
+        {
+            if (string.IsNullOrEmpty(codigo_opcion) || string.IsNullOrEmpty(token))
+                return BadRequest();
+
+            return await _authenticateApplication.UsuarioPermisos(new UsuarioPermisosrequest { token = token, codigo_opcion = codigo_opcion });
+        }
+
     }
 }

@@ -261,5 +261,78 @@ namespace PCM.SIP.ICP.SEG.Aplicacion.Features
                 return ResponseUtil.InternalError(message: ex.Message);
             }
         }
+
+        public async Task<PcmResponse> UsuarioPermisos(UsuarioPermisosrequest request)
+        {
+            try
+            {
+                //obtiene datos del usuario de sesion
+                var user = _pcmSessionApplication.UsuarioCache;
+
+                //obtenemos el token
+                string token = request.token ?? string.Empty;
+
+                //verificamos quew el toekn llegue correctamente
+                if (string.IsNullOrEmpty(token))
+                {
+                    _logger.LogError("Parametro token vacio");
+                    return ResponseUtil.BadRequest(message: "Parametro token vacio");
+                }
+
+                if (!token.StartsWith("Bearer ", StringComparison.OrdinalIgnoreCase))
+                {
+                    _logger.LogError("Formato incorrecto del token");
+                    return ResponseUtil.BadRequest(message: "El token tiene un formato incorrecto");
+                }
+
+                //seteamos el formato del token
+                token = token.Substring("Bearer ".Length).Trim();
+
+                // obtenemos el idSession del Token
+                string idsession = _authentication.GetIdSessionFromToken(token);
+
+                //verificamos si existe la idSesion en el token
+                if (string.IsNullOrEmpty(idsession))
+                {
+                    _logger.LogError("Id de sesion vacio");
+                    return ResponseUtil.BadRequest(message: "No se encontro la id de sesion en su peticion, intentelo nuevamente");
+                }
+
+                //buscamos en redis los datos de la sesion en redis
+                var usuarioCache = await _redisCacheService.GetAsync<UsuarioCache>(idsession);
+
+                //verificamos si retorna informacion de la caché
+                if (usuarioCache == null)
+                {
+                    _logger.LogError("Sesion expirada");
+                    return ResponseUtil.BadRequest(message: "Su sesión ha expirado, vuelva a intentarlo");
+                }
+
+                // obtenemos los permisos
+                List<OpcionPermisos> usuarioOpciones = usuarioCache.usuario_permisos ?? new List<OpcionPermisos>();
+
+                // obtenemos la lista de permisos de la opcion
+                var permisos = usuarioOpciones.FirstOrDefault(p => p.codigo == request.codigo_opcion)?.permisos ?? new List<Permiso>();
+
+                // Convertir la lista de Permiso a un array de string
+                string[] permisosArray = permisos.Select(p => p.codigo).ToArray();
+
+                // Crear el objeto de respuesta
+                UsuarioPermisosResponse response = new UsuarioPermisosResponse
+                {
+                    permisos = permisosArray
+                };
+
+                //retornamos la informacion
+                return response != null ? ResponseUtil.Ok(
+                    response, TransactionMessage.QuerySuccess
+                    ) : ResponseUtil.NoContent();
+            }
+            catch(Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                return ResponseUtil.InternalError(message: ex.Message);
+            }
+        }
     }
 }

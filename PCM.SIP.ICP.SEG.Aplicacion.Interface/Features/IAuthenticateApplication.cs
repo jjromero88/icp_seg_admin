@@ -9,5 +9,6 @@ namespace PCM.SIP.ICP.SEG.Aplicacion.Interface.Features
         Task<PcmResponse> Authenticate(Request<AuthenticateRequest> request);
         Task<PcmResponse> Authorize(Request<AuthorizeRequest> request);
         Task<PcmResponse> UsuarioAccesos();
+        Task<PcmResponse> UsuarioPermisos(UsuarioPermisosrequest request);
     }
 }
