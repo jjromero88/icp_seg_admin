@@ -70,6 +70,52 @@ namespace PCM.SIP.ICP.SEG.Aplicacion.Features
             }
         }
 
+        public PcmResponse GetListPermisosPerfilOpcion(Request<PerfilOpcionDto> request)
+        {
+            try
+            {
+                var entidad = _mapper.Map<PerfilOpcion>(request.entidad);
+
+                entidad.perfil_id = string.IsNullOrEmpty(request.entidad.perfilkey) ? null : Convert.ToInt32(CShrapEncryption.DecryptString(request.entidad.perfilkey, _pcmSessionApplication.UsuarioCache.authkey));
+                entidad.sistemaopcion_id = string.IsNullOrEmpty(request.entidad.sistemaopcionkey) ? null : Convert.ToInt32(CShrapEncryption.DecryptString(request.entidad.sistemaopcionkey, _pcmSessionApplication.UsuarioCache.authkey));
+
+                var result = _unitOfWork.PerfilOpcion.GetListPermisosPerfilOpcion(entidad);
+
+                if (result.Error)
+                {
+                    _logger.LogError(result.Message);
+                    return ResponseUtil.InternalError(message: result.Message);
+                }
+
+                List<dynamic> Lista = new List<dynamic>();
+
+                if (result.Data != null)
+                {
+                    foreach (var item in result.Data)
+                    {
+                        Lista.Add(new 
+                        {
+                            SerialKey = string.IsNullOrEmpty(item.permiso_id.ToString()) ? null : CShrapEncryption.EncryptString(item.permiso_id.ToString(), _pcmSessionApplication.UsuarioCache.authkey),
+                            habilitado = item.habilitado,
+                            codigo = item.codigo,
+                            nombre = item.nombre,
+                            descripcion = item.descripcion
+                        });
+                    }
+                }
+
+                _logger.LogInformation(TransactionMessage.QuerySuccess);
+                return result != null ? ResponseUtil.Ok(Lista,
+                    result.Message ?? TransactionMessage.QuerySuccess
+                    ) : ResponseUtil.NoContent();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                return ResponseUtil.InternalError(message: ex.Message);
+            }
+        }
+
         public PcmResponse GetList(Request<PerfilOpcionDto> request)
         {
             try

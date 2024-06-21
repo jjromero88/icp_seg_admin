@@ -88,6 +88,11 @@ namespace PCM.SIP.ICP.SEG.Transversal.Mapper
             .ForMember(destination => destination.perfilkey, source => source.MapFrom(src => src.perfilkey))
             .ForMember(destination => destination.sistemaopcionkey, source => source.MapFrom(src => src.sistemaopcionkey));
 
+            CreateMap<PerfilOpcionDto, PerfilPermisosRequest>().ReverseMap()
+           .ForMember(destination => destination.perfilkey, source => source.MapFrom(src => src.perfilkey))
+           .ForMember(destination => destination.sistemaopcionkey, source => source.MapFrom(src => src.sistemaopcionkey));
+
+
             #endregion
 
             #region Perfil

@@ -15,6 +15,7 @@ namespace PCM.SIP.ICP.SEG.Domain.Entities
         public string? perfilkey { get; set; }
         public string? sistemaopcionkey { get; set; }
         public bool? habilitado { get; set; }
+        public Permisos? permisos { get; set; }
     }
     public class PerfilOpcionResponse
     {

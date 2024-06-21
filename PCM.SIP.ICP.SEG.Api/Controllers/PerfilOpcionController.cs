@@ -26,6 +26,17 @@ namespace PCM.SIP.ICP.SEG.Api.Controllers
             _mapper = mapper;
         }
 
+        [HttpGet("GetListPermisosPerfil")]
+        [ServiceFilter(typeof(AuthorizationRequestAttribute))]
+        [ProducesResponseType((int)HttpStatusCode.OK, Type = typeof(PcmResponse))]
+        public ActionResult<PcmResponse> GetListPermisosPerfil([FromQuery] PerfilPermisosRequest request)
+        {
+            if (request == null)
+                return BadRequest();
+
+            return _perfilOpcionApplication.GetListPermisosPerfilOpcion(new Request<PerfilOpcionDto>() { entidad = _mapper.Map<PerfilOpcionDto>(request) });
+        }
+
         [HttpGet("GetList")]
         [ServiceFilter(typeof(AuthorizationRequestAttribute))]
         [ProducesResponseType((int)HttpStatusCode.OK, Type = typeof(PcmResponse))]

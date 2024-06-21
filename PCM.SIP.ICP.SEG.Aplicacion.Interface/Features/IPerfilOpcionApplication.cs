@@ -8,5 +8,7 @@ namespace PCM.SIP.ICP.SEG.Aplicacion.Interface.Features
     {
         PcmResponse Insert(Request<PerfilOpcionDto> request);
         PcmResponse GetList(Request<PerfilOpcionDto> request);
+        PcmResponse GetListPermisosPerfilOpcion(Request<PerfilOpcionDto> request);
+
     }
 }

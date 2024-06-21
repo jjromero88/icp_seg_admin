@@ -32,4 +32,9 @@ namespace PCM.SIP.ICP.SEG.Aplicacion.Dto
         public string? perfilkey { get; set; }
         public string? sistemaopcionkey { get; set; }
     }
+    public class PerfilPermisosRequest
+    {
+        public string? perfilkey { get; set; }
+        public string? sistemaopcionkey { get; set; }
+    }
 }
