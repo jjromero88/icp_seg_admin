@@ -54,7 +54,7 @@ namespace PCM.SIP.ICP.SEG.Aplicacion.Dto
     public class UsuarioPermisosrequest
     {
         public string? token { get; set; }
-        public string? codigo_opcion { get; set; }
+        public string? url { get; set; }
     }
 
     public class UsuarioPermisosResponse

@@ -312,7 +312,7 @@ namespace PCM.SIP.ICP.SEG.Aplicacion.Features
                 List<OpcionPermisos> usuarioOpciones = usuarioCache.usuario_permisos ?? new List<OpcionPermisos>();
 
                 // obtenemos la lista de permisos de la opcion
-                var permisos = usuarioOpciones.FirstOrDefault(p => p.codigo == request.codigo_opcion)?.permisos ?? new List<Permiso>();
+                var permisos = usuarioOpciones.FirstOrDefault(p => p.url == request.url)?.permisos ?? new List<Permiso>();
 
                 // Convertir la lista de Permiso a un array de string
                 string[] permisosArray = permisos.Select(p => p.codigo).ToArray();
