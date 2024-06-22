@@ -1,6 +1,6 @@
 USE [pcm_icp_seg]
 GO
-/****** Object:  Table [dbo].[BLOQUEOUSUARIO]    Script Date: 21/06/2024 01:37:17 ******/
+/****** Object:  Table [dbo].[BLOQUEOUSUARIO]    Script Date: 21/06/2024 22:47:43 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -21,7 +21,7 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[LOG_ACCESO]    Script Date: 21/06/2024 01:37:17 ******/
+/****** Object:  Table [dbo].[LOG_ACCESO]    Script Date: 21/06/2024 22:47:44 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -45,7 +45,7 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[LOG_BLOQUEO]    Script Date: 21/06/2024 01:37:17 ******/
+/****** Object:  Table [dbo].[LOG_BLOQUEO]    Script Date: 21/06/2024 22:47:44 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -66,7 +66,7 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[OPCIONPERMISOS]    Script Date: 21/06/2024 01:37:17 ******/
+/****** Object:  Table [dbo].[OPCIONPERMISOS]    Script Date: 21/06/2024 22:47:44 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -87,7 +87,7 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[PERFIL]    Script Date: 21/06/2024 01:37:17 ******/
+/****** Object:  Table [dbo].[PERFIL]    Script Date: 21/06/2024 22:47:44 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -109,7 +109,7 @@ CREATE TABLE [dbo].[PERFIL](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[PERFILOPCION]    Script Date: 21/06/2024 01:37:17 ******/
+/****** Object:  Table [dbo].[PERFILOPCION]    Script Date: 21/06/2024 22:47:44 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -130,7 +130,7 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[PERMISOS]    Script Date: 21/06/2024 01:37:17 ******/
+/****** Object:  Table [dbo].[PERMISOS]    Script Date: 21/06/2024 22:47:44 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -151,7 +151,7 @@ CREATE TABLE [dbo].[PERMISOS](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[SISTEMAOPCION]    Script Date: 21/06/2024 01:37:17 ******/
+/****** Object:  Table [dbo].[SISTEMAOPCION]    Script Date: 21/06/2024 22:47:44 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -176,7 +176,7 @@ CREATE TABLE [dbo].[SISTEMAOPCION](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[USUARIO]    Script Date: 21/06/2024 01:37:17 ******/
+/****** Object:  Table [dbo].[USUARIO]    Script Date: 21/06/2024 22:47:44 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -201,7 +201,7 @@ CREATE TABLE [dbo].[USUARIO](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[USUARIOPERFIL]    Script Date: 21/06/2024 01:37:17 ******/
+/****** Object:  Table [dbo].[USUARIOPERFIL]    Script Date: 21/06/2024 22:47:44 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -727,43 +727,43 @@ INSERT [dbo].[SISTEMAOPCION] ([sistemaopcion_id], [padre_id], [codigo], [abrevia
 GO
 INSERT [dbo].[SISTEMAOPCION] ([sistemaopcion_id], [padre_id], [codigo], [abreviatura], [descripcion], [num_orden], [url_opcion], [icono_opcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (5, NULL, N'00005', N'ICP', N'ICP', 5, NULL, N'bx bx-objects-horizontal-right', 1, N'sys', CAST(N'2024-06-20T11:54:48.113' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[SISTEMAOPCION] ([sistemaopcion_id], [padre_id], [codigo], [abreviatura], [descripcion], [num_orden], [url_opcion], [icono_opcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (6, 1, N'00006', N'Gestión de Usuarios', N'Gestión de Usuarios', 1, NULL, NULL, 1, N'sys', CAST(N'2024-06-20T11:59:22.107' AS DateTime), NULL, NULL)
+INSERT [dbo].[SISTEMAOPCION] ([sistemaopcion_id], [padre_id], [codigo], [abreviatura], [descripcion], [num_orden], [url_opcion], [icono_opcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (6, 1, N'00006', N'Gestión de Usuarios', N'Gestión de Usuarios', 1, N'usuarios', NULL, 1, N'sys', CAST(N'2024-06-20T11:59:22.107' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[SISTEMAOPCION] ([sistemaopcion_id], [padre_id], [codigo], [abreviatura], [descripcion], [num_orden], [url_opcion], [icono_opcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (7, 1, N'00007', N'Configurar usuarios', N'Configurar usuarios', 2, NULL, NULL, 1, N'sys', CAST(N'2024-06-20T11:59:22.107' AS DateTime), NULL, NULL)
+INSERT [dbo].[SISTEMAOPCION] ([sistemaopcion_id], [padre_id], [codigo], [abreviatura], [descripcion], [num_orden], [url_opcion], [icono_opcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (7, 1, N'00007', N'Configurar usuarios', N'Configurar usuarios', 2, N'roles', NULL, 1, N'sys', CAST(N'2024-06-20T11:59:22.107' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[SISTEMAOPCION] ([sistemaopcion_id], [padre_id], [codigo], [abreviatura], [descripcion], [num_orden], [url_opcion], [icono_opcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (8, 1, N'00008', N'Asignar evaluador - supervisor', N'Asignar evaluador - supervisor', 3, NULL, NULL, 1, N'sys', CAST(N'2024-06-20T11:59:22.107' AS DateTime), NULL, NULL)
+INSERT [dbo].[SISTEMAOPCION] ([sistemaopcion_id], [padre_id], [codigo], [abreviatura], [descripcion], [num_orden], [url_opcion], [icono_opcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (8, 1, N'00008', N'Asignar evaluador - supervisor', N'Asignar evaluador - supervisor', 3, N'evaluadores', NULL, 1, N'sys', CAST(N'2024-06-20T11:59:22.107' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[SISTEMAOPCION] ([sistemaopcion_id], [padre_id], [codigo], [abreviatura], [descripcion], [num_orden], [url_opcion], [icono_opcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (9, 1, N'00009', N'Gestión de datos generales de la entidad', N'Gestión de datos generales de la entidad', 4, NULL, NULL, 1, N'sys', CAST(N'2024-06-20T11:59:22.107' AS DateTime), NULL, NULL)
+INSERT [dbo].[SISTEMAOPCION] ([sistemaopcion_id], [padre_id], [codigo], [abreviatura], [descripcion], [num_orden], [url_opcion], [icono_opcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (9, 1, N'00009', N'Gestión de datos generales de la entidad', N'Gestión de datos generales de la entidad', 4, N'entidades', NULL, 1, N'sys', CAST(N'2024-06-20T11:59:22.107' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[SISTEMAOPCION] ([sistemaopcion_id], [padre_id], [codigo], [abreviatura], [descripcion], [num_orden], [url_opcion], [icono_opcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (10, 1, N'00010', N'Asignar entidades a sectortista', N'Asignar entidades a sectortista', 5, NULL, NULL, 1, N'sys', CAST(N'2024-06-20T11:59:22.107' AS DateTime), NULL, NULL)
+INSERT [dbo].[SISTEMAOPCION] ([sistemaopcion_id], [padre_id], [codigo], [abreviatura], [descripcion], [num_orden], [url_opcion], [icono_opcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (10, 1, N'00010', N'Asignar entidades a sectortista', N'Asignar entidades a sectortista', 5, N'sectoristasentidad', NULL, 1, N'sys', CAST(N'2024-06-20T11:59:22.107' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[SISTEMAOPCION] ([sistemaopcion_id], [padre_id], [codigo], [abreviatura], [descripcion], [num_orden], [url_opcion], [icono_opcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (11, 1, N'00011', N'Configurar ficha de evaluación ICP', N'Configurar ficha de evaluación ICP', 6, NULL, NULL, 1, N'sys', CAST(N'2024-06-20T11:59:22.107' AS DateTime), NULL, NULL)
+INSERT [dbo].[SISTEMAOPCION] ([sistemaopcion_id], [padre_id], [codigo], [abreviatura], [descripcion], [num_orden], [url_opcion], [icono_opcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (11, 1, N'00011', N'Configurar ficha de evaluación ICP', N'Configurar ficha de evaluación ICP', 6, N'configuracionficha', NULL, 1, N'sys', CAST(N'2024-06-20T11:59:22.107' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[SISTEMAOPCION] ([sistemaopcion_id], [padre_id], [codigo], [abreviatura], [descripcion], [num_orden], [url_opcion], [icono_opcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (12, 2, N'00012', N'Bandeja de entidades asignadas', N'Bandeja de entidades asignadas', 1, NULL, NULL, 1, N'sys', CAST(N'2024-06-20T12:09:25.647' AS DateTime), NULL, NULL)
+INSERT [dbo].[SISTEMAOPCION] ([sistemaopcion_id], [padre_id], [codigo], [abreviatura], [descripcion], [num_orden], [url_opcion], [icono_opcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (12, 2, N'00012', N'Bandeja de entidades asignadas', N'Bandeja de entidades asignadas', 1, N'entiadesasignadas', NULL, 1, N'sys', CAST(N'2024-06-20T12:09:25.647' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[SISTEMAOPCION] ([sistemaopcion_id], [padre_id], [codigo], [abreviatura], [descripcion], [num_orden], [url_opcion], [icono_opcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (13, 2, N'00013', N'Registrar asistencia técnica', N'Registrar asistencia técnica', 2, NULL, NULL, 1, N'sys', CAST(N'2024-06-20T12:09:25.647' AS DateTime), NULL, NULL)
+INSERT [dbo].[SISTEMAOPCION] ([sistemaopcion_id], [padre_id], [codigo], [abreviatura], [descripcion], [num_orden], [url_opcion], [icono_opcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (13, 2, N'00013', N'Registrar asistencia técnica', N'Registrar asistencia técnica', 2, N'asistenciatecnica', NULL, 1, N'sys', CAST(N'2024-06-20T12:09:25.647' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[SISTEMAOPCION] ([sistemaopcion_id], [padre_id], [codigo], [abreviatura], [descripcion], [num_orden], [url_opcion], [icono_opcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (14, 3, N'00014', N'Asignar ficha ICP por etapa a entidad', N'Asignar ficha ICP por etapa a entidad', 1, NULL, NULL, 1, N'sys', CAST(N'2024-06-20T12:10:20.087' AS DateTime), NULL, NULL)
+INSERT [dbo].[SISTEMAOPCION] ([sistemaopcion_id], [padre_id], [codigo], [abreviatura], [descripcion], [num_orden], [url_opcion], [icono_opcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (14, 3, N'00014', N'Asignar ficha ICP por etapa a entidad', N'Asignar ficha ICP por etapa a entidad', 1, N'asignarentidadetapa', NULL, 1, N'sys', CAST(N'2024-06-20T12:10:20.087' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[SISTEMAOPCION] ([sistemaopcion_id], [padre_id], [codigo], [abreviatura], [descripcion], [num_orden], [url_opcion], [icono_opcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (15, 3, N'00015', N'Asignar ficha ICP por etapa entidad a evaluador', N'Asignar ficha ICP por etapa entidad a evaluador', 2, NULL, NULL, 1, N'sys', CAST(N'2024-06-20T12:10:20.087' AS DateTime), NULL, NULL)
+INSERT [dbo].[SISTEMAOPCION] ([sistemaopcion_id], [padre_id], [codigo], [abreviatura], [descripcion], [num_orden], [url_opcion], [icono_opcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (15, 3, N'00015', N'Asignar ficha ICP por etapa entidad a evaluador', N'Asignar ficha ICP por etapa entidad a evaluador', 2, N'asignarentidadevaluador', NULL, 1, N'sys', CAST(N'2024-06-20T12:10:20.087' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[SISTEMAOPCION] ([sistemaopcion_id], [padre_id], [codigo], [abreviatura], [descripcion], [num_orden], [url_opcion], [icono_opcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (16, 3, N'00016', N'Ficha de reporte de evaluación ICP', N'Ficha de reporte de evaluación ICP', 3, NULL, NULL, 1, N'sys', CAST(N'2024-06-20T12:10:20.087' AS DateTime), NULL, NULL)
+INSERT [dbo].[SISTEMAOPCION] ([sistemaopcion_id], [padre_id], [codigo], [abreviatura], [descripcion], [num_orden], [url_opcion], [icono_opcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (16, 3, N'00016', N'Ficha de reporte de evaluación ICP', N'Ficha de reporte de evaluación ICP', 3, N'fichareporte', NULL, 1, N'sys', CAST(N'2024-06-20T12:10:20.087' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[SISTEMAOPCION] ([sistemaopcion_id], [padre_id], [codigo], [abreviatura], [descripcion], [num_orden], [url_opcion], [icono_opcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (17, 4, N'00017', N'Generar reporte de Ficha Informativa de Entidad', N'Generar reporte de Ficha Informativa de Entidad', 1, NULL, NULL, 1, N'sys', CAST(N'2024-06-20T12:11:04.177' AS DateTime), NULL, NULL)
+INSERT [dbo].[SISTEMAOPCION] ([sistemaopcion_id], [padre_id], [codigo], [abreviatura], [descripcion], [num_orden], [url_opcion], [icono_opcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (17, 4, N'00017', N'Generar reporte de Ficha Informativa de Entidad', N'Generar reporte de Ficha Informativa de Entidad', 1, N'fichainformativa', NULL, 1, N'sys', CAST(N'2024-06-20T12:11:04.177' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[SISTEMAOPCION] ([sistemaopcion_id], [padre_id], [codigo], [abreviatura], [descripcion], [num_orden], [url_opcion], [icono_opcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (18, 4, N'00018', N'Generar reporte general por filtros', N'Generar reporte general por filtros', 2, NULL, NULL, 1, N'sys', CAST(N'2024-06-20T12:11:04.177' AS DateTime), NULL, NULL)
+INSERT [dbo].[SISTEMAOPCION] ([sistemaopcion_id], [padre_id], [codigo], [abreviatura], [descripcion], [num_orden], [url_opcion], [icono_opcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (18, 4, N'00018', N'Generar reporte general por filtros', N'Generar reporte general por filtros', 2, N'reportegeneral', NULL, 1, N'sys', CAST(N'2024-06-20T12:11:04.177' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[SISTEMAOPCION] ([sistemaopcion_id], [padre_id], [codigo], [abreviatura], [descripcion], [num_orden], [url_opcion], [icono_opcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (19, 4, N'00019', N'Generar reporte nacional por filtros', N'Generar reporte nacional por filtros', 3, NULL, NULL, 1, N'sys', CAST(N'2024-06-20T12:11:04.177' AS DateTime), NULL, NULL)
+INSERT [dbo].[SISTEMAOPCION] ([sistemaopcion_id], [padre_id], [codigo], [abreviatura], [descripcion], [num_orden], [url_opcion], [icono_opcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (19, 4, N'00019', N'Generar reporte nacional por filtros', N'Generar reporte nacional por filtros', 3, N'reportenacional', NULL, 1, N'sys', CAST(N'2024-06-20T12:11:04.177' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[SISTEMAOPCION] ([sistemaopcion_id], [padre_id], [codigo], [abreviatura], [descripcion], [num_orden], [url_opcion], [icono_opcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (20, 5, N'00020', N'Actualizar datos generales de la entidad', N'Actualizar datos generales de la entidad', 1, NULL, NULL, 1, N'sys', CAST(N'2024-06-20T12:13:29.023' AS DateTime), NULL, NULL)
+INSERT [dbo].[SISTEMAOPCION] ([sistemaopcion_id], [padre_id], [codigo], [abreviatura], [descripcion], [num_orden], [url_opcion], [icono_opcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (20, 5, N'00020', N'Actualizar datos generales de la entidad', N'Actualizar datos generales de la entidad', 1, N'entidadgenerales', NULL, 1, N'sys', CAST(N'2024-06-20T12:13:29.023' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[SISTEMAOPCION] ([sistemaopcion_id], [padre_id], [codigo], [abreviatura], [descripcion], [num_orden], [url_opcion], [icono_opcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (21, 5, N'00021', N'Actualizar ficha de evaluación ICP', N'Actualizar ficha de evaluación ICP', 2, NULL, NULL, 1, N'sys', CAST(N'2024-06-20T12:13:29.023' AS DateTime), NULL, NULL)
+INSERT [dbo].[SISTEMAOPCION] ([sistemaopcion_id], [padre_id], [codigo], [abreviatura], [descripcion], [num_orden], [url_opcion], [icono_opcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (21, 5, N'00021', N'Actualizar ficha de evaluación ICP', N'Actualizar ficha de evaluación ICP', 2, N'actualizarficha', NULL, 1, N'sys', CAST(N'2024-06-20T12:13:29.023' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[SISTEMAOPCION] ([sistemaopcion_id], [padre_id], [codigo], [abreviatura], [descripcion], [num_orden], [url_opcion], [icono_opcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (22, 5, N'00022', N'Generar reporte preliminar del ICP', N'Generar reporte preliminar del ICP', 3, NULL, NULL, 1, N'sys', CAST(N'2024-06-20T12:13:29.023' AS DateTime), NULL, NULL)
+INSERT [dbo].[SISTEMAOPCION] ([sistemaopcion_id], [padre_id], [codigo], [abreviatura], [descripcion], [num_orden], [url_opcion], [icono_opcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (22, 5, N'00022', N'Generar reporte preliminar del ICP', N'Generar reporte preliminar del ICP', 3, N'reportepreliminar', NULL, 1, N'sys', CAST(N'2024-06-20T12:13:29.023' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[SISTEMAOPCION] ([sistemaopcion_id], [padre_id], [codigo], [abreviatura], [descripcion], [num_orden], [url_opcion], [icono_opcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (23, 5, N'00023', N'Generar reporte final del ICP', N'Generar reporte final del ICP', 4, NULL, NULL, 1, N'sys', CAST(N'2024-06-20T12:13:29.023' AS DateTime), NULL, NULL)
+INSERT [dbo].[SISTEMAOPCION] ([sistemaopcion_id], [padre_id], [codigo], [abreviatura], [descripcion], [num_orden], [url_opcion], [icono_opcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (23, 5, N'00023', N'Generar reporte final del ICP', N'Generar reporte final del ICP', 4, N'reportefinal', NULL, 1, N'sys', CAST(N'2024-06-20T12:13:29.023' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[SISTEMAOPCION] ([sistemaopcion_id], [padre_id], [codigo], [abreviatura], [descripcion], [num_orden], [url_opcion], [icono_opcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (24, 5, N'00024', N'Registrar asistencia a reunión de AT', N'Registrar asistencia a reunión de AT', 5, NULL, NULL, 1, N'sys', CAST(N'2024-06-20T12:13:29.023' AS DateTime), NULL, NULL)
+INSERT [dbo].[SISTEMAOPCION] ([sistemaopcion_id], [padre_id], [codigo], [abreviatura], [descripcion], [num_orden], [url_opcion], [icono_opcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (24, 5, N'00024', N'Registrar asistencia a reunión de AT', N'Registrar asistencia a reunión de AT', 5, N'asistenciasat', NULL, 1, N'sys', CAST(N'2024-06-20T12:13:29.023' AS DateTime), NULL, NULL)
 GO
 SET IDENTITY_INSERT [dbo].[SISTEMAOPCION] OFF
 GO
@@ -777,7 +777,7 @@ INSERT [dbo].[USUARIO] ([usuario_id], [persona_id], [username], [password], [num
 GO
 INSERT [dbo].[USUARIO] ([usuario_id], [persona_id], [username], [password], [numdocumento], [nombre_completo], [interno], [habilitado], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (12, 15, N'45874458', N'FEnSuWrsn42PHzQEv7h7YA==', N'45874458', N'Ernesto Garcia Sanchez', 0, 1, 0, N'jjromero88', CAST(N'2024-06-17T18:32:54.263' AS DateTime), N'jjromero88', NULL)
 GO
-INSERT [dbo].[USUARIO] ([usuario_id], [persona_id], [username], [password], [numdocumento], [nombre_completo], [interno], [habilitado], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (13, 16, N'47388829', N'wxbcd4xiEGBKwNj4DYMcQQ==', N'47388829', N'Andrea Loyola Tejada', 1, 1, 1, N'jjromero88', CAST(N'2024-06-17T22:57:10.013' AS DateTime), NULL, NULL)
+INSERT [dbo].[USUARIO] ([usuario_id], [persona_id], [username], [password], [numdocumento], [nombre_completo], [interno], [habilitado], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (13, 16, N'47388829', N'wxbcd4xiEGBKwNj4DYMcQQ==', N'47388829', N'Andrea Loyola Tejada', 1, 1, 1, N'jjromero88', CAST(N'2024-06-17T22:57:10.013' AS DateTime), N'jjromero88', CAST(N'2024-06-21T22:42:57.903' AS DateTime))
 GO
 INSERT [dbo].[USUARIO] ([usuario_id], [persona_id], [username], [password], [numdocumento], [nombre_completo], [interno], [habilitado], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (14, 17, N'47856669', N'N3cpt6Oi9cC5//qIa77zbg==', N'47856669', N'Rodrigo Lopez Hidalgo', 0, 1, 1, N'jjromero88', CAST(N'2024-06-17T22:58:07.847' AS DateTime), NULL, NULL)
 GO
@@ -792,6 +792,8 @@ GO
 INSERT [dbo].[USUARIOPERFIL] ([usuarioperfil_id], [usuario_id], [perfil_id], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (1, 9, 1, 1, N'sys', CAST(N'2024-06-20T15:33:01.207' AS DateTime), NULL, NULL)
 GO
 INSERT [dbo].[USUARIOPERFIL] ([usuarioperfil_id], [usuario_id], [perfil_id], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (2, 10, 1, 1, N'sys', CAST(N'2024-06-20T15:33:49.203' AS DateTime), NULL, NULL)
+GO
+INSERT [dbo].[USUARIOPERFIL] ([usuarioperfil_id], [usuario_id], [perfil_id], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (3, 13, 2, 1, N'jjromero88', CAST(N'2024-06-21T22:42:57.903' AS DateTime), N'jjromero88', CAST(N'2024-06-21T22:42:57.903' AS DateTime))
 GO
 SET IDENTITY_INSERT [dbo].[USUARIOPERFIL] OFF
 GO
@@ -907,22 +909,12 @@ REFERENCES [dbo].[PERFIL] ([perfil_id])
 GO
 ALTER TABLE [dbo].[USUARIOPERFIL] CHECK CONSTRAINT [FK__USUARIOPE__perfi__693CA210]
 GO
-ALTER TABLE [dbo].[USUARIOPERFIL]  WITH CHECK ADD  CONSTRAINT [FK__USUARIOPE__perfi__6A30C649] FOREIGN KEY([perfil_id])
-REFERENCES [dbo].[PERFIL] ([perfil_id])
-GO
-ALTER TABLE [dbo].[USUARIOPERFIL] CHECK CONSTRAINT [FK__USUARIOPE__perfi__6A30C649]
-GO
-ALTER TABLE [dbo].[USUARIOPERFIL]  WITH CHECK ADD  CONSTRAINT [FK__USUARIOPE__usuar__02FC7413] FOREIGN KEY([usuario_id])
-REFERENCES [dbo].[USUARIO] ([usuario_id])
-GO
-ALTER TABLE [dbo].[USUARIOPERFIL] CHECK CONSTRAINT [FK__USUARIOPE__usuar__02FC7413]
-GO
 ALTER TABLE [dbo].[USUARIOPERFIL]  WITH CHECK ADD  CONSTRAINT [FK__USUARIOPE__usuar__4F7CD00D] FOREIGN KEY([usuario_id])
 REFERENCES [dbo].[USUARIO] ([usuario_id])
 GO
 ALTER TABLE [dbo].[USUARIOPERFIL] CHECK CONSTRAINT [FK__USUARIOPE__usuar__4F7CD00D]
 GO
-/****** Object:  StoredProcedure [dbo].[USP_DEL_PERFIL]    Script Date: 21/06/2024 01:37:17 ******/
+/****** Object:  StoredProcedure [dbo].[USP_DEL_PERFIL]    Script Date: 21/06/2024 22:47:44 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -967,7 +959,7 @@ BEGIN
 END
 
 GO
-/****** Object:  StoredProcedure [dbo].[USP_DEL_USUARIO]    Script Date: 21/06/2024 01:37:17 ******/
+/****** Object:  StoredProcedure [dbo].[USP_DEL_USUARIO]    Script Date: 21/06/2024 22:47:44 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1014,7 +1006,7 @@ BEGIN
 END
 
 GO
-/****** Object:  StoredProcedure [dbo].[USP_GET_PERFIL]    Script Date: 21/06/2024 01:37:17 ******/
+/****** Object:  StoredProcedure [dbo].[USP_GET_PERFIL]    Script Date: 21/06/2024 22:47:44 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1062,7 +1054,7 @@ BEGIN
 END
 
 GO
-/****** Object:  StoredProcedure [dbo].[USP_GET_USUARIO]    Script Date: 21/06/2024 01:37:17 ******/
+/****** Object:  StoredProcedure [dbo].[USP_GET_USUARIO]    Script Date: 21/06/2024 22:47:44 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1113,7 +1105,7 @@ BEGIN
 END
 
 GO
-/****** Object:  StoredProcedure [dbo].[USP_GET_USUARIO_ACCESOS]    Script Date: 21/06/2024 01:37:17 ******/
+/****** Object:  StoredProcedure [dbo].[USP_GET_USUARIO_ACCESOS]    Script Date: 21/06/2024 22:47:44 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1323,7 +1315,7 @@ END
 
 
 GO
-/****** Object:  StoredProcedure [dbo].[USP_GET_USUARIO_LOGIN]    Script Date: 21/06/2024 01:37:17 ******/
+/****** Object:  StoredProcedure [dbo].[USP_GET_USUARIO_LOGIN]    Script Date: 21/06/2024 22:47:44 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1482,7 +1474,7 @@ END
 
 
 GO
-/****** Object:  StoredProcedure [dbo].[USP_INS_PERFIL]    Script Date: 21/06/2024 01:37:17 ******/
+/****** Object:  StoredProcedure [dbo].[USP_INS_PERFIL]    Script Date: 21/06/2024 22:47:44 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1580,7 +1572,7 @@ BEGIN
 END
 
 GO
-/****** Object:  StoredProcedure [dbo].[USP_INS_PERFILOPCION]    Script Date: 21/06/2024 01:37:17 ******/
+/****** Object:  StoredProcedure [dbo].[USP_INS_PERFILOPCION]    Script Date: 21/06/2024 22:47:44 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1673,7 +1665,7 @@ BEGIN
 END
 
 GO
-/****** Object:  StoredProcedure [dbo].[USP_INS_USUARIO]    Script Date: 21/06/2024 01:37:17 ******/
+/****** Object:  StoredProcedure [dbo].[USP_INS_USUARIO]    Script Date: 21/06/2024 22:47:44 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1774,7 +1766,7 @@ BEGIN
 END
 
 GO
-/****** Object:  StoredProcedure [dbo].[USP_SEL_PERFIL]    Script Date: 21/06/2024 01:37:17 ******/
+/****** Object:  StoredProcedure [dbo].[USP_SEL_PERFIL]    Script Date: 21/06/2024 22:47:44 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1818,7 +1810,7 @@ BEGIN
 END
 
 GO
-/****** Object:  StoredProcedure [dbo].[USP_SEL_PERFILOPCION]    Script Date: 21/06/2024 01:37:17 ******/
+/****** Object:  StoredProcedure [dbo].[USP_SEL_PERFILOPCION]    Script Date: 21/06/2024 22:47:44 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1949,7 +1941,7 @@ BEGIN
 END
 
 GO
-/****** Object:  StoredProcedure [dbo].[USP_SEL_PERFILOPCION_HIJO]    Script Date: 21/06/2024 01:37:17 ******/
+/****** Object:  StoredProcedure [dbo].[USP_SEL_PERFILOPCION_HIJO]    Script Date: 21/06/2024 22:47:44 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -1987,7 +1979,7 @@ BEGIN
 END
 
 GO
-/****** Object:  StoredProcedure [dbo].[USP_SEL_PERFILOPCION_PADRE]    Script Date: 21/06/2024 01:37:17 ******/
+/****** Object:  StoredProcedure [dbo].[USP_SEL_PERFILOPCION_PADRE]    Script Date: 21/06/2024 22:47:44 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -2026,7 +2018,7 @@ BEGIN
 END
 
 GO
-/****** Object:  StoredProcedure [dbo].[USP_SEL_PERMISOS]    Script Date: 21/06/2024 01:37:17 ******/
+/****** Object:  StoredProcedure [dbo].[USP_SEL_PERMISOS]    Script Date: 21/06/2024 22:47:44 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -2065,7 +2057,7 @@ BEGIN
 END
 
 GO
-/****** Object:  StoredProcedure [dbo].[USP_SEL_PERMISOS_OPCIONPERMISOS]    Script Date: 21/06/2024 01:37:17 ******/
+/****** Object:  StoredProcedure [dbo].[USP_SEL_PERMISOS_OPCIONPERMISOS]    Script Date: 21/06/2024 22:47:44 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -2104,7 +2096,72 @@ BEGIN
 END
 
 GO
-/****** Object:  StoredProcedure [dbo].[USP_SEL_USUARIO]    Script Date: 21/06/2024 01:37:17 ******/
+/****** Object:  StoredProcedure [dbo].[USP_SEL_SISTEMAOPCION_PERMISOS]    Script Date: 21/06/2024 22:47:44 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE       PROCEDURE [dbo].[USP_SEL_SISTEMAOPCION_PERMISOS](
+	@usuario_id int = null,
+	@perfil_id int = null,
+	@permisosJson nvarchar(max) = null output,
+	@error BIT = NULL OUTPUT,
+	@message NVARCHAR(500) = NULL OUTPUT
+)
+AS
+BEGIN
+
+	set @error = 0;
+				
+		select @permisosJson = (
+			SELECT 
+				so.descripcion AS opcion_descripcion,
+				so.url_opcion AS url_opcion,
+				so.codigo AS opcion_codigo,
+				(
+					SELECT 
+						p.codigo AS permiso_codigo
+					FROM 
+						OPCIONPERMISOS op with(nolock)
+					INNER JOIN 
+						PERMISOS p with(nolock) ON op.permiso_id = p.permiso_id
+					INNER JOIN 
+						PERFILOPCION po with(nolock) ON op.perfilopcion_id = po.perfilopcion_id
+					WHERE 
+						po.perfil_id = @perfil_id
+						AND po.sistemaopcion_id = so.sistemaopcion_id
+						AND po.estado = 1
+						AND op.estado = 1
+						AND op.habilitado = 1
+						AND po.habilitado = 1
+					FOR JSON PATH
+				) AS opcion_permisos
+			FROM 
+				SISTEMAOPCION so
+			INNER JOIN 
+				PERFILOPCION po with(nolock) ON so.sistemaopcion_id = po.sistemaopcion_id
+			INNER JOIN 
+				USUARIOPERFIL up with(nolock) ON po.perfil_id = up.perfil_id
+			WHERE 
+				up.usuario_id = @usuario_id
+				AND up.perfil_id = @perfil_id
+				AND so.padre_id IS NOT NULL  -- Considerando que solo los hijos tienen permisos
+				AND so.estado = 1
+				AND po.estado = 1
+				AND up.estado = 1
+				AND po.habilitado = 1
+			FOR JSON PATH
+		);
+
+	-- seteamos mensaje de salida
+	set @message = 'Consulta exitosa';
+
+
+END
+
+GO
+/****** Object:  StoredProcedure [dbo].[USP_SEL_USUARIO]    Script Date: 21/06/2024 22:47:44 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -2169,7 +2226,7 @@ BEGIN
 END
  
 GO
-/****** Object:  StoredProcedure [dbo].[USP_UPD_PERFIL]    Script Date: 21/06/2024 01:37:17 ******/
+/****** Object:  StoredProcedure [dbo].[USP_UPD_PERFIL]    Script Date: 21/06/2024 22:47:44 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -2281,7 +2338,7 @@ BEGIN
 END
 
 GO
-/****** Object:  StoredProcedure [dbo].[USP_UPD_USUARIO]    Script Date: 21/06/2024 01:37:17 ******/
+/****** Object:  StoredProcedure [dbo].[USP_UPD_USUARIO]    Script Date: 21/06/2024 22:47:44 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON

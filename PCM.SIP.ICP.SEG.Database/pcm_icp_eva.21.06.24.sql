@@ -1,6 +1,6 @@
 USE [pcm_icp_eva]
 GO
-/****** Object:  Table [dbo].[ENTIDAD]    Script Date: 21/06/2024 01:35:25 ******/
+/****** Object:  Table [dbo].[ENTIDAD]    Script Date: 21/06/2024 22:45:26 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -26,7 +26,7 @@ CREATE TABLE [dbo].[ENTIDAD](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[ENTIDADGRUPO]    Script Date: 21/06/2024 01:35:25 ******/
+/****** Object:  Table [dbo].[ENTIDADGRUPO]    Script Date: 21/06/2024 22:45:26 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -47,7 +47,7 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[ENTIDADSECTOR]    Script Date: 21/06/2024 01:35:25 ******/
+/****** Object:  Table [dbo].[ENTIDADSECTOR]    Script Date: 21/06/2024 22:45:26 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -69,7 +69,7 @@ CREATE TABLE [dbo].[ENTIDADSECTOR](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[MODALIDADINTEGRIDAD]    Script Date: 21/06/2024 01:35:25 ******/
+/****** Object:  Table [dbo].[MODALIDADINTEGRIDAD]    Script Date: 21/06/2024 22:45:26 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -90,7 +90,7 @@ CREATE TABLE [dbo].[MODALIDADINTEGRIDAD](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[PERSONA]    Script Date: 21/06/2024 01:35:25 ******/
+/****** Object:  Table [dbo].[PERSONA]    Script Date: 21/06/2024 22:45:26 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -114,7 +114,7 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[TIPOSECTOR]    Script Date: 21/06/2024 01:35:25 ******/
+/****** Object:  Table [dbo].[TIPOSECTOR]    Script Date: 21/06/2024 22:45:26 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -135,7 +135,7 @@ CREATE TABLE [dbo].[TIPOSECTOR](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[UBIGEO]    Script Date: 21/06/2024 01:35:25 ******/
+/****** Object:  Table [dbo].[UBIGEO]    Script Date: 21/06/2024 22:45:26 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -333,7 +333,7 @@ INSERT [dbo].[PERSONA] ([persona_id], [nombres], [apellido_paterno], [apellido_m
 GO
 INSERT [dbo].[PERSONA] ([persona_id], [nombres], [apellido_paterno], [apellido_materno], [numdocumento], [email], [telefono_movil], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (15, N'Ernesto', N'Garcia', N'Sanchez', N'45874458', N'ernestog001@pcm.gob.pe', N'965001452', 0, N'jjromero88', CAST(N'2024-06-17T18:32:54.100' AS DateTime), N'jjromero88', NULL)
 GO
-INSERT [dbo].[PERSONA] ([persona_id], [nombres], [apellido_paterno], [apellido_materno], [numdocumento], [email], [telefono_movil], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (16, N'Andrea', N'Loyola', N'Tejada', N'47388829', N'andrealoyola91@gmail.com', N'920020001', 1, N'jjromero88', CAST(N'2024-06-17T22:57:09.923' AS DateTime), NULL, NULL)
+INSERT [dbo].[PERSONA] ([persona_id], [nombres], [apellido_paterno], [apellido_materno], [numdocumento], [email], [telefono_movil], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (16, N'Andrea', N'Loyola', N'Tejada', N'47388829', N'andrealoyola91@gmail.com', N'920020001', 1, N'jjromero88', CAST(N'2024-06-17T22:57:09.923' AS DateTime), N'jjromero88', CAST(N'2024-06-21T22:42:57.697' AS DateTime))
 GO
 INSERT [dbo].[PERSONA] ([persona_id], [nombres], [apellido_paterno], [apellido_materno], [numdocumento], [email], [telefono_movil], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (17, N'Rodrigo', N'Lopez', N'Hidalgo', N'47856669', N'rodrigolh99@gmail.com', N'903999381', 1, N'jjromero88', CAST(N'2024-06-17T22:58:07.700' AS DateTime), NULL, NULL)
 GO
@@ -4200,7 +4200,7 @@ REFERENCES [dbo].[TIPOSECTOR] ([tiposector_id])
 GO
 ALTER TABLE [dbo].[ENTIDADSECTOR] CHECK CONSTRAINT [FK_ENTIDADSECTOR_TIPOSECTOR]
 GO
-/****** Object:  StoredProcedure [dbo].[USP_DEL_ENTIDAD]    Script Date: 21/06/2024 01:35:25 ******/
+/****** Object:  StoredProcedure [dbo].[USP_DEL_ENTIDAD]    Script Date: 21/06/2024 22:45:26 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -4245,7 +4245,7 @@ BEGIN
 END
 
 GO
-/****** Object:  StoredProcedure [dbo].[USP_DEL_ENTIDADGRUPO]    Script Date: 21/06/2024 01:35:25 ******/
+/****** Object:  StoredProcedure [dbo].[USP_DEL_ENTIDADGRUPO]    Script Date: 21/06/2024 22:45:26 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -4290,7 +4290,7 @@ BEGIN
 END
 
 GO
-/****** Object:  StoredProcedure [dbo].[USP_DEL_PERSONA]    Script Date: 21/06/2024 01:35:25 ******/
+/****** Object:  StoredProcedure [dbo].[USP_DEL_PERSONA]    Script Date: 21/06/2024 22:45:26 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -4335,7 +4335,7 @@ BEGIN
 END
 
 GO
-/****** Object:  StoredProcedure [dbo].[USP_GET_ENTIDAD]    Script Date: 21/06/2024 01:35:25 ******/
+/****** Object:  StoredProcedure [dbo].[USP_GET_ENTIDAD]    Script Date: 21/06/2024 22:45:26 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -4405,7 +4405,7 @@ BEGIN
 END
 
 GO
-/****** Object:  StoredProcedure [dbo].[USP_GET_ENTIDADGRUPO]    Script Date: 21/06/2024 01:35:25 ******/
+/****** Object:  StoredProcedure [dbo].[USP_GET_ENTIDADGRUPO]    Script Date: 21/06/2024 22:45:26 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -4452,7 +4452,7 @@ BEGIN
 END
 
 GO
-/****** Object:  StoredProcedure [dbo].[USP_GET_PERSONA]    Script Date: 21/06/2024 01:35:25 ******/
+/****** Object:  StoredProcedure [dbo].[USP_GET_PERSONA]    Script Date: 21/06/2024 22:45:26 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -4502,7 +4502,7 @@ BEGIN
 END
 
 GO
-/****** Object:  StoredProcedure [dbo].[USP_INS_ENTIDAD]    Script Date: 21/06/2024 01:35:25 ******/
+/****** Object:  StoredProcedure [dbo].[USP_INS_ENTIDAD]    Script Date: 21/06/2024 22:45:26 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -4595,7 +4595,7 @@ BEGIN
 END
 
 GO
-/****** Object:  StoredProcedure [dbo].[USP_INS_ENTIDADGRUPO]    Script Date: 21/06/2024 01:35:25 ******/
+/****** Object:  StoredProcedure [dbo].[USP_INS_ENTIDADGRUPO]    Script Date: 21/06/2024 22:45:26 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -4652,7 +4652,7 @@ BEGIN
 END
 
 GO
-/****** Object:  StoredProcedure [dbo].[USP_INS_PERSONA]    Script Date: 21/06/2024 01:35:25 ******/
+/****** Object:  StoredProcedure [dbo].[USP_INS_PERSONA]    Script Date: 21/06/2024 22:45:26 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -4716,7 +4716,7 @@ BEGIN
 END
 
 GO
-/****** Object:  StoredProcedure [dbo].[USP_SEL_ENTIDAD]    Script Date: 21/06/2024 01:35:25 ******/
+/****** Object:  StoredProcedure [dbo].[USP_SEL_ENTIDAD]    Script Date: 21/06/2024 22:45:26 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -4793,7 +4793,7 @@ BEGIN
 END
 
 GO
-/****** Object:  StoredProcedure [dbo].[USP_SEL_ENTIDADGRUPO]    Script Date: 21/06/2024 01:35:25 ******/
+/****** Object:  StoredProcedure [dbo].[USP_SEL_ENTIDADGRUPO]    Script Date: 21/06/2024 22:45:26 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -4834,7 +4834,7 @@ BEGIN
 END
 
 GO
-/****** Object:  StoredProcedure [dbo].[USP_SEL_ENTIDADSECTOR]    Script Date: 21/06/2024 01:35:25 ******/
+/****** Object:  StoredProcedure [dbo].[USP_SEL_ENTIDADSECTOR]    Script Date: 21/06/2024 22:45:26 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -4879,7 +4879,7 @@ BEGIN
 END
 
 GO
-/****** Object:  StoredProcedure [dbo].[USP_SEL_MODALIDADINTEGRIDAD]    Script Date: 21/06/2024 01:35:25 ******/
+/****** Object:  StoredProcedure [dbo].[USP_SEL_MODALIDADINTEGRIDAD]    Script Date: 21/06/2024 22:45:26 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -4920,7 +4920,7 @@ BEGIN
 END
 
 GO
-/****** Object:  StoredProcedure [dbo].[USP_SEL_PERSONA]    Script Date: 21/06/2024 01:35:25 ******/
+/****** Object:  StoredProcedure [dbo].[USP_SEL_PERSONA]    Script Date: 21/06/2024 22:45:26 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -4967,7 +4967,7 @@ BEGIN
 END
 
 GO
-/****** Object:  StoredProcedure [dbo].[USP_SEL_UBIGEO_DEPARTAMENTO]    Script Date: 21/06/2024 01:35:25 ******/
+/****** Object:  StoredProcedure [dbo].[USP_SEL_UBIGEO_DEPARTAMENTO]    Script Date: 21/06/2024 22:45:26 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -4999,7 +4999,7 @@ BEGIN
 END
 
 GO
-/****** Object:  StoredProcedure [dbo].[USP_SEL_UBIGEO_DISTRITO]    Script Date: 21/06/2024 01:35:25 ******/
+/****** Object:  StoredProcedure [dbo].[USP_SEL_UBIGEO_DISTRITO]    Script Date: 21/06/2024 22:45:26 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -5032,7 +5032,7 @@ BEGIN
 END
 
 GO
-/****** Object:  StoredProcedure [dbo].[USP_SEL_UBIGEO_PROVINCIA]    Script Date: 21/06/2024 01:35:25 ******/
+/****** Object:  StoredProcedure [dbo].[USP_SEL_UBIGEO_PROVINCIA]    Script Date: 21/06/2024 22:45:26 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -5068,7 +5068,7 @@ BEGIN
 END
 
 GO
-/****** Object:  StoredProcedure [dbo].[USP_UPD_ENTIDAD]    Script Date: 21/06/2024 01:35:25 ******/
+/****** Object:  StoredProcedure [dbo].[USP_UPD_ENTIDAD]    Script Date: 21/06/2024 22:45:26 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -5153,7 +5153,7 @@ BEGIN
 END
 
 GO
-/****** Object:  StoredProcedure [dbo].[USP_UPD_ENTIDADGRUPO]    Script Date: 21/06/2024 01:35:25 ******/
+/****** Object:  StoredProcedure [dbo].[USP_UPD_ENTIDADGRUPO]    Script Date: 21/06/2024 22:45:26 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -5205,7 +5205,7 @@ BEGIN
 END
 
 GO
-/****** Object:  StoredProcedure [dbo].[USP_UPD_PERSONA]    Script Date: 21/06/2024 01:35:25 ******/
+/****** Object:  StoredProcedure [dbo].[USP_UPD_PERSONA]    Script Date: 21/06/2024 22:45:26 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
