@@ -35,6 +35,7 @@ namespace PCM.SIP.ICP.SEG.Aplicacion.Dto
     public class AuthorizeResponse
     {
         public string? token { get; set; }
+        public string? nombrecompleto { get; set; }
         public string? username { get; set; }
         public string? perfil { get; set; }
         public string? numdocumento { get; set; }

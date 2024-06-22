@@ -189,6 +189,7 @@ namespace PCM.SIP.ICP.SEG.Aplicacion.Features
                 var authorizeResponse = new AuthorizeResponse
                 {
                     token = Token,
+                    nombrecompleto = usuario.nombre_completo,
                     username = usuario.username,
                     perfil = perfil.descripcion,
                     numdocumento = usuario.numdocumento
