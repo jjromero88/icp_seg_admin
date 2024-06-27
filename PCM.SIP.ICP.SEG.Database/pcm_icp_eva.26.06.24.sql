@@ -1,6 +1,6 @@
 USE [pcm_icp_eva]
 GO
-/****** Object:  Table [dbo].[DOCUMENTOESTRUCTURA]    Script Date: 23/06/2024 02:00:00 ******/
+/****** Object:  Table [dbo].[DOCUMENTOESTRUCTURA]    Script Date: 26/06/2024 23:23:02 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -21,7 +21,7 @@ CREATE TABLE [dbo].[DOCUMENTOESTRUCTURA](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[ENTIDAD]    Script Date: 23/06/2024 02:00:00 ******/
+/****** Object:  Table [dbo].[ENTIDAD]    Script Date: 26/06/2024 23:23:02 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -30,13 +30,14 @@ CREATE TABLE [dbo].[ENTIDAD](
 	[entidad_id] [int] IDENTITY(1,1) NOT NULL,
 	[entidadgrupo_id] [int] NULL,
 	[entidadsector_id] [int] NULL,
+	[ubigeo_id] [int] NULL,
+	[documentoestructura_id] [int] NULL,
+	[modalidadintegridad_id] [int] NULL,
 	[codigo] [varchar](30) NULL,
 	[numero_ruc] [varchar](11) NULL,
 	[acronimo] [varchar](20) NULL,
 	[nombre] [varchar](250) NULL,
-	[ubigeo_id] [int] NULL,
-	[documentoestructura_id] [int] NULL,
-	[modalidadintegridad_id] [int] NULL,
+	[generalidades] [bit] NULL,
 	[documentoestructura_doc] [varchar](250) NULL,
 	[modalidadintegridad_doc] [varchar](250) NULL,
 	[modalidadintegridad_anterior] [varchar](150) NULL,
@@ -54,7 +55,36 @@ CREATE TABLE [dbo].[ENTIDAD](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[ENTIDADGRUPO]    Script Date: 23/06/2024 02:00:00 ******/
+/****** Object:  Table [dbo].[ENTIDADCOORDINADOR]    Script Date: 26/06/2024 23:23:02 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[ENTIDADCOORDINADOR](
+	[entidadcoordinador_id] [int] IDENTITY(1,1) NOT NULL,
+	[entidad_id] [int] NULL,
+	[profesion_id] [int] NULL,
+	[modalidad_id] [int] NULL,
+	[nombres] [varchar](150) NULL,
+	[apellidos] [varchar](150) NULL,
+	[numero_celular] [varchar](20) NULL,
+	[correo_institucional] [varchar](50) NULL,
+	[fecha_inicio] [datetime] NULL,
+	[fecha_fin] [datetime] NULL,
+	[designacion_doc] [varchar](250) NULL,
+	[actual] [bit] NULL,
+	[estado] [bit] NULL,
+	[usuario_reg] [varchar](20) NULL,
+	[fecha_reg] [datetime] NULL,
+	[usuario_act] [varchar](20) NULL,
+	[fecha_act] [datetime] NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[entidadcoordinador_id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[ENTIDADGRUPO]    Script Date: 26/06/2024 23:23:02 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -75,7 +105,36 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[ENTIDADSECTOR]    Script Date: 23/06/2024 02:00:00 ******/
+/****** Object:  Table [dbo].[ENTIDADOFICIAL]    Script Date: 26/06/2024 23:23:02 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[ENTIDADOFICIAL](
+	[entidadoficial_id] [int] IDENTITY(1,1) NOT NULL,
+	[entidad_id] [int] NULL,
+	[modalidad_id] [int] NULL,
+	[profesion_id] [int] NULL,
+	[nombres] [varchar](150) NULL,
+	[apellidos] [varchar](150) NULL,
+	[numero_celular] [varchar](20) NULL,
+	[correo_institucional] [varchar](50) NULL,
+	[fecha_inicio] [datetime] NULL,
+	[fecha_fin] [datetime] NULL,
+	[designacion_doc] [varchar](250) NULL,
+	[actual] [bit] NULL,
+	[estado] [bit] NULL,
+	[usuario_reg] [varchar](20) NULL,
+	[fecha_reg] [datetime] NULL,
+	[usuario_act] [varchar](20) NULL,
+	[fecha_act] [datetime] NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[entidadoficial_id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[ENTIDADSECTOR]    Script Date: 26/06/2024 23:23:02 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -97,7 +156,7 @@ CREATE TABLE [dbo].[ENTIDADSECTOR](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[MODALIDAD]    Script Date: 23/06/2024 02:00:00 ******/
+/****** Object:  Table [dbo].[MODALIDAD]    Script Date: 26/06/2024 23:23:02 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -118,7 +177,7 @@ PRIMARY KEY CLUSTERED
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[MODALIDADINTEGRIDAD]    Script Date: 23/06/2024 02:00:00 ******/
+/****** Object:  Table [dbo].[MODALIDADINTEGRIDAD]    Script Date: 26/06/2024 23:23:02 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -139,7 +198,7 @@ CREATE TABLE [dbo].[MODALIDADINTEGRIDAD](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[PERSONA]    Script Date: 23/06/2024 02:00:00 ******/
+/****** Object:  Table [dbo].[PERSONA]    Script Date: 26/06/2024 23:23:02 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -164,7 +223,7 @@ CREATE TABLE [dbo].[PERSONA](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[PROFESION]    Script Date: 23/06/2024 02:00:00 ******/
+/****** Object:  Table [dbo].[PROFESION]    Script Date: 26/06/2024 23:23:02 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -180,7 +239,7 @@ CREATE TABLE [dbo].[PROFESION](
 	[estado] [bit] NULL,
 	[usuario_reg] [varchar](20) NULL,
 	[fecha_reg] [datetime] NULL,
-	[usuario_acto] [varchar](20) NULL,
+	[usuario_act] [varchar](20) NULL,
 	[fecha_act] [datetime] NULL,
  CONSTRAINT [PK__PROFESIO__FFF5BCF0FFE1CB5B] PRIMARY KEY CLUSTERED 
 (
@@ -188,7 +247,7 @@ CREATE TABLE [dbo].[PROFESION](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[TIPOSECTOR]    Script Date: 23/06/2024 02:00:00 ******/
+/****** Object:  Table [dbo].[TIPOSECTOR]    Script Date: 26/06/2024 23:23:02 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -209,7 +268,7 @@ CREATE TABLE [dbo].[TIPOSECTOR](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[UBIGEO]    Script Date: 23/06/2024 02:00:00 ******/
+/****** Object:  Table [dbo].[UBIGEO]    Script Date: 26/06/2024 23:23:02 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -253,17 +312,25 @@ SET IDENTITY_INSERT [dbo].[DOCUMENTOESTRUCTURA] OFF
 GO
 SET IDENTITY_INSERT [dbo].[ENTIDAD] ON 
 GO
-INSERT [dbo].[ENTIDAD] ([entidad_id], [entidadgrupo_id], [entidadsector_id], [codigo], [numero_ruc], [acronimo], [nombre], [ubigeo_id], [documentoestructura_id], [modalidadintegridad_id], [documentoestructura_doc], [modalidadintegridad_doc], [modalidadintegridad_anterior], [documentointegridad_desc], [documentointegridad_doc], [num_servidores], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (2, 5, 25, N'00002', N'10214458745', N'VUCE', N'Ventanilla Única de Comercio Exterior', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, N'jjromero88', CAST(N'2024-06-18T16:34:21.147' AS DateTime), N'jjromero88', CAST(N'2024-06-22T17:40:07.807' AS DateTime))
+INSERT [dbo].[ENTIDAD] ([entidad_id], [entidadgrupo_id], [entidadsector_id], [ubigeo_id], [documentoestructura_id], [modalidadintegridad_id], [codigo], [numero_ruc], [acronimo], [nombre], [generalidades], [documentoestructura_doc], [modalidadintegridad_doc], [modalidadintegridad_anterior], [documentointegridad_desc], [documentointegridad_doc], [num_servidores], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (2, 5, 25, 1321, 1, 1, N'00002', N'10214458745', N'VUCE', N'Ventanilla Única de Comercio Exterior', 1, N'{"category":"EstructuraPath","filename":"Cv_05-24.pdf","extension":".pdf","size":"2.84 MB"}', N'{"category":"DocumentoIntegridad","filename":"Profile (1).pdf","extension":".pdf","size":"0.07 MB"}', N'DGL-2024-109209209', N'DGL-2023-0928920010', N'{"category":"ModalidadIntegridadPath","filename":"Login.pdf","extension":".pdf","size":"0.57 MB"}', 10, 1, N'jjromero88', CAST(N'2024-06-18T16:34:21.147' AS DateTime), N'jjromero88', CAST(N'2024-06-25T22:57:33.730' AS DateTime))
 GO
-INSERT [dbo].[ENTIDAD] ([entidad_id], [entidadgrupo_id], [entidadsector_id], [codigo], [numero_ruc], [acronimo], [nombre], [ubigeo_id], [documentoestructura_id], [modalidadintegridad_id], [documentoestructura_doc], [modalidadintegridad_doc], [modalidadintegridad_anterior], [documentointegridad_desc], [documentointegridad_doc], [num_servidores], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (3, 1, 1, N'00003', N'20131380870', N'CCFFAA', N'COMANDO CONJUNTO DE LAS FUERZAS ARMADAS', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, N'jjromero88', CAST(N'2024-06-18T20:16:44.520' AS DateTime), N'jjromero88', CAST(N'2024-06-22T17:40:15.590' AS DateTime))
+INSERT [dbo].[ENTIDAD] ([entidad_id], [entidadgrupo_id], [entidadsector_id], [ubigeo_id], [documentoestructura_id], [modalidadintegridad_id], [codigo], [numero_ruc], [acronimo], [nombre], [generalidades], [documentoestructura_doc], [modalidadintegridad_doc], [modalidadintegridad_anterior], [documentointegridad_desc], [documentointegridad_doc], [num_servidores], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (3, 1, 1, NULL, NULL, NULL, N'00003', N'20131380870', N'CCFFAA', N'COMANDO CONJUNTO DE LAS FUERZAS ARMADAS', 0, NULL, NULL, NULL, NULL, NULL, NULL, 1, N'jjromero88', CAST(N'2024-06-18T20:16:44.520' AS DateTime), N'jjromero88', CAST(N'2024-06-22T17:40:15.590' AS DateTime))
 GO
-INSERT [dbo].[ENTIDAD] ([entidad_id], [entidadgrupo_id], [entidadsector_id], [codigo], [numero_ruc], [acronimo], [nombre], [ubigeo_id], [documentoestructura_id], [modalidadintegridad_id], [documentoestructura_doc], [modalidadintegridad_doc], [modalidadintegridad_anterior], [documentointegridad_desc], [documentointegridad_doc], [num_servidores], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (4, 1, 1, N'00004', N'20135890031', N'INDECI', N'INSTITUTO NACIONAL DE DEFENSA CIVIL', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, N'jjromero88', CAST(N'2024-06-22T17:20:37.870' AS DateTime), N'jjromero88', CAST(N'2024-06-22T17:21:56.273' AS DateTime))
+INSERT [dbo].[ENTIDAD] ([entidad_id], [entidadgrupo_id], [entidadsector_id], [ubigeo_id], [documentoestructura_id], [modalidadintegridad_id], [codigo], [numero_ruc], [acronimo], [nombre], [generalidades], [documentoestructura_doc], [modalidadintegridad_doc], [modalidadintegridad_anterior], [documentointegridad_desc], [documentointegridad_doc], [num_servidores], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (4, 1, 1, NULL, NULL, NULL, N'00004', N'20135890031', N'INDECI', N'INSTITUTO NACIONAL DE DEFENSA CIVIL', 0, NULL, NULL, NULL, NULL, NULL, NULL, 1, N'jjromero88', CAST(N'2024-06-22T17:20:37.870' AS DateTime), N'jjromero88', CAST(N'2024-06-22T17:21:56.273' AS DateTime))
 GO
-INSERT [dbo].[ENTIDAD] ([entidad_id], [entidadgrupo_id], [entidadsector_id], [codigo], [numero_ruc], [acronimo], [nombre], [ubigeo_id], [documentoestructura_id], [modalidadintegridad_id], [documentoestructura_doc], [modalidadintegridad_doc], [modalidadintegridad_anterior], [documentointegridad_desc], [documentointegridad_doc], [num_servidores], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (5, 1, 1, N'00005', N'20131367938', N'MINDEF', N'MINISTERIO DE DEFENSA', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, N'jjromero88', CAST(N'2024-06-22T17:45:34.327' AS DateTime), N'jjromero88', CAST(N'2024-06-22T17:46:31.067' AS DateTime))
+INSERT [dbo].[ENTIDAD] ([entidad_id], [entidadgrupo_id], [entidadsector_id], [ubigeo_id], [documentoestructura_id], [modalidadintegridad_id], [codigo], [numero_ruc], [acronimo], [nombre], [generalidades], [documentoestructura_doc], [modalidadintegridad_doc], [modalidadintegridad_anterior], [documentointegridad_desc], [documentointegridad_doc], [num_servidores], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (5, 1, 1, NULL, NULL, NULL, N'00005', N'20131367938', N'MINDEF', N'MINISTERIO DE DEFENSA', 0, NULL, NULL, NULL, NULL, NULL, NULL, 1, N'jjromero88', CAST(N'2024-06-22T17:45:34.327' AS DateTime), N'jjromero88', CAST(N'2024-06-22T17:46:31.067' AS DateTime))
 GO
-INSERT [dbo].[ENTIDAD] ([entidad_id], [entidadgrupo_id], [entidadsector_id], [codigo], [numero_ruc], [acronimo], [nombre], [ubigeo_id], [documentoestructura_id], [modalidadintegridad_id], [documentoestructura_doc], [modalidadintegridad_doc], [modalidadintegridad_anterior], [documentointegridad_desc], [documentointegridad_doc], [num_servidores], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (6, 1, 1, N'00006', N'20153408191', N'MGP', N'Marina de Guerra del Perú', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, N'jjromero88', CAST(N'2024-06-22T17:47:37.613' AS DateTime), NULL, NULL)
+INSERT [dbo].[ENTIDAD] ([entidad_id], [entidadgrupo_id], [entidadsector_id], [ubigeo_id], [documentoestructura_id], [modalidadintegridad_id], [codigo], [numero_ruc], [acronimo], [nombre], [generalidades], [documentoestructura_doc], [modalidadintegridad_doc], [modalidadintegridad_anterior], [documentointegridad_desc], [documentointegridad_doc], [num_servidores], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (6, 1, 1, NULL, NULL, NULL, N'00006', N'20153408191', N'MGP', N'Marina de Guerra del Perú', 0, NULL, NULL, NULL, NULL, NULL, NULL, 1, N'jjromero88', CAST(N'2024-06-22T17:47:37.613' AS DateTime), NULL, NULL)
+GO
+INSERT [dbo].[ENTIDAD] ([entidad_id], [entidadgrupo_id], [entidadsector_id], [ubigeo_id], [documentoestructura_id], [modalidadintegridad_id], [codigo], [numero_ruc], [acronimo], [nombre], [generalidades], [documentoestructura_doc], [modalidadintegridad_doc], [modalidadintegridad_anterior], [documentointegridad_desc], [documentointegridad_doc], [num_servidores], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (8, 1, 26, NULL, NULL, NULL, N'00007', N'10212454848', N'ABC', N'entidad abc', 0, NULL, NULL, NULL, NULL, NULL, NULL, 1, N'jjromero88', CAST(N'2024-06-24T19:23:43.893' AS DateTime), NULL, NULL)
 GO
 SET IDENTITY_INSERT [dbo].[ENTIDAD] OFF
+GO
+SET IDENTITY_INSERT [dbo].[ENTIDADCOORDINADOR] ON 
+GO
+INSERT [dbo].[ENTIDADCOORDINADOR] ([entidadcoordinador_id], [entidad_id], [profesion_id], [modalidad_id], [nombres], [apellidos], [numero_celular], [correo_institucional], [fecha_inicio], [fecha_fin], [designacion_doc], [actual], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (1, 2, 77, 7, N'Luis', N'Zegarra Sanchez', N'902100578', N'luiszr9322@gmail.com', CAST(N'2023-02-16T00:00:00.000' AS DateTime), CAST(N'2024-01-19T00:00:00.000' AS DateTime), N'{"category":"DocumentoDesignacionCoordinador","filename":"Login.pdf","extension":".pdf","size":"0.57 MB"}', 0, 1, N'jjromero88', CAST(N'2024-06-26T19:13:11.807' AS DateTime), N'jjromero88', CAST(N'2024-06-26T19:15:51.963' AS DateTime))
+GO
+SET IDENTITY_INSERT [dbo].[ENTIDADCOORDINADOR] OFF
 GO
 SET IDENTITY_INSERT [dbo].[ENTIDADGRUPO] ON 
 GO
@@ -280,6 +347,14 @@ GO
 INSERT [dbo].[ENTIDADGRUPO] ([entidadgrupo_id], [codigo], [abreviatura], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (6, N'00006', N'GL', N'Gobierno Local', 1, N'sys', CAST(N'2024-06-17T19:20:22.327' AS DateTime), NULL, NULL)
 GO
 SET IDENTITY_INSERT [dbo].[ENTIDADGRUPO] OFF
+GO
+SET IDENTITY_INSERT [dbo].[ENTIDADOFICIAL] ON 
+GO
+INSERT [dbo].[ENTIDADOFICIAL] ([entidadoficial_id], [entidad_id], [modalidad_id], [profesion_id], [nombres], [apellidos], [numero_celular], [correo_institucional], [fecha_inicio], [fecha_fin], [designacion_doc], [actual], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (1, 2, 11, 76, N'Jorge', N'Sarmiento Lopez', N'901929099', N'jlopez19@gmail.com', CAST(N'2024-06-26T00:00:00.000' AS DateTime), CAST(N'2025-06-26T00:00:00.000' AS DateTime), N'{"category":"DocumentoDesignacionOficial","filename":"Login.pdf","extension":".pdf","size":"0.57 MB"}', 1, 1, N'jjromero88', CAST(N'2024-06-26T18:48:04.857' AS DateTime), N'jjromero88', CAST(N'2024-06-26T18:59:12.057' AS DateTime))
+GO
+INSERT [dbo].[ENTIDADOFICIAL] ([entidadoficial_id], [entidad_id], [modalidad_id], [profesion_id], [nombres], [apellidos], [numero_celular], [correo_institucional], [fecha_inicio], [fecha_fin], [designacion_doc], [actual], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (2, 2, 7, 75, N'Juan', N'Peralta Nuñez', N'982988391', N'jperalta8182@gmail.com', CAST(N'2024-06-29T05:00:00.000' AS DateTime), NULL, N'{"category":"DocumentoDesignacionOficial","filename":"2.C-054-24 JuanJoseRomeroFirmadoGIZ.pdf","extension":".pdf","size":"6.19 MB"}', 0, 0, N'jjromero88', CAST(N'2024-06-26T23:10:58.647' AS DateTime), N'jjromero88', CAST(N'2024-06-26T23:17:56.700' AS DateTime))
+GO
+SET IDENTITY_INSERT [dbo].[ENTIDADOFICIAL] OFF
 GO
 SET IDENTITY_INSERT [dbo].[ENTIDADSECTOR] ON 
 GO
@@ -437,987 +512,995 @@ INSERT [dbo].[PERSONA] ([persona_id], [entidad_id], [nombres], [apellido_paterno
 GO
 INSERT [dbo].[PERSONA] ([persona_id], [entidad_id], [nombres], [apellido_paterno], [apellido_materno], [numdocumento], [email], [telefono_movil], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (2, 3, N'Jose Miguel', N'Sanchez', N'Peredo', N'45802558', N'josem90@gmail.com', N'960254002', 1, N'jjromero88', CAST(N'2024-06-22T12:43:06.543' AS DateTime), N'jjromero88', CAST(N'2024-06-22T12:48:08.223' AS DateTime))
 GO
+INSERT [dbo].[PERSONA] ([persona_id], [entidad_id], [nombres], [apellido_paterno], [apellido_materno], [numdocumento], [email], [telefono_movil], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (3, NULL, N'Kelly', N'Ocorspoma', N'Reynada', N'45855525', N'kelly@pcm.gob.pe', N'963658963', 1, N'jjromero88', CAST(N'2024-06-24T19:15:12.907' AS DateTime), NULL, NULL)
+GO
+INSERT [dbo].[PERSONA] ([persona_id], [entidad_id], [nombres], [apellido_paterno], [apellido_materno], [numdocumento], [email], [telefono_movil], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (4, NULL, N'Jose', N'Martinez', N'Pineda', N'45875587', N'josemartin091@gmail.com', N'902158789', 1, N'jjromero88', CAST(N'2024-06-25T10:26:37.853' AS DateTime), NULL, NULL)
+GO
+INSERT [dbo].[PERSONA] ([persona_id], [entidad_id], [nombres], [apellido_paterno], [apellido_materno], [numdocumento], [email], [telefono_movil], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (5, 5, N'Maria', N'Ramirez', N'Tejada', N'48550214', N'mariar19397@gmail.com', N'960124587', 1, N'jjromero88', CAST(N'2024-06-25T10:27:33.503' AS DateTime), NULL, NULL)
+GO
+INSERT [dbo].[PERSONA] ([persona_id], [entidad_id], [nombres], [apellido_paterno], [apellido_materno], [numdocumento], [email], [telefono_movil], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (6, 4, N'jose', N'martinez', N'tejada', N'45874587', N'josem01@gmail.com', N'965877747', 1, N'jjromero88', CAST(N'2024-06-25T10:43:31.307' AS DateTime), NULL, NULL)
+GO
 SET IDENTITY_INSERT [dbo].[PERSONA] OFF
 GO
 SET IDENTITY_INSERT [dbo].[PROFESION] ON 
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (1, N'TECNOLÓGICA', 1, N'PROFESIONAL', 4, N'M29821001', N'ADMINISTRACIÓN DE EMPRESAS', 1, N'sys', CAST(N'2024-06-22T14:15:05.847' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (1, N'TECNOLÓGICA', 1, N'PROFESIONAL', 4, N'M29821001', N'ADMINISTRACIÓN DE EMPRESAS', 1, N'sys', CAST(N'2024-06-22T14:15:05.847' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (2, N'TECNOLÓGICA', 2, N'PROFESIONAL', 4, N'003325001', N'ADMINISTRACIÓN DE EMPRESAS TURÍSTICAS Y HOTELERAS', 1, N'sys', CAST(N'2024-06-22T14:15:05.850' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (2, N'TECNOLÓGICA', 2, N'PROFESIONAL', 4, N'003325001', N'ADMINISTRACIÓN DE EMPRESAS TURÍSTICAS Y HOTELERAS', 1, N'sys', CAST(N'2024-06-22T14:15:05.850' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (3, N'TECNOLÓGICA', 3, N'PROFESIONAL', 4, N'M29691001', N'ADMINISTRACIÓN DE EMPRESAS Y CONTABILIDAD', 1, N'sys', CAST(N'2024-06-22T14:15:05.850' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (3, N'TECNOLÓGICA', 3, N'PROFESIONAL', 4, N'M29691001', N'ADMINISTRACIÓN DE EMPRESAS Y CONTABILIDAD', 1, N'sys', CAST(N'2024-06-22T14:15:05.850' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (4, N'TECNOLÓGICA', 4, N'PROFESIONAL', 4, N'I25551001', N'ADMINISTRACIÓN DE HOTELES, RESTAURANTES Y AFINES', 1, N'sys', CAST(N'2024-06-22T14:15:05.850' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (4, N'TECNOLÓGICA', 4, N'PROFESIONAL', 4, N'I25551001', N'ADMINISTRACIÓN DE HOTELES, RESTAURANTES Y AFINES', 1, N'sys', CAST(N'2024-06-22T14:15:05.850' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (5, N'TECNOLÓGICA', 5, N'PROFESIONAL', 4, N'M29821002', N'ADMINISTRACIÓN DE NEGOCIOS', 1, N'sys', CAST(N'2024-06-22T14:15:05.850' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (5, N'TECNOLÓGICA', 5, N'PROFESIONAL', 4, N'M29821002', N'ADMINISTRACIÓN DE NEGOCIOS', 1, N'sys', CAST(N'2024-06-22T14:15:05.850' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (6, N'TECNOLÓGICA', 6, N'PROFESIONAL', 4, N'M29791001', N'ADMINISTRACIÓN EMPRESAS TURÍSTICAS HOTELERAS', 1, N'sys', CAST(N'2024-06-22T14:15:05.850' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (6, N'TECNOLÓGICA', 6, N'PROFESIONAL', 4, N'M29791001', N'ADMINISTRACIÓN EMPRESAS TURÍSTICAS HOTELERAS', 1, N'sys', CAST(N'2024-06-22T14:15:05.850' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (7, N'TECNOLÓGICA', 7, N'PROFESIONAL', 4, N'005335001', N'ARQUITECTURA DE INTERIORES', 1, N'sys', CAST(N'2024-06-22T14:15:05.850' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (7, N'TECNOLÓGICA', 7, N'PROFESIONAL', 4, N'005335001', N'ARQUITECTURA DE INTERIORES', 1, N'sys', CAST(N'2024-06-22T14:15:05.850' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (8, N'TECNOLÓGICA', 8, N'PROFESIONAL', 4, N'J26624001', N'ARQUITECTURA DE SISTEMAS DE INFORMACIÓN', 1, N'sys', CAST(N'2024-06-22T14:15:05.850' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (8, N'TECNOLÓGICA', 8, N'PROFESIONAL', 4, N'J26624001', N'ARQUITECTURA DE SISTEMAS DE INFORMACIÓN', 1, N'sys', CAST(N'2024-06-22T14:15:05.850' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (9, N'TECNOLÓGICA', 9, N'PROFESIONAL', 4, N'J26591001', N'COMUNICACIÓN AUDIOVISUAL MULTIMEDIA', 1, N'sys', CAST(N'2024-06-22T14:15:05.853' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (9, N'TECNOLÓGICA', 9, N'PROFESIONAL', 4, N'J26591001', N'COMUNICACIÓN AUDIOVISUAL MULTIMEDIA', 1, N'sys', CAST(N'2024-06-22T14:15:05.853' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (10, N'TECNOLÓGICA', 10, N'PROFESIONAL', 4, N'R33914001', N'CONSERVACIÓN Y RESTAURACIÓN DE BIENES CULTURALES MATERIALES', 1, N'sys', CAST(N'2024-06-22T14:15:05.853' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (10, N'TECNOLÓGICA', 10, N'PROFESIONAL', 4, N'R33914001', N'CONSERVACIÓN Y RESTAURACIÓN DE BIENES CULTURALES MATERIALES', 1, N'sys', CAST(N'2024-06-22T14:15:05.853' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (11, N'TECNOLÓGICA', 11, N'PROFESIONAL', 4, N'J26594001', N'CREACIÓN Y DIRECCIÓN AUDIOVISUAL ', 1, N'sys', CAST(N'2024-06-22T14:15:05.853' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (11, N'TECNOLÓGICA', 11, N'PROFESIONAL', 4, N'J26594001', N'CREACIÓN Y DIRECCIÓN AUDIOVISUAL ', 1, N'sys', CAST(N'2024-06-22T14:15:05.853' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (12, N'TECNOLÓGICA', 12, N'PROFESIONAL', 4, N'002225001', N'DIRECCIÓN DE ARTES GRÁFICAS Y PUBLICITARIAS', 1, N'sys', CAST(N'2024-06-22T14:15:05.853' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (12, N'TECNOLÓGICA', 12, N'PROFESIONAL', 4, N'002225001', N'DIRECCIÓN DE ARTES GRÁFICAS Y PUBLICITARIAS', 1, N'sys', CAST(N'2024-06-22T14:15:05.853' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (13, N'TECNOLÓGICA', 13, N'PROFESIONAL', 4, N'002225002', N'DIRECCIÓN Y DISEÑO GRÁFICO', 1, N'sys', CAST(N'2024-06-22T14:15:05.853' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (13, N'TECNOLÓGICA', 13, N'PROFESIONAL', 4, N'002225002', N'DIRECCIÓN Y DISEÑO GRÁFICO', 1, N'sys', CAST(N'2024-06-22T14:15:05.853' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (14, N'TECNOLÓGICA', 14, N'PROFESIONAL', 4, N'002225003', N'DIRECCIÓN Y DISEÑO PUBLICITARIO', 1, N'sys', CAST(N'2024-06-22T14:15:05.853' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (14, N'TECNOLÓGICA', 14, N'PROFESIONAL', 4, N'002225003', N'DIRECCIÓN Y DISEÑO PUBLICITARIO', 1, N'sys', CAST(N'2024-06-22T14:15:05.853' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (15, N'TECNOLÓGICA', 15, N'PROFESIONAL', 4, N'C07141001', N'DISEÑO Y GESTIÓN DE LA MODA', 1, N'sys', CAST(N'2024-06-22T14:15:05.853' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (15, N'TECNOLÓGICA', 15, N'PROFESIONAL', 4, N'C07141001', N'DISEÑO Y GESTIÓN DE LA MODA', 1, N'sys', CAST(N'2024-06-22T14:15:05.853' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (16, N'TECNOLÓGICA', 16, N'PROFESIONAL', 4, N'K27644001', N'GESTIÓN COMERCIAL DE PRODUCTOS Y SERVICIOS BANCARIOS Y FINANCIEROS', 1, N'sys', CAST(N'2024-06-22T14:15:05.853' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (16, N'TECNOLÓGICA', 16, N'PROFESIONAL', 4, N'K27644001', N'GESTIÓN COMERCIAL DE PRODUCTOS Y SERVICIOS BANCARIOS Y FINANCIEROS', 1, N'sys', CAST(N'2024-06-22T14:15:05.853' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (17, N'TECNOLÓGICA', 17, N'PROFESIONAL', 4, N'C06104001', N'BANCARIOS Y FINANCIEROS GESTIÓN DE INDUSTRIAS ALIMENTARIAS', 1, N'sys', CAST(N'2024-06-22T14:15:05.853' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (17, N'TECNOLÓGICA', 17, N'PROFESIONAL', 4, N'C06104001', N'BANCARIOS Y FINANCIEROS GESTIÓN DE INDUSTRIAS ALIMENTARIAS', 1, N'sys', CAST(N'2024-06-22T14:15:05.853' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (18, N'TECNOLÓGICA', 18, N'PROFESIONAL', 4, N'J26594002', N'GESTIÓN DE LA PRODUCCIÓN AUDIOVISUAL', 1, N'sys', CAST(N'2024-06-22T14:15:05.857' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (18, N'TECNOLÓGICA', 18, N'PROFESIONAL', 4, N'J26594002', N'GESTIÓN DE LA PRODUCCIÓN AUDIOVISUAL', 1, N'sys', CAST(N'2024-06-22T14:15:05.857' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (19, N'TECNOLÓGICA', 19, N'PROFESIONAL', 4, N'J26624002', N'GESTIÓN DE SISTEMAS DE INFORMACIÓN', 1, N'sys', CAST(N'2024-06-22T14:15:05.857' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (19, N'TECNOLÓGICA', 19, N'PROFESIONAL', 4, N'J26624002', N'GESTIÓN DE SISTEMAS DE INFORMACIÓN', 1, N'sys', CAST(N'2024-06-22T14:15:05.857' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (20, N'TECNOLÓGICA', 20, N'PROFESIONAL', 4, N'C18334001', N'INSPECCIÓN Y MANTENIMIENTO AERONÁUTICO', 1, N'sys', CAST(N'2024-06-22T14:15:05.857' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (20, N'TECNOLÓGICA', 20, N'PROFESIONAL', 4, N'C18334001', N'INSPECCIÓN Y MANTENIMIENTO AERONÁUTICO', 1, N'sys', CAST(N'2024-06-22T14:15:05.857' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (21, N'TECNOLÓGICA', 21, N'PROFESIONAL', 4, N'M29731001', N'MARKETING INTEGRAL', 1, N'sys', CAST(N'2024-06-22T14:15:05.857' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (21, N'TECNOLÓGICA', 21, N'PROFESIONAL', 4, N'M29731001', N'MARKETING INTEGRAL', 1, N'sys', CAST(N'2024-06-22T14:15:05.857' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (22, N'TECNOLÓGICA', 22, N'PROFESIONAL', 4, N'002225009', N'PUBLICIDAD Y MARKETING DIGITAL', 1, N'sys', CAST(N'2024-06-22T14:15:05.857' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (22, N'TECNOLÓGICA', 22, N'PROFESIONAL', 4, N'002225009', N'PUBLICIDAD Y MARKETING DIGITAL', 1, N'sys', CAST(N'2024-06-22T14:15:05.857' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (23, N'TECNOLÓGICA', 23, N'PROFESIONAL', 4, N'J26621001', N'SISTEMAS INFORMÁTICOS PARA LA PRODUCTIVIDAD', 1, N'sys', CAST(N'2024-06-22T14:15:05.857' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (23, N'TECNOLÓGICA', 23, N'PROFESIONAL', 4, N'J26621001', N'SISTEMAS INFORMÁTICOS PARA LA PRODUCTIVIDAD', 1, N'sys', CAST(N'2024-06-22T14:15:05.857' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (24, N'TECNOLÓGICA', 24, N'PROFESIONAL', 4, N'005125003', N'TÉCNICAS DE INGENIERÍA DE TELECOMUNICACIONES', 1, N'sys', CAST(N'2024-06-22T14:15:05.857' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (24, N'TECNOLÓGICA', 24, N'PROFESIONAL', 4, N'005125003', N'TÉCNICAS DE INGENIERÍA DE TELECOMUNICACIONES', 1, N'sys', CAST(N'2024-06-22T14:15:05.857' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (25, N'TECNOLÓGICA', 25, N'PROFESIONAL', 4, N'005255001', N'TÉCNICAS DE INGENIERÍA ELECTRÓNICA', 1, N'sys', CAST(N'2024-06-22T14:15:05.857' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (25, N'TECNOLÓGICA', 25, N'PROFESIONAL', 4, N'005255001', N'TÉCNICAS DE INGENIERÍA ELECTRÓNICA', 1, N'sys', CAST(N'2024-06-22T14:15:05.857' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (26, N'TECNOLÓGICA', 26, N'PROFESIONAL', 4, N'C18331001', N'TÉCNICAS DE INGENIERÍA MECÁNICA DE MANTENIMIENTO', 1, N'sys', CAST(N'2024-06-22T14:15:05.857' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (26, N'TECNOLÓGICA', 26, N'PROFESIONAL', 4, N'C18331001', N'TÉCNICAS DE INGENIERÍA MECÁNICA DE MANTENIMIENTO', 1, N'sys', CAST(N'2024-06-22T14:15:05.857' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (27, N'TECNOLÓGICA', 27, N'PROFESIONAL', 4, N'C16251001', N'TÉCNICAS DE INGENIERÍA MECÁNICA DE PRODUCCIÓN', 1, N'sys', CAST(N'2024-06-22T14:15:05.857' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (27, N'TECNOLÓGICA', 27, N'PROFESIONAL', 4, N'C16251001', N'TÉCNICAS DE INGENIERÍA MECÁNICA DE PRODUCCIÓN', 1, N'sys', CAST(N'2024-06-22T14:15:05.857' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (28, N'TECNOLÓGICA', 28, N'PROFESIONAL', 4, N'005265012', N'TÉCNICO EN INGENIERÍA MECÁNICA', 1, N'sys', CAST(N'2024-06-22T14:15:05.857' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (28, N'TECNOLÓGICA', 28, N'PROFESIONAL', 4, N'005265012', N'TÉCNICO EN INGENIERÍA MECÁNICA', 1, N'sys', CAST(N'2024-06-22T14:15:05.857' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (29, N'TECNOLÓGICA', 29, N'PROFESIONAL', 4, N'A01011001', N'TECNOLOGÍA AGRÍCOLA', 1, N'sys', CAST(N'2024-06-22T14:15:05.857' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (29, N'TECNOLÓGICA', 29, N'PROFESIONAL', 4, N'A01011001', N'TECNOLOGÍA AGRÍCOLA', 1, N'sys', CAST(N'2024-06-22T14:15:05.857' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (30, N'TECNOLÓGICA', 30, N'PROFESIONAL', 4, N'C18321001', N'TECNOLOGÍA DE LA PRODUCCIÓN', 1, N'sys', CAST(N'2024-06-22T14:15:05.857' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (30, N'TECNOLÓGICA', 30, N'PROFESIONAL', 4, N'C18321001', N'TECNOLOGÍA DE LA PRODUCCIÓN', 1, N'sys', CAST(N'2024-06-22T14:15:05.857' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (31, N'TECNOLÓGICA', 31, N'PROFESIONAL', 4, N'005265003', N'TECNOLOGÍA MECÁNICA ELÉCTRICA', 1, N'sys', CAST(N'2024-06-22T14:15:05.857' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (31, N'TECNOLÓGICA', 31, N'PROFESIONAL', 4, N'005265003', N'TECNOLOGÍA MECÁNICA ELÉCTRICA', 1, N'sys', CAST(N'2024-06-22T14:15:05.857' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (32, N'TECNOLÓGICA', 32, N'PROFESIONAL', 4, N'002165004', N'TEOLOGÍA', 1, N'sys', CAST(N'2024-06-22T14:15:05.857' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (32, N'TECNOLÓGICA', 32, N'PROFESIONAL', 4, N'002165004', N'TEOLOGÍA', 1, N'sys', CAST(N'2024-06-22T14:15:05.857' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (33, N'PEDAGÓGICA', 1, N'PROFESIONAL', NULL, N'01', N'EDUCACIÓN INICIAL', 1, N'sys', CAST(N'2024-06-22T14:26:00.553' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (33, N'PEDAGÓGICA', 1, N'PROFESIONAL', NULL, N'01', N'EDUCACIÓN INICIAL', 1, N'sys', CAST(N'2024-06-22T14:26:00.553' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (34, N'PEDAGÓGICA', 22, N'PROFESIONAL', NULL, N'22', N'EDUCACIÓN RELIGIOSA', 1, N'sys', CAST(N'2024-06-22T14:26:00.553' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (34, N'PEDAGÓGICA', 22, N'PROFESIONAL', NULL, N'22', N'EDUCACIÓN RELIGIOSA', 1, N'sys', CAST(N'2024-06-22T14:26:00.553' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (35, N'PEDAGÓGICA', 2, N'PROFESIONAL', NULL, N'02', N'EDUCACIÓN PRIMARIA', 1, N'sys', CAST(N'2024-06-22T14:26:00.553' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (35, N'PEDAGÓGICA', 2, N'PROFESIONAL', NULL, N'02', N'EDUCACIÓN PRIMARIA', 1, N'sys', CAST(N'2024-06-22T14:26:00.553' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (36, N'PEDAGÓGICA', 23, N'PROFESIONAL', NULL, N'23', N'E.S. EDUCACIÓN FAMILIAR', 1, N'sys', CAST(N'2024-06-22T14:26:00.553' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (36, N'PEDAGÓGICA', 23, N'PROFESIONAL', NULL, N'23', N'E.S. EDUCACIÓN FAMILIAR', 1, N'sys', CAST(N'2024-06-22T14:26:00.553' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (37, N'PEDAGÓGICA', 3, N'PROFESIONAL', NULL, N'03', N'EDUCACIÓN INICIAL INTERCULTURAL BILINGÜE', 1, N'sys', CAST(N'2024-06-22T14:26:00.557' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (37, N'PEDAGÓGICA', 3, N'PROFESIONAL', NULL, N'03', N'EDUCACIÓN INICIAL INTERCULTURAL BILINGÜE', 1, N'sys', CAST(N'2024-06-22T14:26:00.557' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (38, N'PEDAGÓGICA', 24, N'PROFESIONAL', NULL, N'24', N'E.T. ARTES INDUSTRIALES', 1, N'sys', CAST(N'2024-06-22T14:26:00.557' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (38, N'PEDAGÓGICA', 24, N'PROFESIONAL', NULL, N'24', N'E.T. ARTES INDUSTRIALES', 1, N'sys', CAST(N'2024-06-22T14:26:00.557' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (39, N'PEDAGÓGICA', 4, N'PROFESIONAL', NULL, N'04', N'EDUCACIÓN PRIMARIA INTERCULTURAL BILINGÜE', 1, N'sys', CAST(N'2024-06-22T14:26:00.557' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (39, N'PEDAGÓGICA', 4, N'PROFESIONAL', NULL, N'04', N'EDUCACIÓN PRIMARIA INTERCULTURAL BILINGÜE', 1, N'sys', CAST(N'2024-06-22T14:26:00.557' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (40, N'PEDAGÓGICA', 25, N'PROFESIONAL', NULL, N'25', N'E.T. ARTESANÍA', 1, N'sys', CAST(N'2024-06-22T14:26:00.557' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (40, N'PEDAGÓGICA', 25, N'PROFESIONAL', NULL, N'25', N'E.T. ARTESANÍA', 1, N'sys', CAST(N'2024-06-22T14:26:00.557' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (41, N'PEDAGÓGICA', 5, N'PROFESIONAL', NULL, N'05', N'EDUCACIÓN BÁSICA ALTERNATIVA', 1, N'sys', CAST(N'2024-06-22T14:26:00.557' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (41, N'PEDAGÓGICA', 5, N'PROFESIONAL', NULL, N'05', N'EDUCACIÓN BÁSICA ALTERNATIVA', 1, N'sys', CAST(N'2024-06-22T14:26:00.557' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (42, N'PEDAGÓGICA', 26, N'PROFESIONAL', NULL, N'26', N'E.T. AGROPECUARIA', 1, N'sys', CAST(N'2024-06-22T14:26:00.557' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (42, N'PEDAGÓGICA', 26, N'PROFESIONAL', NULL, N'26', N'E.T. AGROPECUARIA', 1, N'sys', CAST(N'2024-06-22T14:26:00.557' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (43, N'PEDAGÓGICA', 6, N'PROFESIONAL', NULL, N'06', N'EDUCACIÓN ESPECIAL', 1, N'sys', CAST(N'2024-06-22T14:26:00.557' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (43, N'PEDAGÓGICA', 6, N'PROFESIONAL', NULL, N'06', N'EDUCACIÓN ESPECIAL', 1, N'sys', CAST(N'2024-06-22T14:26:00.557' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (44, N'PEDAGÓGICA', 27, N'PROFESIONAL', NULL, N'27', N'E.T. CONSTRUCCIÓN DE MADERA', 1, N'sys', CAST(N'2024-06-22T14:26:00.557' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (44, N'PEDAGÓGICA', 27, N'PROFESIONAL', NULL, N'27', N'E.T. CONSTRUCCIÓN DE MADERA', 1, N'sys', CAST(N'2024-06-22T14:26:00.557' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (45, N'PEDAGÓGICA', 7, N'PROFESIONAL', NULL, N'07', N'EDUCACIÓN FÍSICA', 1, N'sys', CAST(N'2024-06-22T14:26:00.557' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (45, N'PEDAGÓGICA', 7, N'PROFESIONAL', NULL, N'07', N'EDUCACIÓN FÍSICA', 1, N'sys', CAST(N'2024-06-22T14:26:00.557' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (46, N'PEDAGÓGICA', 28, N'PROFESIONAL', NULL, N'28', N'COMPUTACIÓN E INFORMÁTICA', 1, N'sys', CAST(N'2024-06-22T14:26:00.557' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (46, N'PEDAGÓGICA', 28, N'PROFESIONAL', NULL, N'28', N'COMPUTACIÓN E INFORMÁTICA', 1, N'sys', CAST(N'2024-06-22T14:26:00.557' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (47, N'PEDAGÓGICA', 8, N'PROFESIONAL', NULL, N'08', N'EDUCACIÓN ARTÍSTICA', 1, N'sys', CAST(N'2024-06-22T14:26:00.557' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (47, N'PEDAGÓGICA', 8, N'PROFESIONAL', NULL, N'08', N'EDUCACIÓN ARTÍSTICA', 1, N'sys', CAST(N'2024-06-22T14:26:00.557' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (48, N'PEDAGÓGICA', 29, N'PROFESIONAL', NULL, N'29', N'E.T. CARPINTERÍA / EBANISTERÍA', 1, N'sys', CAST(N'2024-06-22T14:26:00.557' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (48, N'PEDAGÓGICA', 29, N'PROFESIONAL', NULL, N'29', N'E.T. CARPINTERÍA / EBANISTERÍA', 1, N'sys', CAST(N'2024-06-22T14:26:00.557' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (49, N'PEDAGÓGICA', 9, N'PROFESIONAL', NULL, N'09', N'E.S. LENGUA Y LITERATURA', 1, N'sys', CAST(N'2024-06-22T14:26:00.557' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (49, N'PEDAGÓGICA', 9, N'PROFESIONAL', NULL, N'09', N'E.S. LENGUA Y LITERATURA', 1, N'sys', CAST(N'2024-06-22T14:26:00.557' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (50, N'PEDAGÓGICA', 30, N'PROFESIONAL', NULL, N'30', N'E.T. ELECTRICIDAD', 1, N'sys', CAST(N'2024-06-22T14:26:00.557' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (50, N'PEDAGÓGICA', 30, N'PROFESIONAL', NULL, N'30', N'E.T. ELECTRICIDAD', 1, N'sys', CAST(N'2024-06-22T14:26:00.557' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (51, N'PEDAGÓGICA', 10, N'PROFESIONAL', NULL, N'10', N'EDUCACIÓN SECUNDARIA ESPECIALIDAD COMUNICACIÓN', 1, N'sys', CAST(N'2024-06-22T14:26:00.560' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (51, N'PEDAGÓGICA', 10, N'PROFESIONAL', NULL, N'10', N'EDUCACIÓN SECUNDARIA ESPECIALIDAD COMUNICACIÓN', 1, N'sys', CAST(N'2024-06-22T14:26:00.560' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (52, N'PEDAGÓGICA', 31, N'PROFESIONAL', NULL, N'31', N'E.T. ELECTRÓNICA', 1, N'sys', CAST(N'2024-06-22T14:26:00.560' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (52, N'PEDAGÓGICA', 31, N'PROFESIONAL', NULL, N'31', N'E.T. ELECTRÓNICA', 1, N'sys', CAST(N'2024-06-22T14:26:00.560' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (53, N'PEDAGÓGICA', 11, N'PROFESIONAL', NULL, N'11', N'E.S. MATEMÁTICA Y FÍSICA', 1, N'sys', CAST(N'2024-06-22T14:26:00.560' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (53, N'PEDAGÓGICA', 11, N'PROFESIONAL', NULL, N'11', N'E.S. MATEMÁTICA Y FÍSICA', 1, N'sys', CAST(N'2024-06-22T14:26:00.560' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (54, N'PEDAGÓGICA', 32, N'PROFESIONAL', NULL, N'32', N'E.T. EBANISTERÍA', 1, N'sys', CAST(N'2024-06-22T14:26:00.560' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (54, N'PEDAGÓGICA', 32, N'PROFESIONAL', NULL, N'32', N'E.T. EBANISTERÍA', 1, N'sys', CAST(N'2024-06-22T14:26:00.560' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (55, N'PEDAGÓGICA', 12, N'PROFESIONAL', NULL, N'12', N'EDUCACIÓN SECUNDARIA ESPECIALIDAD MATEMÁTICA', 1, N'sys', CAST(N'2024-06-22T14:26:00.560' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (55, N'PEDAGÓGICA', 12, N'PROFESIONAL', NULL, N'12', N'EDUCACIÓN SECUNDARIA ESPECIALIDAD MATEMÁTICA', 1, N'sys', CAST(N'2024-06-22T14:26:00.560' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (56, N'PEDAGÓGICA', 33, N'PROFESIONAL', NULL, N'33', N'E.T. INDUSTRIA DEL VESTIDO', 1, N'sys', CAST(N'2024-06-22T14:26:00.560' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (56, N'PEDAGÓGICA', 33, N'PROFESIONAL', NULL, N'33', N'E.T. INDUSTRIA DEL VESTIDO', 1, N'sys', CAST(N'2024-06-22T14:26:00.560' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (57, N'PEDAGÓGICA', 13, N'PROFESIONAL', NULL, N'13', N'E.S. CCSS Y FILOSOFÍA', 1, N'sys', CAST(N'2024-06-22T14:26:00.560' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (57, N'PEDAGÓGICA', 13, N'PROFESIONAL', NULL, N'13', N'E.S. CCSS Y FILOSOFÍA', 1, N'sys', CAST(N'2024-06-22T14:26:00.560' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (58, N'PEDAGÓGICA', 34, N'PROFESIONAL', NULL, N'34', N'E.T. INDUSTRIA DEL VESTIDO Y ALIMENTACIÓN Y ALTA COSTURA', 1, N'sys', CAST(N'2024-06-22T14:26:00.560' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (58, N'PEDAGÓGICA', 34, N'PROFESIONAL', NULL, N'34', N'E.T. INDUSTRIA DEL VESTIDO Y ALIMENTACIÓN Y ALTA COSTURA', 1, N'sys', CAST(N'2024-06-22T14:26:00.560' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (59, N'PEDAGÓGICA', 14, N'PROFESIONAL', NULL, N'14', N'EDUCACIÓN SECUNDARIA ESPECIALIDAD CIUDADANÍA Y CIENCIAS SOCIALES', 1, N'sys', CAST(N'2024-06-22T14:26:00.560' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (59, N'PEDAGÓGICA', 14, N'PROFESIONAL', NULL, N'14', N'EDUCACIÓN SECUNDARIA ESPECIALIDAD CIUDADANÍA Y CIENCIAS SOCIALES', 1, N'sys', CAST(N'2024-06-22T14:26:00.560' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (60, N'PEDAGÓGICA', 35, N'PROFESIONAL', NULL, N'35', N'EDUCACIÓN TÉCNICA EN INDUSTRIA DEL VESTIDO Y ALTA COSTURA', 1, N'sys', CAST(N'2024-06-22T14:26:00.560' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (60, N'PEDAGÓGICA', 35, N'PROFESIONAL', NULL, N'35', N'EDUCACIÓN TÉCNICA EN INDUSTRIA DEL VESTIDO Y ALTA COSTURA', 1, N'sys', CAST(N'2024-06-22T14:26:00.560' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (61, N'PEDAGÓGICA', 15, N'PROFESIONAL', NULL, N'15', N'E.S. CIENCIAS NATURALES', 1, N'sys', CAST(N'2024-06-22T14:26:00.560' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (61, N'PEDAGÓGICA', 15, N'PROFESIONAL', NULL, N'15', N'E.S. CIENCIAS NATURALES', 1, N'sys', CAST(N'2024-06-22T14:26:00.560' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (62, N'PEDAGÓGICA', 36, N'PROFESIONAL', NULL, N'36', N'EDUCACIÓN SECUNDARIA TÉCNICA ESPECIALIDAD INDUSTRIA DEL VESTIDO,INDUSTRIA ALIMENTARIA Y ARTESANÍA', 1, N'sys', CAST(N'2024-06-22T14:26:00.560' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (62, N'PEDAGÓGICA', 36, N'PROFESIONAL', NULL, N'36', N'EDUCACIÓN SECUNDARIA TÉCNICA ESPECIALIDAD INDUSTRIA DEL VESTIDO,INDUSTRIA ALIMENTARIA Y ARTESANÍA', 1, N'sys', CAST(N'2024-06-22T14:26:00.560' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (63, N'PEDAGÓGICA', 16, N'PROFESIONAL', NULL, N'16', N'EDUCACIÓN SECUNDARIA ESPECIALIDAD CIENCIA Y TECNOLOGÍA', 1, N'sys', CAST(N'2024-06-22T14:26:00.560' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (63, N'PEDAGÓGICA', 16, N'PROFESIONAL', NULL, N'16', N'EDUCACIÓN SECUNDARIA ESPECIALIDAD CIENCIA Y TECNOLOGÍA', 1, N'sys', CAST(N'2024-06-22T14:26:00.560' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (64, N'PEDAGÓGICA', 37, N'PROFESIONAL', NULL, N'37', N'E.T. INDUSTRIA ALIMENTARIA', 1, N'sys', CAST(N'2024-06-22T14:26:00.560' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (64, N'PEDAGÓGICA', 37, N'PROFESIONAL', NULL, N'37', N'E.T. INDUSTRIA ALIMENTARIA', 1, N'sys', CAST(N'2024-06-22T14:26:00.560' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (65, N'PEDAGÓGICA', 17, N'PROFESIONAL', NULL, N'17', N'E.S. ALIMENTACIÓN Y NUTRICIÓN', 1, N'sys', CAST(N'2024-06-22T14:26:00.560' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (65, N'PEDAGÓGICA', 17, N'PROFESIONAL', NULL, N'17', N'E.S. ALIMENTACIÓN Y NUTRICIÓN', 1, N'sys', CAST(N'2024-06-22T14:26:00.560' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (66, N'PEDAGÓGICA', 38, N'PROFESIONAL', NULL, N'38', N'E.T. MECÁNICA AUTOMOTRIZ', 1, N'sys', CAST(N'2024-06-22T14:26:00.560' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (66, N'PEDAGÓGICA', 38, N'PROFESIONAL', NULL, N'38', N'E.T. MECÁNICA AUTOMOTRIZ', 1, N'sys', CAST(N'2024-06-22T14:26:00.560' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (67, N'PEDAGÓGICA', 18, N'PROFESIONAL', NULL, N'18', N'E.S. BIOLOGÍA Y QUÍMICA', 1, N'sys', CAST(N'2024-06-22T14:26:00.560' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (67, N'PEDAGÓGICA', 18, N'PROFESIONAL', NULL, N'18', N'E.S. BIOLOGÍA Y QUÍMICA', 1, N'sys', CAST(N'2024-06-22T14:26:00.560' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (68, N'PEDAGÓGICA', 39, N'PROFESIONAL', NULL, N'39', N'E.T. MECÁNICA DE PRODUCCIÓN', 1, N'sys', CAST(N'2024-06-22T14:26:00.560' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (68, N'PEDAGÓGICA', 39, N'PROFESIONAL', NULL, N'39', N'E.T. MECÁNICA DE PRODUCCIÓN', 1, N'sys', CAST(N'2024-06-22T14:26:00.560' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (69, N'PEDAGÓGICA', 19, N'PROFESIONAL', NULL, N'19', N'E.S. HISTORIA Y GEOGRAFÍA', 1, N'sys', CAST(N'2024-06-22T14:26:00.560' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (69, N'PEDAGÓGICA', 19, N'PROFESIONAL', NULL, N'19', N'E.S. HISTORIA Y GEOGRAFÍA', 1, N'sys', CAST(N'2024-06-22T14:26:00.560' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (70, N'PEDAGÓGICA', 40, N'PROFESIONAL', NULL, N'40', N'E.T. MECÁNICA DE PRODUCCIÓN Y SOLDADURA', 1, N'sys', CAST(N'2024-06-22T14:26:00.560' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (70, N'PEDAGÓGICA', 40, N'PROFESIONAL', NULL, N'40', N'E.T. MECÁNICA DE PRODUCCIÓN Y SOLDADURA', 1, N'sys', CAST(N'2024-06-22T14:26:00.560' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (71, N'PEDAGÓGICA', 20, N'PROFESIONAL', NULL, N'20', N'E.S. CC.HH. SOCIALES', 1, N'sys', CAST(N'2024-06-22T14:26:00.563' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (71, N'PEDAGÓGICA', 20, N'PROFESIONAL', NULL, N'20', N'E.S. CC.HH. SOCIALES', 1, N'sys', CAST(N'2024-06-22T14:26:00.563' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (72, N'PEDAGÓGICA', 41, N'PROFESIONAL', NULL, N'41', N'EDUCACIÓN PARA EL TRABAJO: TEXTIL Y CONFECCIÓN', 1, N'sys', CAST(N'2024-06-22T14:26:00.563' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (72, N'PEDAGÓGICA', 41, N'PROFESIONAL', NULL, N'41', N'EDUCACIÓN PARA EL TRABAJO: TEXTIL Y CONFECCIÓN', 1, N'sys', CAST(N'2024-06-22T14:26:00.563' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (73, N'PEDAGÓGICA', 21, N'PROFESIONAL', NULL, N'21', N'IDIOMAS ESPECIALIDAD INGLÉS 42 42 OTRO', 1, N'sys', CAST(N'2024-06-22T14:26:00.563' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (73, N'PEDAGÓGICA', 21, N'PROFESIONAL', NULL, N'21', N'IDIOMAS ESPECIALIDAD INGLÉS 42 42 OTRO', 1, N'sys', CAST(N'2024-06-22T14:26:00.563' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (74, N'TECNOLÓGICA', 33, N'PROFESIONAL TÉCNICO', 3, N'M29692001', N'ABASTECIMIENTO', 1, N'sys', CAST(N'2024-06-22T15:21:18.003' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (74, N'TECNOLÓGICA', 33, N'PROFESIONAL TÉCNICO', 3, N'M29692001', N'ABASTECIMIENTO', 1, N'sys', CAST(N'2024-06-22T15:21:18.003' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (75, N'TECNOLÓGICA', 34, N'PROFESIONAL TÉCNICO', 3, N'000831015', N'ACUICULTURA', 1, N'sys', CAST(N'2024-06-22T15:21:18.003' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (75, N'TECNOLÓGICA', 34, N'PROFESIONAL TÉCNICO', 3, N'000831015', N'ACUICULTURA', 1, N'sys', CAST(N'2024-06-22T15:21:18.003' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (76, N'TECNOLÓGICA', 35, N'PROFESIONAL TÉCNICO', 3, N'000413015', N'ADMINISTRACIÓN', 1, N'sys', CAST(N'2024-06-22T15:21:18.003' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (76, N'TECNOLÓGICA', 35, N'PROFESIONAL TÉCNICO', 3, N'000413015', N'ADMINISTRACIÓN', 1, N'sys', CAST(N'2024-06-22T15:21:18.003' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (77, N'TECNOLÓGICA', 36, N'PROFESIONAL TÉCNICO', 3, N'000412015', N'ADMINISTRACIÓN BANCARIA', 1, N'sys', CAST(N'2024-06-22T15:21:18.003' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (77, N'TECNOLÓGICA', 36, N'PROFESIONAL TÉCNICO', 3, N'000412015', N'ADMINISTRACIÓN BANCARIA', 1, N'sys', CAST(N'2024-06-22T15:21:18.003' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (78, N'TECNOLÓGICA', 37, N'PROFESIONAL TÉCNICO', 3, N'k27642002', N'ADMINISTRACIÓN BANCARIA (POR COMPETENCIAS)', 1, N'sys', CAST(N'2024-06-22T15:21:18.003' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (78, N'TECNOLÓGICA', 37, N'PROFESIONAL TÉCNICO', 3, N'k27642002', N'ADMINISTRACIÓN BANCARIA (POR COMPETENCIAS)', 1, N'sys', CAST(N'2024-06-22T15:21:18.003' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (79, N'TECNOLÓGICA', 38, N'PROFESIONAL TÉCNICO', 3, N'000412025', N'ADMINISTRACIÓN BANCARIA POR COMPETENCIAS', 1, N'sys', CAST(N'2024-06-22T15:21:18.003' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (79, N'TECNOLÓGICA', 38, N'PROFESIONAL TÉCNICO', 3, N'000412025', N'ADMINISTRACIÓN BANCARIA POR COMPETENCIAS', 1, N'sys', CAST(N'2024-06-22T15:21:18.003' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (80, N'TECNOLÓGICA', 39, N'PROFESIONAL TÉCNICO', 3, N'000412035', N'ADMINISTRACIÓN BANCARIA Y FINANCIERA', 1, N'sys', CAST(N'2024-06-22T15:21:18.003' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (80, N'TECNOLÓGICA', 39, N'PROFESIONAL TÉCNICO', 3, N'000412035', N'ADMINISTRACIÓN BANCARIA Y FINANCIERA', 1, N'sys', CAST(N'2024-06-22T15:21:18.003' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (81, N'TECNOLÓGICA', 40, N'PROFESIONAL TÉCNICO', 3, N'000413025', N'ADMINISTRACIÓN DE AEROPUERTOS', 1, N'sys', CAST(N'2024-06-22T15:21:18.003' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (81, N'TECNOLÓGICA', 40, N'PROFESIONAL TÉCNICO', 3, N'000413025', N'ADMINISTRACIÓN DE AEROPUERTOS', 1, N'sys', CAST(N'2024-06-22T15:21:18.003' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (82, N'TECNOLÓGICA', 41, N'PROFESIONAL TÉCNICO', 3, N'000413035', N'ADMINISTRACIÓN DE AGENCIA DE VIAJES', 1, N'sys', CAST(N'2024-06-22T15:21:18.003' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (82, N'TECNOLÓGICA', 41, N'PROFESIONAL TÉCNICO', 3, N'000413035', N'ADMINISTRACIÓN DE AGENCIA DE VIAJES', 1, N'sys', CAST(N'2024-06-22T15:21:18.003' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (83, N'TECNOLÓGICA', 42, N'PROFESIONAL TÉCNICO', 3, N'k27642004', N'ADMINISTRACIÓN DE BANCA Y FINANZAS', 1, N'sys', CAST(N'2024-06-22T15:21:18.003' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (83, N'TECNOLÓGICA', 42, N'PROFESIONAL TÉCNICO', 3, N'k27642004', N'ADMINISTRACIÓN DE BANCA Y FINANZAS', 1, N'sys', CAST(N'2024-06-22T15:21:18.003' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (84, N'TECNOLÓGICA', 43, N'PROFESIONAL TÉCNICO', 3, N'000012015', N'ADMINISTRACIÓN DE BAR', 1, N'sys', CAST(N'2024-06-22T15:21:18.003' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (84, N'TECNOLÓGICA', 43, N'PROFESIONAL TÉCNICO', 3, N'000012015', N'ADMINISTRACIÓN DE BAR', 1, N'sys', CAST(N'2024-06-22T15:21:18.003' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (85, N'TECNOLÓGICA', 44, N'PROFESIONAL TÉCNICO', 3, N'000612015', N'ADMINISTRACIÓN DE CENTRO DE COMPUTO', 1, N'sys', CAST(N'2024-06-22T15:29:59.037' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (85, N'TECNOLÓGICA', 44, N'PROFESIONAL TÉCNICO', 3, N'000612015', N'ADMINISTRACIÓN DE CENTRO DE COMPUTO', 1, N'sys', CAST(N'2024-06-22T15:29:59.037' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (86, N'TECNOLÓGICA', 45, N'PROFESIONAL TÉCNICO', 3, N'J26623004', N'ADMINISTRACIÓN DE CENTROS DE COMPUTO', 1, N'sys', CAST(N'2024-06-22T15:29:59.037' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (86, N'TECNOLÓGICA', 45, N'PROFESIONAL TÉCNICO', 3, N'J26623004', N'ADMINISTRACIÓN DE CENTROS DE COMPUTO', 1, N'sys', CAST(N'2024-06-22T15:29:59.037' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (87, N'TECNOLÓGICA', 46, N'PROFESIONAL TÉCNICO', 3, N'000413045', N'ADMINISTRACIÓN DE EMPRESAS', 1, N'sys', CAST(N'2024-06-22T15:29:59.037' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (87, N'TECNOLÓGICA', 46, N'PROFESIONAL TÉCNICO', 3, N'000413045', N'ADMINISTRACIÓN DE EMPRESAS', 1, N'sys', CAST(N'2024-06-22T15:29:59.037' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (88, N'TECNOLÓGICA', 47, N'PROFESIONAL TÉCNICO', 3, N'000413055', N'ADMINISTRACIÓN DE EMPRESAS CON MENCIÓN EN AGRONEGOCIOS', 1, N'sys', CAST(N'2024-06-22T15:29:59.037' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (88, N'TECNOLÓGICA', 47, N'PROFESIONAL TÉCNICO', 3, N'000413055', N'ADMINISTRACIÓN DE EMPRESAS CON MENCIÓN EN AGRONEGOCIOS', 1, N'sys', CAST(N'2024-06-22T15:29:59.037' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (89, N'TECNOLÓGICA', 48, N'PROFESIONAL TÉCNICO', 3, N'000413065', N'ADMINISTRACIÓN DE EMPRESAS CON MENCIÓN EN EMPRESAS INDUSTRIALES', 1, N'sys', CAST(N'2024-06-22T15:29:59.037' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (89, N'TECNOLÓGICA', 48, N'PROFESIONAL TÉCNICO', 3, N'000413065', N'ADMINISTRACIÓN DE EMPRESAS CON MENCIÓN EN EMPRESAS INDUSTRIALES', 1, N'sys', CAST(N'2024-06-22T15:29:59.037' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (90, N'TECNOLÓGICA', 49, N'PROFESIONAL TÉCNICO', 3, N'000413075', N'ADMINISTRACIÓN DE EMPRESAS CON MENCIÓN EN FINANZAS', 1, N'sys', CAST(N'2024-06-22T15:29:59.040' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (90, N'TECNOLÓGICA', 49, N'PROFESIONAL TÉCNICO', 3, N'000413075', N'ADMINISTRACIÓN DE EMPRESAS CON MENCIÓN EN FINANZAS', 1, N'sys', CAST(N'2024-06-22T15:29:59.040' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (91, N'TECNOLÓGICA', 50, N'PROFESIONAL TÉCNICO', 3, N'000413085', N'ADMINISTRACIÓN DE EMPRESAS CON MENCIÓN EN GESTIÓN EMPRESARIAL', 1, N'sys', CAST(N'2024-06-22T15:29:59.040' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (91, N'TECNOLÓGICA', 50, N'PROFESIONAL TÉCNICO', 3, N'000413085', N'ADMINISTRACIÓN DE EMPRESAS CON MENCIÓN EN GESTIÓN EMPRESARIAL', 1, N'sys', CAST(N'2024-06-22T15:29:59.040' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (92, N'TECNOLÓGICA', 51, N'PROFESIONAL TÉCNICO', 3, N'000413095', N'ADMINISTRACIÓN DE EMPRESAS DE TRANSPORTES', 1, N'sys', CAST(N'2024-06-22T15:29:59.040' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (92, N'TECNOLÓGICA', 51, N'PROFESIONAL TÉCNICO', 3, N'000413095', N'ADMINISTRACIÓN DE EMPRESAS DE TRANSPORTES', 1, N'sys', CAST(N'2024-06-22T15:29:59.040' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (93, N'TECNOLÓGICA', 52, N'PROFESIONAL TÉCNICO', 3, N'000014015', N'ADMINISTRACIÓN DE EMPRESAS TURÍSTICAS', 1, N'sys', CAST(N'2024-06-22T15:29:59.040' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (93, N'TECNOLÓGICA', 52, N'PROFESIONAL TÉCNICO', 3, N'000014015', N'ADMINISTRACIÓN DE EMPRESAS TURÍSTICAS', 1, N'sys', CAST(N'2024-06-22T15:29:59.040' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (94, N'TECNOLÓGICA', 53, N'PROFESIONAL TÉCNICO', 3, N'000014025', N'ADMINISTRACIÓN DE EMPRESAS TURÍSTICAS Y HOTELERAS', 1, N'sys', CAST(N'2024-06-22T15:29:59.040' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (94, N'TECNOLÓGICA', 53, N'PROFESIONAL TÉCNICO', 3, N'000014025', N'ADMINISTRACIÓN DE EMPRESAS TURÍSTICAS Y HOTELERAS', 1, N'sys', CAST(N'2024-06-22T15:29:59.040' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (95, N'TECNOLÓGICA', 54, N'PROFESIONAL TÉCNICO', 3, N'000413105', N'ADMINISTRACIÓN DE EMPRESAS Y CONTABILIDAD', 1, N'sys', CAST(N'2024-06-22T15:29:59.040' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (95, N'TECNOLÓGICA', 54, N'PROFESIONAL TÉCNICO', 3, N'000413105', N'ADMINISTRACIÓN DE EMPRESAS Y CONTABILIDAD', 1, N'sys', CAST(N'2024-06-22T15:29:59.040' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (96, N'TECNOLÓGICA', 55, N'PROFESIONAL TÉCNICO', 3, N'EST000693', N'ADMINISTRACIÓN DE EMPRESAS Y GESTIÓN DE EQUIPOS', 1, N'sys', CAST(N'2024-06-22T15:29:59.040' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (96, N'TECNOLÓGICA', 55, N'PROFESIONAL TÉCNICO', 3, N'EST000693', N'ADMINISTRACIÓN DE EMPRESAS Y GESTIÓN DE EQUIPOS', 1, N'sys', CAST(N'2024-06-22T15:29:59.040' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (97, N'TECNOLÓGICA', 56, N'PROFESIONAL TÉCNICO', 3, N'EST000694', N'ADMINISTRACIÓN DE EMPRESAS Y GESTIÓN DE MARKETING', 1, N'sys', CAST(N'2024-06-22T15:29:59.043' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (97, N'TECNOLÓGICA', 56, N'PROFESIONAL TÉCNICO', 3, N'EST000694', N'ADMINISTRACIÓN DE EMPRESAS Y GESTIÓN DE MARKETING', 1, N'sys', CAST(N'2024-06-22T15:29:59.043' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (98, N'TECNOLÓGICA', 57, N'PROFESIONAL TÉCNICO', 3, N'EST000695', N'ADMINISTRACIÓN DE EMPRESAS Y GESTIÓN DE RECURSOS HUMANOS', 1, N'sys', CAST(N'2024-06-22T15:32:38.110' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (98, N'TECNOLÓGICA', 57, N'PROFESIONAL TÉCNICO', 3, N'EST000695', N'ADMINISTRACIÓN DE EMPRESAS Y GESTIÓN DE RECURSOS HUMANOS', 1, N'sys', CAST(N'2024-06-22T15:32:38.110' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (99, N'TECNOLÓGICA', 58, N'PROFESIONAL TÉCNICO', 3, N'EST000696', N'ADMINISTRACIÓN DE EMPRESAS Y GESTIÓN FINANCIERA', 1, N'sys', CAST(N'2024-06-22T15:32:38.110' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (99, N'TECNOLÓGICA', 58, N'PROFESIONAL TÉCNICO', 3, N'EST000696', N'ADMINISTRACIÓN DE EMPRESAS Y GESTIÓN FINANCIERA', 1, N'sys', CAST(N'2024-06-22T15:32:38.110' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (100, N'TECNOLÓGICA', 59, N'PROFESIONAL TÉCNICO', 3, N'000012025', N'ADMINISTRACIÓN DE HOSTELERÍA', 1, N'sys', CAST(N'2024-06-22T15:32:38.110' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (100, N'TECNOLÓGICA', 59, N'PROFESIONAL TÉCNICO', 3, N'000012025', N'ADMINISTRACIÓN DE HOSTELERÍA', 1, N'sys', CAST(N'2024-06-22T15:32:38.110' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (101, N'TECNOLÓGICA', 60, N'PROFESIONAL TÉCNICO', 3, N'I25552002', N'ADMINISTRACIÓN DE HOTELES', 1, N'sys', CAST(N'2024-06-22T15:32:38.110' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (101, N'TECNOLÓGICA', 60, N'PROFESIONAL TÉCNICO', 3, N'I25552002', N'ADMINISTRACIÓN DE HOTELES', 1, N'sys', CAST(N'2024-06-22T15:32:38.110' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (102, N'TECNOLÓGICA', 61, N'PROFESIONAL TÉCNICO', 3, N'000012035', N'ADMINISTRACIÓN DE HOTELES Y RESTAURANTES', 1, N'sys', CAST(N'2024-06-22T15:32:38.110' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (102, N'TECNOLÓGICA', 61, N'PROFESIONAL TÉCNICO', 3, N'000012035', N'ADMINISTRACIÓN DE HOTELES Y RESTAURANTES', 1, N'sys', CAST(N'2024-06-22T15:32:38.110' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (103, N'TECNOLÓGICA', 62, N'PROFESIONAL TÉCNICO', 3, N'000012045', N'ADMINISTRACIÓN DE HOTELES, RESTAURANTES Y AFINES', 1, N'sys', CAST(N'2024-06-22T15:32:38.110' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (103, N'TECNOLÓGICA', 62, N'PROFESIONAL TÉCNICO', 3, N'000012045', N'ADMINISTRACIÓN DE HOTELES, RESTAURANTES Y AFINES', 1, N'sys', CAST(N'2024-06-22T15:32:38.110' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (104, N'TECNOLÓGICA', 63, N'PROFESIONAL TÉCNICO', 3, N'000014035', N'ADMINISTRACIÓN DE INDUSTRIAS TURÍSTICAS Y HOTELERAS', 1, N'sys', CAST(N'2024-06-22T15:32:38.110' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (104, N'TECNOLÓGICA', 63, N'PROFESIONAL TÉCNICO', 3, N'000014035', N'ADMINISTRACIÓN DE INDUSTRIAS TURÍSTICAS Y HOTELERAS', 1, N'sys', CAST(N'2024-06-22T15:32:38.110' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (105, N'TECNOLÓGICA', 64, N'PROFESIONAL TÉCNICO', 3, N'000413115', N'ADMINISTRACIÓN DE NEGOCIOS', 1, N'sys', CAST(N'2024-06-22T15:32:38.110' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (105, N'TECNOLÓGICA', 64, N'PROFESIONAL TÉCNICO', 3, N'000413115', N'ADMINISTRACIÓN DE NEGOCIOS', 1, N'sys', CAST(N'2024-06-22T15:32:38.110' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (106, N'TECNOLÓGICA', 65, N'PROFESIONAL TÉCNICO', 3, N'000413125', N'ADMINISTRACIÓN DE NEGOCIOS AGROPECUARIOS', 1, N'sys', CAST(N'2024-06-22T15:32:38.110' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (106, N'TECNOLÓGICA', 65, N'PROFESIONAL TÉCNICO', 3, N'000413125', N'ADMINISTRACIÓN DE NEGOCIOS AGROPECUARIOS', 1, N'sys', CAST(N'2024-06-22T15:32:38.110' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (107, N'TECNOLÓGICA', 66, N'PROFESIONAL TÉCNICO', 3, N'000412045', N'ADMINISTRACIÓN DE NEGOCIOS BANCARIOS Y FINANCIEROS', 1, N'sys', CAST(N'2024-06-22T15:32:38.110' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (107, N'TECNOLÓGICA', 66, N'PROFESIONAL TÉCNICO', 3, N'000412045', N'ADMINISTRACIÓN DE NEGOCIOS BANCARIOS Y FINANCIEROS', 1, N'sys', CAST(N'2024-06-22T15:32:38.110' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (108, N'TECNOLÓGICA', 67, N'PROFESIONAL TÉCNICO', 3, N'EST000697', N'ADMINISTRACIÓN DE NEGOCIOS BANCARIOS Y MICROFINANZAS', 1, N'sys', CAST(N'2024-06-22T15:32:38.110' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (108, N'TECNOLÓGICA', 67, N'PROFESIONAL TÉCNICO', 3, N'EST000697', N'ADMINISTRACIÓN DE NEGOCIOS BANCARIOS Y MICROFINANZAS', 1, N'sys', CAST(N'2024-06-22T15:32:38.110' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (109, N'TECNOLÓGICA', 68, N'PROFESIONAL TÉCNICO', 3, N'EST000698', N'ADMINISTRACIÓN DE NEGOCIOS BANCARIOS, FINANCIEROS Y BANCA DIGITAL', 1, N'sys', CAST(N'2024-06-22T15:32:38.110' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (109, N'TECNOLÓGICA', 68, N'PROFESIONAL TÉCNICO', 3, N'EST000698', N'ADMINISTRACIÓN DE NEGOCIOS BANCARIOS, FINANCIEROS Y BANCA DIGITAL', 1, N'sys', CAST(N'2024-06-22T15:32:38.110' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (110, N'TECNOLÓGICA', 69, N'PROFESIONAL TÉCNICO', 3, N'EST000699', N'ADMINISTRACIÓN DE NEGOCIOS BANCARIOS, FINANCIEROS Y GESTIÓN DE EQUIPOS', 1, N'sys', CAST(N'2024-06-22T15:32:38.110' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (110, N'TECNOLÓGICA', 69, N'PROFESIONAL TÉCNICO', 3, N'EST000699', N'ADMINISTRACIÓN DE NEGOCIOS BANCARIOS, FINANCIEROS Y GESTIÓN DE EQUIPOS', 1, N'sys', CAST(N'2024-06-22T15:32:38.110' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (111, N'TECNOLÓGICA', 70, N'PROFESIONAL TÉCNICO', 3, N'000416015', N'ADMINISTRACIÓN DE NEGOCIOS INTERNACIONALES', 1, N'sys', CAST(N'2024-06-22T15:32:38.110' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (111, N'TECNOLÓGICA', 70, N'PROFESIONAL TÉCNICO', 3, N'000416015', N'ADMINISTRACIÓN DE NEGOCIOS INTERNACIONALES', 1, N'sys', CAST(N'2024-06-22T15:32:38.110' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (112, N'TECNOLÓGICA', 71, N'PROFESIONAL TÉCNICO', 3, N'000014045', N'ADMINISTRACIÓN DE NEGOCIOS INTERNACIONALES DE TURISMO', 1, N'sys', CAST(N'2024-06-22T15:32:38.110' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (112, N'TECNOLÓGICA', 71, N'PROFESIONAL TÉCNICO', 3, N'000014045', N'ADMINISTRACIÓN DE NEGOCIOS INTERNACIONALES DE TURISMO', 1, N'sys', CAST(N'2024-06-22T15:32:38.110' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (113, N'TECNOLÓGICA', 72, N'PROFESIONAL TÉCNICO', 3, N'EST000700', N'ADMINISTRACIÓN DE NEGOCIOS INTERNACIONALES Y GESTIÓN DE FINANZAS INTERNACIONALES', 1, N'sys', CAST(N'2024-06-22T15:32:38.110' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (113, N'TECNOLÓGICA', 72, N'PROFESIONAL TÉCNICO', 3, N'EST000700', N'ADMINISTRACIÓN DE NEGOCIOS INTERNACIONALES Y GESTIÓN DE FINANZAS INTERNACIONALES', 1, N'sys', CAST(N'2024-06-22T15:32:38.110' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (114, N'TECNOLÓGICA', 73, N'PROFESIONAL TÉCNICO', 3, N'EST000701', N'ADMINISTRACIÓN DE NEGOCIOS INTERNACIONALES Y MARKETING INTERNACIONAL', 1, N'sys', CAST(N'2024-06-22T15:32:38.110' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (114, N'TECNOLÓGICA', 73, N'PROFESIONAL TÉCNICO', 3, N'EST000701', N'ADMINISTRACIÓN DE NEGOCIOS INTERNACIONALES Y MARKETING INTERNACIONAL', 1, N'sys', CAST(N'2024-06-22T15:32:38.110' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (115, N'TECNOLÓGICA', 74, N'PROFESIONAL TÉCNICO', 3, N'M29792004', N'ADMINISTRACIÓN DE NEGOCIOS TURÍSTICOS', 1, N'sys', CAST(N'2024-06-22T15:32:38.110' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (115, N'TECNOLÓGICA', 74, N'PROFESIONAL TÉCNICO', 3, N'M29792004', N'ADMINISTRACIÓN DE NEGOCIOS TURÍSTICOS', 1, N'sys', CAST(N'2024-06-22T15:32:38.110' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (116, N'TECNOLÓGICA', 75, N'PROFESIONAL TÉCNICO', 3, N'M29822006', N'ADMINISTRACIÓN DE NEGOCIOS Y GESTIÓN DEL EMPRENDIMIENTO', 1, N'sys', CAST(N'2024-06-22T15:32:38.110' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (116, N'TECNOLÓGICA', 75, N'PROFESIONAL TÉCNICO', 3, N'M29822006', N'ADMINISTRACIÓN DE NEGOCIOS Y GESTIÓN DEL EMPRENDIMIENTO', 1, N'sys', CAST(N'2024-06-22T15:32:38.110' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (117, N'TECNOLÓGICA', 76, N'PROFESIONAL TÉCNICO', 3, N'000413135', N'ADMINISTRACIÓN DE NEGOCIOS Y VENTAS', 1, N'sys', CAST(N'2024-06-22T15:32:38.110' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (117, N'TECNOLÓGICA', 76, N'PROFESIONAL TÉCNICO', 3, N'000413135', N'ADMINISTRACIÓN DE NEGOCIOS Y VENTAS', 1, N'sys', CAST(N'2024-06-22T15:32:38.110' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (118, N'TECNOLÓGICA', 77, N'PROFESIONAL TÉCNICO', 3, N'000412055', N'ADMINISTRACIÓN DE OPERACIONES BANCARIAS Y FINANCIERAS', 1, N'sys', CAST(N'2024-06-22T15:32:38.110' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (118, N'TECNOLÓGICA', 77, N'PROFESIONAL TÉCNICO', 3, N'000412055', N'ADMINISTRACIÓN DE OPERACIONES BANCARIAS Y FINANCIERAS', 1, N'sys', CAST(N'2024-06-22T15:32:38.110' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (119, N'TECNOLÓGICA', 78, N'PROFESIONAL TÉCNICO', 3, N'000014055', N'ADMINISTRACIÓN DE OPERACIONES TURÍSTICAS', 1, N'sys', CAST(N'2024-06-22T15:32:38.110' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (119, N'TECNOLÓGICA', 78, N'PROFESIONAL TÉCNICO', 3, N'000014055', N'ADMINISTRACIÓN DE OPERACIONES TURÍSTICAS', 1, N'sys', CAST(N'2024-06-22T15:32:38.110' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (120, N'TECNOLÓGICA', 79, N'PROFESIONAL TÉCNICO', 3, N'000612025', N'ADMINISTRACIÓN DE PLATAFORMAS Y SERVICIOS WEB', 1, N'sys', CAST(N'2024-06-22T15:32:38.110' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (120, N'TECNOLÓGICA', 79, N'PROFESIONAL TÉCNICO', 3, N'000612025', N'ADMINISTRACIÓN DE PLATAFORMAS Y SERVICIOS WEB', 1, N'sys', CAST(N'2024-06-22T15:32:38.110' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (121, N'TECNOLÓGICA', 80, N'PROFESIONAL TÉCNICO', 3, N'M29822008', N'ADMINISTRACIÓN DE RECURSOS AGROPECUARIOS Y FORESTALES', 1, N'sys', CAST(N'2024-06-22T15:32:38.110' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (121, N'TECNOLÓGICA', 80, N'PROFESIONAL TÉCNICO', 3, N'M29822008', N'ADMINISTRACIÓN DE RECURSOS AGROPECUARIOS Y FORESTALES', 1, N'sys', CAST(N'2024-06-22T15:32:38.110' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (122, N'TECNOLÓGICA', 81, N'PROFESIONAL TÉCNICO', 3, N'000821015', N'ADMINISTRACIÓN DE RECURSOS FORESTALES', 1, N'sys', CAST(N'2024-06-22T15:32:38.110' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (122, N'TECNOLÓGICA', 81, N'PROFESIONAL TÉCNICO', 3, N'000821015', N'ADMINISTRACIÓN DE RECURSOS FORESTALES', 1, N'sys', CAST(N'2024-06-22T15:32:38.110' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (123, N'TECNOLÓGICA', 82, N'PROFESIONAL TÉCNICO', 3, N'000418015', N'ADMINISTRACIÓN DE RECURSOS HUMANOS', 1, N'sys', CAST(N'2024-06-22T15:32:38.110' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (123, N'TECNOLÓGICA', 82, N'PROFESIONAL TÉCNICO', 3, N'000418015', N'ADMINISTRACIÓN DE RECURSOS HUMANOS', 1, N'sys', CAST(N'2024-06-22T15:32:38.110' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (124, N'TECNOLÓGICA', 83, N'PROFESIONAL TÉCNICO', 3, N'000612035', N'ADMINISTRACIÓN DE REDES Y COMUNICACIONES', 1, N'sys', CAST(N'2024-06-22T15:32:38.110' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (124, N'TECNOLÓGICA', 83, N'PROFESIONAL TÉCNICO', 3, N'000612035', N'ADMINISTRACIÓN DE REDES Y COMUNICACIONES', 1, N'sys', CAST(N'2024-06-22T15:32:38.110' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (125, N'TECNOLÓGICA', 84, N'PROFESIONAL TÉCNICO', 3, N'000612045', N'ADMINISTRACIÓN DE REDES Y COMUNICACIONES CON MENCIÓN EN VIRTUALIZACIÓN Y SEGURIDAD INFORMÁTICA', 1, N'sys', CAST(N'2024-06-22T15:32:38.110' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (125, N'TECNOLÓGICA', 84, N'PROFESIONAL TÉCNICO', 3, N'000612045', N'ADMINISTRACIÓN DE REDES Y COMUNICACIONES CON MENCIÓN EN VIRTUALIZACIÓN Y SEGURIDAD INFORMÁTICA', 1, N'sys', CAST(N'2024-06-22T15:32:38.110' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (126, N'TECNOLÓGICA', 85, N'PROFESIONAL TÉCNICO', 3, N'I25562001', N'ADMINISTRACIÓN DE RESTAURANTES', 1, N'sys', CAST(N'2024-06-22T15:32:38.110' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (126, N'TECNOLÓGICA', 85, N'PROFESIONAL TÉCNICO', 3, N'I25562001', N'ADMINISTRACIÓN DE RESTAURANTES', 1, N'sys', CAST(N'2024-06-22T15:32:38.110' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (127, N'TECNOLÓGICA', 86, N'PROFESIONAL TÉCNICO', 3, N'000412065', N'ADMINISTRACIÓN DE SEGUROS', 1, N'sys', CAST(N'2024-06-22T15:32:38.110' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (127, N'TECNOLÓGICA', 86, N'PROFESIONAL TÉCNICO', 3, N'000412065', N'ADMINISTRACIÓN DE SEGUROS', 1, N'sys', CAST(N'2024-06-22T15:32:38.110' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (128, N'TECNOLÓGICA', 87, N'PROFESIONAL TÉCNICO', 3, N'000012055', N'ADMINISTRACIÓN DE SERVICIOS DE HOSTELERÍA', 1, N'sys', CAST(N'2024-06-22T15:32:38.110' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (128, N'TECNOLÓGICA', 87, N'PROFESIONAL TÉCNICO', 3, N'000012055', N'ADMINISTRACIÓN DE SERVICIOS DE HOSTELERÍA', 1, N'sys', CAST(N'2024-06-22T15:32:38.110' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (129, N'TECNOLÓGICA', 88, N'PROFESIONAL TÉCNICO', 3, N'000012065', N'ADMINISTRACIÓN DE SERVICIOS DE HOSTELERÍA Y RESTAURANTES', 1, N'sys', CAST(N'2024-06-22T15:32:38.110' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (129, N'TECNOLÓGICA', 88, N'PROFESIONAL TÉCNICO', 3, N'000012065', N'ADMINISTRACIÓN DE SERVICIOS DE HOSTELERÍA Y RESTAURANTES', 1, N'sys', CAST(N'2024-06-22T15:32:38.110' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (130, N'TECNOLÓGICA', 89, N'PROFESIONAL TÉCNICO', 3, N'000012075', N'ADMINISTRACIÓN DE SERVICIOS DE HOSTELERÍA Y RESTAURANTES CON MENCIÓN EN GERENCIA DE LA', 1, N'sys', CAST(N'2024-06-22T15:32:38.110' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (130, N'TECNOLÓGICA', 89, N'PROFESIONAL TÉCNICO', 3, N'000012075', N'ADMINISTRACIÓN DE SERVICIOS DE HOSTELERÍA Y RESTAURANTES CON MENCIÓN EN GERENCIA DE LA', 1, N'sys', CAST(N'2024-06-22T15:32:38.110' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (131, N'TECNOLÓGICA', 90, N'PROFESIONAL TÉCNICO', 3, N'I25552005', N'ADMINISTRACIÓN DE SERVICIOS DE HOTELERÍA', 1, N'sys', CAST(N'2024-06-22T15:32:38.110' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (131, N'TECNOLÓGICA', 90, N'PROFESIONAL TÉCNICO', 3, N'I25552005', N'ADMINISTRACIÓN DE SERVICIOS DE HOTELERÍA', 1, N'sys', CAST(N'2024-06-22T15:32:38.110' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (132, N'TECNOLÓGICA', 91, N'PROFESIONAL TÉCNICO', 3, N'000413145', N'ADMINISTRACIÓN DE SERVICIOS DE POSTALES', 1, N'sys', CAST(N'2024-06-22T15:32:38.110' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (132, N'TECNOLÓGICA', 91, N'PROFESIONAL TÉCNICO', 3, N'000413145', N'ADMINISTRACIÓN DE SERVICIOS DE POSTALES', 1, N'sys', CAST(N'2024-06-22T15:32:38.110' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (133, N'TECNOLÓGICA', 92, N'PROFESIONAL TÉCNICO', 3, N'003325014', N'ADMINISTRACIÓN DE SERVICIOS EN HOSTELERÍA', 1, N'sys', CAST(N'2024-06-22T15:32:38.123' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (133, N'TECNOLÓGICA', 92, N'PROFESIONAL TÉCNICO', 3, N'003325014', N'ADMINISTRACIÓN DE SERVICIOS EN HOSTELERÍA', 1, N'sys', CAST(N'2024-06-22T15:32:38.123' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (134, N'TECNOLÓGICA', 93, N'PROFESIONAL TÉCNICO', 3, N'M29792005', N'ADMINISTRACIÓN DE SERVICIOS TURÍSTICOS', 1, N'sys', CAST(N'2024-06-22T15:32:38.123' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (134, N'TECNOLÓGICA', 93, N'PROFESIONAL TÉCNICO', 3, N'M29792005', N'ADMINISTRACIÓN DE SERVICIOS TURÍSTICOS', 1, N'sys', CAST(N'2024-06-22T15:32:38.123' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (135, N'TECNOLÓGICA', 94, N'PROFESIONAL TÉCNICO', 3, N'EST000702', N'ADMINISTRACIÓN DE SISTEMAS PARA LA TRANSFORMACIÓN DIGITAL', 1, N'sys', CAST(N'2024-06-22T15:32:38.127' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (135, N'TECNOLÓGICA', 94, N'PROFESIONAL TÉCNICO', 3, N'EST000702', N'ADMINISTRACIÓN DE SISTEMAS PARA LA TRANSFORMACIÓN DIGITAL', 1, N'sys', CAST(N'2024-06-22T15:32:38.127' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (136, N'TECNOLÓGICA', 95, N'PROFESIONAL TÉCNICO', 3, N'EST000703', N'ADMINISTRACIÓN DE SISTEMAS Y PRUEBAS DE SOLUCIONES MULTIPLATAFORMA PARA LA TRANSFORMACIÓN DIGITAL', 1, N'sys', CAST(N'2024-06-22T15:32:38.127' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (136, N'TECNOLÓGICA', 95, N'PROFESIONAL TÉCNICO', 3, N'EST000703', N'ADMINISTRACIÓN DE SISTEMAS Y PRUEBAS DE SOLUCIONES MULTIPLATAFORMA PARA LA TRANSFORMACIÓN DIGITAL', 1, N'sys', CAST(N'2024-06-22T15:32:38.127' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (137, N'TECNOLÓGICA', 96, N'PROFESIONAL TÉCNICO', 3, N'EST000704', N'ADMINISTRACIÓN DE SISTEMAS Y SOLUCIONES DE INTELIGENCIA DE NEGOCIOS PARA LA TRANSFORMACIÓN', 1, N'sys', CAST(N'2024-06-22T15:32:38.127' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (137, N'TECNOLÓGICA', 96, N'PROFESIONAL TÉCNICO', 3, N'EST000704', N'ADMINISTRACIÓN DE SISTEMAS Y SOLUCIONES DE INTELIGENCIA DE NEGOCIOS PARA LA TRANSFORMACIÓN', 1, N'sys', CAST(N'2024-06-22T15:32:38.127' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (138, N'TECNOLÓGICA', 97, N'PROFESIONAL TÉCNICO', 3, N'000413155', N'ADMINISTRACIÓN EJECUTIVA', 1, N'sys', CAST(N'2024-06-22T15:32:38.127' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (138, N'TECNOLÓGICA', 97, N'PROFESIONAL TÉCNICO', 3, N'000413155', N'ADMINISTRACIÓN EJECUTIVA', 1, N'sys', CAST(N'2024-06-22T15:32:38.127' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (139, N'TECNOLÓGICA', 98, N'PROFESIONAL TÉCNICO', 3, N'003315010', N'ADMINISTRACIÓN EMPRESARIAL', 1, N'sys', CAST(N'2024-06-22T15:32:38.127' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (139, N'TECNOLÓGICA', 98, N'PROFESIONAL TÉCNICO', 3, N'003315010', N'ADMINISTRACIÓN EMPRESARIAL', 1, N'sys', CAST(N'2024-06-22T15:32:38.127' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (140, N'TECNOLÓGICA', 99, N'PROFESIONAL TÉCNICO', 3, N'M29792006', N'ADMINISTRACIÓN EMPRESAS TURÍSTICAS HOTELERAS', 1, N'sys', CAST(N'2024-06-22T15:32:38.127' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (140, N'TECNOLÓGICA', 99, N'PROFESIONAL TÉCNICO', 3, N'M29792006', N'ADMINISTRACIÓN EMPRESAS TURÍSTICAS HOTELERAS', 1, N'sys', CAST(N'2024-06-22T15:32:38.127' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (141, N'TECNOLÓGICA', 100, N'PROFESIONAL TÉCNICO', 3, N'I25552007', N'ADMINISTRACIÓN HOSTELERA', 1, N'sys', CAST(N'2024-06-22T15:32:38.127' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (141, N'TECNOLÓGICA', 100, N'PROFESIONAL TÉCNICO', 3, N'I25552007', N'ADMINISTRACIÓN HOSTELERA', 1, N'sys', CAST(N'2024-06-22T15:32:38.127' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (142, N'TECNOLÓGICA', 101, N'PROFESIONAL TÉCNICO', 3, N'000012085', N'ADMINISTRACIÓN HOTELERA', 1, N'sys', CAST(N'2024-06-22T15:32:38.127' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (142, N'TECNOLÓGICA', 101, N'PROFESIONAL TÉCNICO', 3, N'000012085', N'ADMINISTRACIÓN HOTELERA', 1, N'sys', CAST(N'2024-06-22T15:32:38.127' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (143, N'TECNOLÓGICA', 102, N'PROFESIONAL TÉCNICO', 3, N'M29792007', N'ADMINISTRACIÓN HOTELERA Y TURISMO', 1, N'sys', CAST(N'2024-06-22T15:32:38.127' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (143, N'TECNOLÓGICA', 102, N'PROFESIONAL TÉCNICO', 3, N'M29792007', N'ADMINISTRACIÓN HOTELERA Y TURISMO', 1, N'sys', CAST(N'2024-06-22T15:32:38.127' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (144, N'TECNOLÓGICA', 103, N'PROFESIONAL TÉCNICO', 3, N'000413165', N'ADMINISTRACIÓN INDUSTRIAL', 1, N'sys', CAST(N'2024-06-22T15:32:38.127' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (144, N'TECNOLÓGICA', 103, N'PROFESIONAL TÉCNICO', 3, N'000413165', N'ADMINISTRACIÓN INDUSTRIAL', 1, N'sys', CAST(N'2024-06-22T15:32:38.127' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (145, N'TECNOLÓGICA', 104, N'PROFESIONAL TÉCNICO', 3, N'000612055', N'ADMINISTRACIÓN INFORMÁTICA DE EMPRESAS', 1, N'sys', CAST(N'2024-06-22T15:32:38.127' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (145, N'TECNOLÓGICA', 104, N'PROFESIONAL TÉCNICO', 3, N'000612055', N'ADMINISTRACIÓN INFORMÁTICA DE EMPRESAS', 1, N'sys', CAST(N'2024-06-22T15:32:38.127' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (146, N'TECNOLÓGICA', 105, N'PROFESIONAL TÉCNICO', 3, N'000413175', N'ADMINISTRACIÓN LOGÍSTICA', 1, N'sys', CAST(N'2024-06-22T15:32:38.127' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (146, N'TECNOLÓGICA', 105, N'PROFESIONAL TÉCNICO', 3, N'000413175', N'ADMINISTRACIÓN LOGÍSTICA', 1, N'sys', CAST(N'2024-06-22T15:32:38.127' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (147, N'TECNOLÓGICA', 106, N'PROFESIONAL TÉCNICO', 3, N'000115002', N'ADMINISTRACIÓN MILITAR', 1, N'sys', CAST(N'2024-06-22T15:32:38.127' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (147, N'TECNOLÓGICA', 106, N'PROFESIONAL TÉCNICO', 3, N'000115002', N'ADMINISTRACIÓN MILITAR', 1, N'sys', CAST(N'2024-06-22T15:32:38.127' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (148, N'TECNOLÓGICA', 107, N'PROFESIONAL TÉCNICO', 3, N'000417015', N'ADMINISTRACIÓN MUNICIPAL', 1, N'sys', CAST(N'2024-06-22T15:32:38.127' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (148, N'TECNOLÓGICA', 107, N'PROFESIONAL TÉCNICO', 3, N'000417015', N'ADMINISTRACIÓN MUNICIPAL', 1, N'sys', CAST(N'2024-06-22T15:32:38.127' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (149, N'TECNOLÓGICA', 108, N'PROFESIONAL TÉCNICO', 3, N'EST000820', N'ADMINISTRACIÓN NAVAL', 1, N'sys', CAST(N'2024-06-22T15:32:38.127' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (149, N'TECNOLÓGICA', 108, N'PROFESIONAL TÉCNICO', 3, N'EST000820', N'ADMINISTRACIÓN NAVAL', 1, N'sys', CAST(N'2024-06-22T15:32:38.127' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (150, N'TECNOLÓGICA', 109, N'PROFESIONAL TÉCNICO', 3, N'003315004', N'ADMINISTRACIÓN PUBLICA', 1, N'sys', CAST(N'2024-06-22T15:32:38.127' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (150, N'TECNOLÓGICA', 109, N'PROFESIONAL TÉCNICO', 3, N'003315004', N'ADMINISTRACIÓN PUBLICA', 1, N'sys', CAST(N'2024-06-22T15:32:38.127' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (151, N'TECNOLÓGICA', 110, N'PROFESIONAL TÉCNICO', 3, N'000413185', N'ADMINISTRACIÓN RURAL', 1, N'sys', CAST(N'2024-06-22T15:32:38.127' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (151, N'TECNOLÓGICA', 110, N'PROFESIONAL TÉCNICO', 3, N'000413185', N'ADMINISTRACIÓN RURAL', 1, N'sys', CAST(N'2024-06-22T15:32:38.127' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (152, N'TECNOLÓGICA', 111, N'PROFESIONAL TÉCNICO', 3, N'M29792008', N'ADMINISTRACIÓN TURÍSTICA', 1, N'sys', CAST(N'2024-06-22T15:32:38.127' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (152, N'TECNOLÓGICA', 111, N'PROFESIONAL TÉCNICO', 3, N'M29792008', N'ADMINISTRACIÓN TURÍSTICA', 1, N'sys', CAST(N'2024-06-22T15:32:38.127' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (153, N'TECNOLÓGICA', 112, N'PROFESIONAL TÉCNICO', 3, N'M29792009', N'ADMINISTRACIÓN TURÍSTICA Y HOTELERA', 1, N'sys', CAST(N'2024-06-22T15:32:38.127' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (153, N'TECNOLÓGICA', 112, N'PROFESIONAL TÉCNICO', 3, N'M29792009', N'ADMINISTRACIÓN TURÍSTICA Y HOTELERA', 1, N'sys', CAST(N'2024-06-22T15:32:38.127' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (154, N'TECNOLÓGICA', 113, N'PROFESIONAL TÉCNICO', 3, N'000032015', N'ADMINISTRACIÓN Y CIENCIAS POLICIALES', 1, N'sys', CAST(N'2024-06-22T15:36:42.360' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (154, N'TECNOLÓGICA', 113, N'PROFESIONAL TÉCNICO', 3, N'000032015', N'ADMINISTRACIÓN Y CIENCIAS POLICIALES', 1, N'sys', CAST(N'2024-06-22T15:36:42.360' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (155, N'TECNOLÓGICA', 114, N'PROFESIONAL TÉCNICO', 3, N'003425004', N'ADMINISTRACIÓN Y CONTABILIDAD', 1, N'sys', CAST(N'2024-06-22T15:36:42.360' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (155, N'TECNOLÓGICA', 114, N'PROFESIONAL TÉCNICO', 3, N'003425004', N'ADMINISTRACIÓN Y CONTABILIDAD', 1, N'sys', CAST(N'2024-06-22T15:36:42.360' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (156, N'TECNOLÓGICA', 115, N'PROFESIONAL TÉCNICO', 3, N'000413195', N'ADMINISTRACIÓN Y FINANZAS', 1, N'sys', CAST(N'2024-06-22T15:36:42.360' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (156, N'TECNOLÓGICA', 115, N'PROFESIONAL TÉCNICO', 3, N'000413195', N'ADMINISTRACIÓN Y FINANZAS', 1, N'sys', CAST(N'2024-06-22T15:36:42.360' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (157, N'TECNOLÓGICA', 116, N'PROFESIONAL TÉCNICO', 3, N'000012095', N'ADMINISTRACIÓN Y GERENCIA EN HOTELERÍA INTERNACIONAL', 1, N'sys', CAST(N'2024-06-22T15:36:42.360' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (157, N'TECNOLÓGICA', 116, N'PROFESIONAL TÉCNICO', 3, N'000012095', N'ADMINISTRACIÓN Y GERENCIA EN HOTELERÍA INTERNACIONAL', 1, N'sys', CAST(N'2024-06-22T15:36:42.360' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (158, N'TECNOLÓGICA', 117, N'PROFESIONAL TÉCNICO', 3, N'000413205', N'ADMINISTRACIÓN Y GESTIÓN COMERCIAL', 1, N'sys', CAST(N'2024-06-22T15:36:42.360' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (158, N'TECNOLÓGICA', 117, N'PROFESIONAL TÉCNICO', 3, N'000413205', N'ADMINISTRACIÓN Y GESTIÓN COMERCIAL', 1, N'sys', CAST(N'2024-06-22T15:36:42.360' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (159, N'TECNOLÓGICA', 118, N'PROFESIONAL TÉCNICO', 3, N'EST000705', N'ADMINISTRACIÓN Y GESTIÓN COMERCIAL CON MENCIÓN EN FINANZAS', 1, N'sys', CAST(N'2024-06-22T15:36:42.360' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (159, N'TECNOLÓGICA', 118, N'PROFESIONAL TÉCNICO', 3, N'EST000705', N'ADMINISTRACIÓN Y GESTIÓN COMERCIAL CON MENCIÓN EN FINANZAS', 1, N'sys', CAST(N'2024-06-22T15:36:42.360' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (160, N'TECNOLÓGICA', 119, N'PROFESIONAL TÉCNICO', 3, N'EST000706', N'ADMINISTRACIÓN Y GESTIÓN COMERCIAL CON MENCIÓN EN RECURSOS HUMANOS', 1, N'sys', CAST(N'2024-06-22T15:36:42.360' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (160, N'TECNOLÓGICA', 119, N'PROFESIONAL TÉCNICO', 3, N'EST000706', N'ADMINISTRACIÓN Y GESTIÓN COMERCIAL CON MENCIÓN EN RECURSOS HUMANOS', 1, N'sys', CAST(N'2024-06-22T15:36:42.360' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (161, N'TECNOLÓGICA', 120, N'PROFESIONAL TÉCNICO', 3, N'M29822020', N'ADMINISTRACIÓN Y GESTIÓN DE EMPRESAS', 1, N'sys', CAST(N'2024-06-22T15:36:42.360' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (161, N'TECNOLÓGICA', 120, N'PROFESIONAL TÉCNICO', 3, N'M29822020', N'ADMINISTRACIÓN Y GESTIÓN DE EMPRESAS', 1, N'sys', CAST(N'2024-06-22T15:36:42.360' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (162, N'TECNOLÓGICA', 121, N'PROFESIONAL TÉCNICO', 3, N'000413215', N'ADMINISTRACIÓN Y GESTIÓN EMPRESARIAL', 1, N'sys', CAST(N'2024-06-22T15:36:42.360' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (162, N'TECNOLÓGICA', 121, N'PROFESIONAL TÉCNICO', 3, N'000413215', N'ADMINISTRACIÓN Y GESTIÓN EMPRESARIAL', 1, N'sys', CAST(N'2024-06-22T15:36:42.360' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (163, N'TECNOLÓGICA', 122, N'PROFESIONAL TÉCNICO', 3, N'000413225', N'ADMINISTRACIÓN Y SISTEMAS', 1, N'sys', CAST(N'2024-06-22T15:36:42.360' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (163, N'TECNOLÓGICA', 122, N'PROFESIONAL TÉCNICO', 3, N'000413225', N'ADMINISTRACIÓN Y SISTEMAS', 1, N'sys', CAST(N'2024-06-22T15:36:42.360' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (164, N'TECNOLÓGICA', 123, N'PROFESIONAL TÉCNICO', 3, N'M29822021', N'ADMINISTRATIVO', 1, N'sys', CAST(N'2024-06-22T15:36:42.360' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (164, N'TECNOLÓGICA', 123, N'PROFESIONAL TÉCNICO', 3, N'M29822021', N'ADMINISTRATIVO', 1, N'sys', CAST(N'2024-06-22T15:36:42.360' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (165, N'TECNOLÓGICA', 124, N'PROFESIONAL TÉCNICO', 3, N'000732015', N'AEROFOTOGRAFÍA', 1, N'sys', CAST(N'2024-06-22T15:36:42.360' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (165, N'TECNOLÓGICA', 124, N'PROFESIONAL TÉCNICO', 3, N'000732015', N'AEROFOTOGRAFÍA', 1, N'sys', CAST(N'2024-06-22T15:36:42.360' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (166, N'TECNOLÓGICA', 125, N'PROFESIONAL TÉCNICO', 3, N'000714015', N'AERONÁUTICA', 1, N'sys', CAST(N'2024-06-22T15:36:42.360' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (166, N'TECNOLÓGICA', 125, N'PROFESIONAL TÉCNICO', 3, N'000714015', N'AERONÁUTICA', 1, N'sys', CAST(N'2024-06-22T15:36:42.360' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (167, N'TECNOLÓGICA', 126, N'PROFESIONAL TÉCNICO', 3, N'000811015', N'AGROINDUSTRIAS', 1, N'sys', CAST(N'2024-06-22T15:36:42.360' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (167, N'TECNOLÓGICA', 126, N'PROFESIONAL TÉCNICO', 3, N'000811015', N'AGROINDUSTRIAS', 1, N'sys', CAST(N'2024-06-22T15:36:42.360' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (168, N'TECNOLÓGICA', 127, N'PROFESIONAL TÉCNICO', 3, N'006115004', N'AGRONOMÍA', 1, N'sys', CAST(N'2024-06-22T15:36:42.360' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (168, N'TECNOLÓGICA', 127, N'PROFESIONAL TÉCNICO', 3, N'006115004', N'AGRONOMÍA', 1, N'sys', CAST(N'2024-06-22T15:36:42.360' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (169, N'TECNOLÓGICA', 128, N'PROFESIONAL TÉCNICO', 3, N'000811025', N'AGROPECUARIA', 1, N'sys', CAST(N'2024-06-22T15:36:42.360' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (169, N'TECNOLÓGICA', 128, N'PROFESIONAL TÉCNICO', 3, N'000811025', N'AGROPECUARIA', 1, N'sys', CAST(N'2024-06-22T15:36:42.360' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (170, N'TECNOLÓGICA', 129, N'PROFESIONAL TÉCNICO', 3, N'C06102002', N'ALIMENTOS Y NUTRICIÓN', 1, N'sys', CAST(N'2024-06-22T15:36:42.363' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (170, N'TECNOLÓGICA', 129, N'PROFESIONAL TÉCNICO', 3, N'C06102002', N'ALIMENTOS Y NUTRICIÓN', 1, N'sys', CAST(N'2024-06-22T15:36:42.363' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (171, N'TECNOLÓGICA', 130, N'PROFESIONAL TÉCNICO', 3, N'000612065', N'ANÁLISIS DE SISTEMAS', 1, N'sys', CAST(N'2024-06-22T15:36:42.363' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (171, N'TECNOLÓGICA', 130, N'PROFESIONAL TÉCNICO', 3, N'000612065', N'ANÁLISIS DE SISTEMAS', 1, N'sys', CAST(N'2024-06-22T15:36:42.363' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (172, N'TECNOLÓGICA', 131, N'PROFESIONAL TÉCNICO', 3, N'000612075', N'ANÁLISIS DE SISTEMAS Y MODELACIÓN DE BASE DE DATOS', 1, N'sys', CAST(N'2024-06-22T15:36:42.363' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (172, N'TECNOLÓGICA', 131, N'PROFESIONAL TÉCNICO', 3, N'000612075', N'ANÁLISIS DE SISTEMAS Y MODELACIÓN DE BASE DE DATOS', 1, N'sys', CAST(N'2024-06-22T15:36:42.363' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (173, N'TECNOLÓGICA', 132, N'PROFESIONAL TÉCNICO', 3, N'000732025', N'ANÁLISIS DE SUELOS Y CONCRETO', 1, N'sys', CAST(N'2024-06-22T15:36:42.363' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (173, N'TECNOLÓGICA', 132, N'PROFESIONAL TÉCNICO', 3, N'000732025', N'ANÁLISIS DE SUELOS Y CONCRETO', 1, N'sys', CAST(N'2024-06-22T15:36:42.363' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (174, N'TECNOLÓGICA', 133, N'PROFESIONAL TÉCNICO', 3, N'000612085', N'ANÁLISIS E IMPLEMENTACIÓN DE SERVICIOS WEB', 1, N'sys', CAST(N'2024-06-22T15:36:42.363' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (174, N'TECNOLÓGICA', 133, N'PROFESIONAL TÉCNICO', 3, N'000612085', N'ANÁLISIS E IMPLEMENTACIÓN DE SERVICIOS WEB', 1, N'sys', CAST(N'2024-06-22T15:36:42.363' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (175, N'TECNOLÓGICA', 134, N'PROFESIONAL TÉCNICO', 3, N'000531015', N'ANÁLISIS QUÍMICO', 1, N'sys', CAST(N'2024-06-22T15:36:42.363' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (175, N'TECNOLÓGICA', 134, N'PROFESIONAL TÉCNICO', 3, N'000531015', N'ANÁLISIS QUÍMICO', 1, N'sys', CAST(N'2024-06-22T15:36:42.363' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (176, N'TECNOLÓGICA', 135, N'PROFESIONAL TÉCNICO', 3, N'000612095', N'ANALISTA', 1, N'sys', CAST(N'2024-06-22T15:36:42.363' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (176, N'TECNOLÓGICA', 135, N'PROFESIONAL TÉCNICO', 3, N'000612095', N'ANALISTA', 1, N'sys', CAST(N'2024-06-22T15:36:42.363' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (177, N'TECNOLÓGICA', 136, N'PROFESIONAL TÉCNICO', 3, N'000612105', N'ANALISTA PROGRAMADOR', 1, N'sys', CAST(N'2024-06-22T15:36:42.363' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (177, N'TECNOLÓGICA', 136, N'PROFESIONAL TÉCNICO', 3, N'000612105', N'ANALISTA PROGRAMADOR', 1, N'sys', CAST(N'2024-06-22T15:36:42.363' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (178, N'TECNOLÓGICA', 137, N'PROFESIONAL TÉCNICO', 3, N'000912015', N'ANESTESIOLOGÍA', 1, N'sys', CAST(N'2024-06-22T15:36:42.363' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (178, N'TECNOLÓGICA', 137, N'PROFESIONAL TÉCNICO', 3, N'000912015', N'ANESTESIOLOGÍA', 1, N'sys', CAST(N'2024-06-22T15:36:42.363' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (179, N'TECNOLÓGICA', 138, N'PROFESIONAL TÉCNICO', 3, N'000211015', N'ANIMACIÓN 3D Y EFECTOS ESPECIALES', 1, N'sys', CAST(N'2024-06-22T15:36:42.363' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (179, N'TECNOLÓGICA', 138, N'PROFESIONAL TÉCNICO', 3, N'000211015', N'ANIMACIÓN 3D Y EFECTOS ESPECIALES', 1, N'sys', CAST(N'2024-06-22T15:36:42.363' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (180, N'TECNOLÓGICA', 139, N'PROFESIONAL TÉCNICO', 3, N'000211025', N'ANIMACIÓN DIGITAL', 1, N'sys', CAST(N'2024-06-22T15:36:42.363' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (180, N'TECNOLÓGICA', 139, N'PROFESIONAL TÉCNICO', 3, N'000211025', N'ANIMACIÓN DIGITAL', 1, N'sys', CAST(N'2024-06-22T15:36:42.363' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (181, N'TECNOLÓGICA', 140, N'PROFESIONAL TÉCNICO', 3, N'EST000707', N'ANIMACIÓN DIGITAL Y DISEÑO 3D', 1, N'sys', CAST(N'2024-06-22T15:36:42.363' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (181, N'TECNOLÓGICA', 140, N'PROFESIONAL TÉCNICO', 3, N'EST000707', N'ANIMACIÓN DIGITAL Y DISEÑO 3D', 1, N'sys', CAST(N'2024-06-22T15:36:42.363' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (182, N'TECNOLÓGICA', 141, N'PROFESIONAL TÉCNICO', 3, N'A01023004', N'APROVECHAMIENTO FORESTAL', 1, N'sys', CAST(N'2024-06-22T15:36:42.363' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (182, N'TECNOLÓGICA', 141, N'PROFESIONAL TÉCNICO', 3, N'A01023004', N'APROVECHAMIENTO FORESTAL', 1, N'sys', CAST(N'2024-06-22T15:36:42.363' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (183, N'TECNOLÓGICA', 142, N'PROFESIONAL TÉCNICO', 3, N'000323015', N'ARCHIVO', 1, N'sys', CAST(N'2024-06-22T15:36:42.363' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (183, N'TECNOLÓGICA', 142, N'PROFESIONAL TÉCNICO', 3, N'000323015', N'ARCHIVO', 1, N'sys', CAST(N'2024-06-22T15:36:42.363' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (184, N'TECNOLÓGICA', 143, N'PROFESIONAL TÉCNICO', 3, N'000031015', N'ARMAS SUBMARINAS', 1, N'sys', CAST(N'2024-06-22T15:36:42.363' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (184, N'TECNOLÓGICA', 143, N'PROFESIONAL TÉCNICO', 3, N'000031015', N'ARMAS SUBMARINAS', 1, N'sys', CAST(N'2024-06-22T15:36:42.363' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (185, N'TECNOLÓGICA', 144, N'PROFESIONAL TÉCNICO', 3, N'EST000708', N'ARQUITECTURA DE DATOS EMPRESARIALES CON MENCIÓN EN BIG DATA DEVELOPER', 1, N'sys', CAST(N'2024-06-22T15:36:42.363' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (185, N'TECNOLÓGICA', 144, N'PROFESIONAL TÉCNICO', 3, N'EST000708', N'ARQUITECTURA DE DATOS EMPRESARIALES CON MENCIÓN EN BIG DATA DEVELOPER', 1, N'sys', CAST(N'2024-06-22T15:36:42.363' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (186, N'TECNOLÓGICA', 145, N'PROFESIONAL TÉCNICO', 3, N'000731015', N'ARQUITECTURA DE INTERIORES', 1, N'sys', CAST(N'2024-06-22T15:36:42.363' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (186, N'TECNOLÓGICA', 145, N'PROFESIONAL TÉCNICO', 3, N'000731015', N'ARQUITECTURA DE INTERIORES', 1, N'sys', CAST(N'2024-06-22T15:36:42.363' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (187, N'TECNOLÓGICA', 146, N'PROFESIONAL TÉCNICO', 3, N'005115010', N'ARQUITECTURA DE PLATAFORMA Y SERVICIOS DE TECNOLOGÍAS DE LA INFORMACIÓN', 1, N'sys', CAST(N'2024-06-22T15:36:42.363' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (187, N'TECNOLÓGICA', 146, N'PROFESIONAL TÉCNICO', 3, N'005115010', N'ARQUITECTURA DE PLATAFORMA Y SERVICIOS DE TECNOLOGÍAS DE LA INFORMACIÓN', 1, N'sys', CAST(N'2024-06-22T15:36:42.363' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (188, N'TECNOLÓGICA', 147, N'PROFESIONAL TÉCNICO', 3, N'000211035', N'ARQUITECTURA DE PLATAFORMAS Y SERVICIOS DE TECNOLOGÍAS DE LA INFORMACIÓN', 1, N'sys', CAST(N'2024-06-22T15:36:42.363' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (188, N'TECNOLÓGICA', 147, N'PROFESIONAL TÉCNICO', 3, N'000211035', N'ARQUITECTURA DE PLATAFORMAS Y SERVICIOS DE TECNOLOGÍAS DE LA INFORMACIÓN', 1, N'sys', CAST(N'2024-06-22T15:36:42.363' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (189, N'TECNOLÓGICA', 148, N'PROFESIONAL TÉCNICO', 3, N'EST000709', N'ARQUITECTURA DE PLATAFORMAS Y SERVICIOS DE TECNOLOGÍAS DE LA INFORMACIÓN CON MENCIÓN EN', 1, N'sys', CAST(N'2024-06-22T15:36:42.363' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (189, N'TECNOLÓGICA', 148, N'PROFESIONAL TÉCNICO', 3, N'EST000709', N'ARQUITECTURA DE PLATAFORMAS Y SERVICIOS DE TECNOLOGÍAS DE LA INFORMACIÓN CON MENCIÓN EN', 1, N'sys', CAST(N'2024-06-22T15:36:42.363' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (190, N'TECNOLÓGICA', 149, N'PROFESIONAL TÉCNICO', 3, N'000612125', N'ARQUITECTURA DE SISTEMAS DE INFORMACIÓN', 1, N'sys', CAST(N'2024-06-22T15:36:42.363' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (190, N'TECNOLÓGICA', 149, N'PROFESIONAL TÉCNICO', 3, N'000612125', N'ARQUITECTURA DE SISTEMAS DE INFORMACIÓN', 1, N'sys', CAST(N'2024-06-22T15:36:42.363' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (191, N'TECNOLÓGICA', 150, N'PROFESIONAL TÉCNICO', 3, N'000211045', N'ARTES GRÁFICAS', 1, N'sys', CAST(N'2024-06-22T15:36:42.363' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (191, N'TECNOLÓGICA', 150, N'PROFESIONAL TÉCNICO', 3, N'000211045', N'ARTES GRÁFICAS', 1, N'sys', CAST(N'2024-06-22T15:36:42.363' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (192, N'TECNOLÓGICA', 151, N'PROFESIONAL TÉCNICO', 3, N'000211055', N'ARTES GRÁFICAS Y PUBLICITARIAS', 1, N'sys', CAST(N'2024-06-22T15:36:42.363' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (192, N'TECNOLÓGICA', 151, N'PROFESIONAL TÉCNICO', 3, N'000211055', N'ARTES GRÁFICAS Y PUBLICITARIAS', 1, N'sys', CAST(N'2024-06-22T15:36:42.363' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (193, N'TECNOLÓGICA', 152, N'PROFESIONAL TÉCNICO', 3, N'000213015', N'ARTES PLÁSTICAS Y VISUALES', 1, N'sys', CAST(N'2024-06-22T15:36:42.367' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (193, N'TECNOLÓGICA', 152, N'PROFESIONAL TÉCNICO', 3, N'000213015', N'ARTES PLÁSTICAS Y VISUALES', 1, N'sys', CAST(N'2024-06-22T15:36:42.367' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (194, N'TECNOLÓGICA', 153, N'PROFESIONAL TÉCNICO', 3, N'002215001', N'ARTES VISUALES', 1, N'sys', CAST(N'2024-06-22T15:36:42.367' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (194, N'TECNOLÓGICA', 153, N'PROFESIONAL TÉCNICO', 3, N'002215001', N'ARTES VISUALES', 1, N'sys', CAST(N'2024-06-22T15:36:42.367' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (195, N'TECNOLÓGICA', 154, N'PROFESIONAL TÉCNICO', 3, N'000211065', N'ARTES Y CIENCIAS PUBLICITARIAS', 1, N'sys', CAST(N'2024-06-22T15:36:42.367' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (195, N'TECNOLÓGICA', 154, N'PROFESIONAL TÉCNICO', 3, N'000211065', N'ARTES Y CIENCIAS PUBLICITARIAS', 1, N'sys', CAST(N'2024-06-22T15:36:42.367' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (196, N'TECNOLÓGICA', 155, N'PROFESIONAL TÉCNICO', 3, N'000031025', N'ARTILLERÍA', 1, N'sys', CAST(N'2024-06-22T15:36:42.367' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (196, N'TECNOLÓGICA', 155, N'PROFESIONAL TÉCNICO', 3, N'000031025', N'ARTILLERÍA', 1, N'sys', CAST(N'2024-06-22T15:36:42.367' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (197, N'TECNOLÓGICA', 156, N'PROFESIONAL TÉCNICO', 3, N'000831025', N'ASEGURAMIENTO DE LA CALIDAD DE PRODUCTOS HIDROBIOLÓGICOS', 1, N'sys', CAST(N'2024-06-22T15:36:42.367' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (197, N'TECNOLÓGICA', 156, N'PROFESIONAL TÉCNICO', 3, N'000831025', N'ASEGURAMIENTO DE LA CALIDAD DE PRODUCTOS HIDROBIOLÓGICOS', 1, N'sys', CAST(N'2024-06-22T15:36:42.367' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (198, N'TECNOLÓGICA', 157, N'PROFESIONAL TÉCNICO', 3, N'EST000710', N'ASISTENCIA DE DIRECCIÓN Y GERENCIA', 1, N'sys', CAST(N'2024-06-22T15:36:42.367' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (198, N'TECNOLÓGICA', 157, N'PROFESIONAL TÉCNICO', 3, N'EST000710', N'ASISTENCIA DE DIRECCIÓN Y GERENCIA', 1, N'sys', CAST(N'2024-06-22T15:36:42.367' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (199, N'TECNOLÓGICA', 158, N'PROFESIONAL TÉCNICO', 3, N'EST000711', N'ASISTENTE EJECUTIVA DE GERENCIA', 1, N'sys', CAST(N'2024-06-22T15:36:42.367' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (199, N'TECNOLÓGICA', 158, N'PROFESIONAL TÉCNICO', 3, N'EST000711', N'ASISTENTE EJECUTIVA DE GERENCIA', 1, N'sys', CAST(N'2024-06-22T15:36:42.367' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (200, N'TECNOLÓGICA', 159, N'PROFESIONAL TÉCNICO', 3, N'000415015', N'ASISTENTE EJECUTIVO', 1, N'sys', CAST(N'2024-06-22T15:36:42.367' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (200, N'TECNOLÓGICA', 159, N'PROFESIONAL TÉCNICO', 3, N'000415015', N'ASISTENTE EJECUTIVO', 1, N'sys', CAST(N'2024-06-22T15:36:42.367' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (201, N'TECNOLÓGICA', 160, N'PROFESIONAL TÉCNICO', 3, N'000211075', N'AUDIOVISUAL MULTIMEDIA', 1, N'sys', CAST(N'2024-06-22T15:36:42.367' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (201, N'TECNOLÓGICA', 160, N'PROFESIONAL TÉCNICO', 3, N'000211075', N'AUDIOVISUAL MULTIMEDIA', 1, N'sys', CAST(N'2024-06-22T15:36:42.367' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (202, N'TECNOLÓGICA', 161, N'PROFESIONAL TÉCNICO', 3, N'000714025', N'AUTOTRÓNICA', 1, N'sys', CAST(N'2024-06-22T15:36:42.367' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (202, N'TECNOLÓGICA', 161, N'PROFESIONAL TÉCNICO', 3, N'000714025', N'AUTOTRÓNICA', 1, N'sys', CAST(N'2024-06-22T15:36:42.367' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (203, N'TECNOLÓGICA', 162, N'PROFESIONAL TÉCNICO', 3, N'000714035', N'AVIÓNICA', 1, N'sys', CAST(N'2024-06-22T15:36:42.367' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (203, N'TECNOLÓGICA', 162, N'PROFESIONAL TÉCNICO', 3, N'000714035', N'AVIÓNICA', 1, N'sys', CAST(N'2024-06-22T15:36:42.367' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (204, N'TECNOLÓGICA', 163, N'PROFESIONAL TÉCNICO', 3, N'000714045', N'AVIÓNICA Y MECÁNICA AERONÁUTICA', 1, N'sys', CAST(N'2024-06-22T15:36:42.367' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (204, N'TECNOLÓGICA', 163, N'PROFESIONAL TÉCNICO', 3, N'000714045', N'AVIÓNICA Y MECÁNICA AERONÁUTICA', 1, N'sys', CAST(N'2024-06-22T15:36:42.367' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (205, N'TECNOLÓGICA', 164, N'PROFESIONAL TÉCNICO', 3, N'000441015', N'BANCA Y FINANZAS', 1, N'sys', CAST(N'2024-06-22T15:36:42.367' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (205, N'TECNOLÓGICA', 164, N'PROFESIONAL TÉCNICO', 3, N'000441015', N'BANCA Y FINANZAS', 1, N'sys', CAST(N'2024-06-22T15:36:42.367' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (206, N'TECNOLÓGICA', 165, N'PROFESIONAL TÉCNICO', 3, N'EST000712', N'BIG DATA Y CIENCIA DE DATOS', 1, N'sys', CAST(N'2024-06-22T15:36:42.367' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (206, N'TECNOLÓGICA', 165, N'PROFESIONAL TÉCNICO', 3, N'EST000712', N'BIG DATA Y CIENCIA DE DATOS', 1, N'sys', CAST(N'2024-06-22T15:36:42.367' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (207, N'TECNOLÓGICA', 166, N'PROFESIONAL TÉCNICO', 3, N'000211085', N'CÁMARA Y EDICIÓN CREATIVA', 1, N'sys', CAST(N'2024-06-22T15:36:42.367' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (207, N'TECNOLÓGICA', 166, N'PROFESIONAL TÉCNICO', 3, N'000211085', N'CÁMARA Y EDICIÓN CREATIVA', 1, N'sys', CAST(N'2024-06-22T15:36:42.367' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (208, N'TECNOLÓGICA', 167, N'PROFESIONAL TÉCNICO', 3, N'000031035', N'CAPITANÍA Y GUARDACOSTAS', 1, N'sys', CAST(N'2024-06-22T15:36:42.367' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (208, N'TECNOLÓGICA', 167, N'PROFESIONAL TÉCNICO', 3, N'000031035', N'CAPITANÍA Y GUARDACOSTAS', 1, N'sys', CAST(N'2024-06-22T15:36:42.367' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (209, N'TECNOLÓGICA', 168, N'PROFESIONAL TÉCNICO', 3, N'000322015', N'CIENCIAS DE LA COMUNICACIÓN', 1, N'sys', CAST(N'2024-06-22T15:36:42.367' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (209, N'TECNOLÓGICA', 168, N'PROFESIONAL TÉCNICO', 3, N'000322015', N'CIENCIAS DE LA COMUNICACIÓN', 1, N'sys', CAST(N'2024-06-22T15:36:42.367' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (210, N'TECNOLÓGICA', 169, N'PROFESIONAL TÉCNICO', 3, N'000211095', N'CIENCIAS PUBLICITARIAS', 1, N'sys', CAST(N'2024-06-22T15:38:50.383' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (210, N'TECNOLÓGICA', 169, N'PROFESIONAL TÉCNICO', 3, N'000211095', N'CIENCIAS PUBLICITARIAS', 1, N'sys', CAST(N'2024-06-22T15:38:50.383' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (211, N'TECNOLÓGICA', 170, N'PROFESIONAL TÉCNICO', 3, N'000211105', N'CINEMATOGRAFÍA', 1, N'sys', CAST(N'2024-06-22T15:38:50.383' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (211, N'TECNOLÓGICA', 170, N'PROFESIONAL TÉCNICO', 3, N'000211105', N'CINEMATOGRAFÍA', 1, N'sys', CAST(N'2024-06-22T15:38:50.383' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (212, N'TECNOLÓGICA', 171, N'PROFESIONAL TÉCNICO', 3, N'000418035', N'COMERCIO', 1, N'sys', CAST(N'2024-06-22T15:38:50.383' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (212, N'TECNOLÓGICA', 171, N'PROFESIONAL TÉCNICO', 3, N'000418035', N'COMERCIO', 1, N'sys', CAST(N'2024-06-22T15:38:50.383' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (213, N'TECNOLÓGICA', 172, N'PROFESIONAL TÉCNICO', 3, N'000416025', N'COMERCIO EXTERIOR', 1, N'sys', CAST(N'2024-06-22T15:38:50.383' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (213, N'TECNOLÓGICA', 172, N'PROFESIONAL TÉCNICO', 3, N'000416025', N'COMERCIO EXTERIOR', 1, N'sys', CAST(N'2024-06-22T15:38:50.383' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (214, N'TECNOLÓGICA', 173, N'PROFESIONAL TÉCNICO', 3, N'000416035', N'COMERCIO EXTERIOR ÁREA ARTESANÍA DEL VESTIR', 1, N'sys', CAST(N'2024-06-22T15:38:50.383' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (214, N'TECNOLÓGICA', 173, N'PROFESIONAL TÉCNICO', 3, N'000416035', N'COMERCIO EXTERIOR ÁREA ARTESANÍA DEL VESTIR', 1, N'sys', CAST(N'2024-06-22T15:38:50.383' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (215, N'TECNOLÓGICA', 174, N'PROFESIONAL TÉCNICO', 3, N'000416045', N'COMERCIO EXTERIOR ÁREA FINANZAS', 1, N'sys', CAST(N'2024-06-22T15:38:50.383' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (215, N'TECNOLÓGICA', 174, N'PROFESIONAL TÉCNICO', 3, N'000416045', N'COMERCIO EXTERIOR ÁREA FINANZAS', 1, N'sys', CAST(N'2024-06-22T15:38:50.383' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (216, N'TECNOLÓGICA', 175, N'PROFESIONAL TÉCNICO', 3, N'000416055', N'COMERCIO EXTERIOR ÁREA MARKETING', 1, N'sys', CAST(N'2024-06-22T15:38:50.383' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (216, N'TECNOLÓGICA', 175, N'PROFESIONAL TÉCNICO', 3, N'000416055', N'COMERCIO EXTERIOR ÁREA MARKETING', 1, N'sys', CAST(N'2024-06-22T15:38:50.383' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (217, N'TECNOLÓGICA', 176, N'PROFESIONAL TÉCNICO', 3, N'000611015', N'COMPUTACIÓN', 1, N'sys', CAST(N'2024-06-22T15:38:50.383' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (217, N'TECNOLÓGICA', 176, N'PROFESIONAL TÉCNICO', 3, N'000611015', N'COMPUTACIÓN', 1, N'sys', CAST(N'2024-06-22T15:38:50.383' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (218, N'TECNOLÓGICA', 177, N'PROFESIONAL TÉCNICO', 3, N'000611025', N'COMPUTACIÓN E INFORMÁTICA', 1, N'sys', CAST(N'2024-06-22T15:38:50.383' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (218, N'TECNOLÓGICA', 177, N'PROFESIONAL TÉCNICO', 3, N'000611025', N'COMPUTACIÓN E INFORMÁTICA', 1, N'sys', CAST(N'2024-06-22T15:38:50.383' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (219, N'TECNOLÓGICA', 178, N'PROFESIONAL TÉCNICO', 3, N'000612135', N'COMPUTACIÓN Y ADMINISTRACIÓN DE SISTEMAS', 1, N'sys', CAST(N'2024-06-22T15:38:50.383' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (219, N'TECNOLÓGICA', 178, N'PROFESIONAL TÉCNICO', 3, N'000612135', N'COMPUTACIÓN Y ADMINISTRACIÓN DE SISTEMAS', 1, N'sys', CAST(N'2024-06-22T15:38:50.383' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (220, N'TECNOLÓGICA', 179, N'PROFESIONAL TÉCNICO', 3, N'000612145', N'COMPUTACIÓN Y SISTEMAS', 1, N'sys', CAST(N'2024-06-22T15:38:50.383' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (220, N'TECNOLÓGICA', 179, N'PROFESIONAL TÉCNICO', 3, N'000612145', N'COMPUTACIÓN Y SISTEMAS', 1, N'sys', CAST(N'2024-06-22T15:38:50.383' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (221, N'TECNOLÓGICA', 180, N'PROFESIONAL TÉCNICO', 3, N'004415002', N'COMPUTACIÓN Y SOLUCIONES INFORMÁTICAS', 1, N'sys', CAST(N'2024-06-22T15:38:50.383' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (221, N'TECNOLÓGICA', 180, N'PROFESIONAL TÉCNICO', 3, N'004415002', N'COMPUTACIÓN Y SOLUCIONES INFORMÁTICAS', 1, N'sys', CAST(N'2024-06-22T15:38:50.383' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (222, N'TECNOLÓGICA', 181, N'PROFESIONAL TÉCNICO', 3, N'000211115', N'COMUNICACIÓN AUDIOVISUAL', 1, N'sys', CAST(N'2024-06-22T15:38:50.383' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (222, N'TECNOLÓGICA', 181, N'PROFESIONAL TÉCNICO', 3, N'000211115', N'COMUNICACIÓN AUDIOVISUAL', 1, N'sys', CAST(N'2024-06-22T15:38:50.383' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (223, N'TECNOLÓGICA', 182, N'PROFESIONAL TÉCNICO', 3, N'000211125', N'COMUNICACIÓN AUDIOVISUAL MULTIMEDIA', 1, N'sys', CAST(N'2024-06-22T15:38:50.383' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (223, N'TECNOLÓGICA', 182, N'PROFESIONAL TÉCNICO', 3, N'000211125', N'COMUNICACIÓN AUDIOVISUAL MULTIMEDIA', 1, N'sys', CAST(N'2024-06-22T15:38:50.383' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (224, N'TECNOLÓGICA', 183, N'PROFESIONAL TÉCNICO', 3, N'EST000804', N'COMUNICACIÓN ESCÉNICA', 1, N'sys', CAST(N'2024-06-22T15:38:50.383' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (224, N'TECNOLÓGICA', 183, N'PROFESIONAL TÉCNICO', 3, N'EST000804', N'COMUNICACIÓN ESCÉNICA', 1, N'sys', CAST(N'2024-06-22T15:38:50.383' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (225, N'TECNOLÓGICA', 184, N'PROFESIONAL TÉCNICO', 3, N'000322025', N'COMUNICACIÓN INTEGRAL', 1, N'sys', CAST(N'2024-06-22T15:38:50.383' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (225, N'TECNOLÓGICA', 184, N'PROFESIONAL TÉCNICO', 3, N'000322025', N'COMUNICACIÓN INTEGRAL', 1, N'sys', CAST(N'2024-06-22T15:38:50.383' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (226, N'TECNOLÓGICA', 185, N'PROFESIONAL TÉCNICO', 3, N'EST000713', N'COMUNICACIÓN PERIODÍSTICA', 1, N'sys', CAST(N'2024-06-22T15:38:50.383' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (226, N'TECNOLÓGICA', 185, N'PROFESIONAL TÉCNICO', 3, N'EST000713', N'COMUNICACIÓN PERIODÍSTICA', 1, N'sys', CAST(N'2024-06-22T15:38:50.383' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (227, N'TECNOLÓGICA', 186, N'PROFESIONAL TÉCNICO', 3, N'000322035', N'COMUNICACIÓN SOCIAL', 1, N'sys', CAST(N'2024-06-22T15:38:50.383' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (227, N'TECNOLÓGICA', 186, N'PROFESIONAL TÉCNICO', 3, N'000322035', N'COMUNICACIÓN SOCIAL', 1, N'sys', CAST(N'2024-06-22T15:38:50.383' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (228, N'TECNOLÓGICA', 187, N'PROFESIONAL TÉCNICO', 3, N'000211135', N'COMUNICACIÓN Y ARTE DIGITAL', 1, N'sys', CAST(N'2024-06-22T15:38:50.383' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (228, N'TECNOLÓGICA', 187, N'PROFESIONAL TÉCNICO', 3, N'000211135', N'COMUNICACIÓN Y ARTE DIGITAL', 1, N'sys', CAST(N'2024-06-22T15:38:50.383' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (229, N'TECNOLÓGICA', 188, N'PROFESIONAL TÉCNICO', 3, N'EST000714', N'COMUNICACIÓN Y MARKETING DE LA MODA', 1, N'sys', CAST(N'2024-06-22T15:38:50.383' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (229, N'TECNOLÓGICA', 188, N'PROFESIONAL TÉCNICO', 3, N'EST000714', N'COMUNICACIÓN Y MARKETING DE LA MODA', 1, N'sys', CAST(N'2024-06-22T15:38:50.383' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (230, N'TECNOLÓGICA', 189, N'PROFESIONAL TÉCNICO', 3, N'000724015', N'CONCENTRACIÓN DE MINERALES', 1, N'sys', CAST(N'2024-06-22T15:38:50.383' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (230, N'TECNOLÓGICA', 189, N'PROFESIONAL TÉCNICO', 3, N'000724015', N'CONCENTRACIÓN DE MINERALES', 1, N'sys', CAST(N'2024-06-22T15:38:50.383' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (231, N'TECNOLÓGICA', 190, N'PROFESIONAL TÉCNICO', 3, N'000831035', N'CONDUCCIÓN DE EMBARCACIONES DE PESCA', 1, N'sys', CAST(N'2024-06-22T15:38:50.383' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (231, N'TECNOLÓGICA', 190, N'PROFESIONAL TÉCNICO', 3, N'000831035', N'CONDUCCIÓN DE EMBARCACIONES DE PESCA', 1, N'sys', CAST(N'2024-06-22T15:38:50.383' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (232, N'TECNOLÓGICA', 191, N'PROFESIONAL TÉCNICO', 3, N'000014065', N'CONDUCCIÓN EN TURISMO', 1, N'sys', CAST(N'2024-06-22T15:38:50.383' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (232, N'TECNOLÓGICA', 191, N'PROFESIONAL TÉCNICO', 3, N'000014065', N'CONDUCCIÓN EN TURISMO', 1, N'sys', CAST(N'2024-06-22T15:38:50.383' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (233, N'TECNOLÓGICA', 192, N'PROFESIONAL TÉCNICO', 3, N'EST000689', N'CONSERVACIÓN DE BIENES ARQUEOLÓGICOS', 1, N'sys', CAST(N'2024-06-22T15:38:50.383' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (233, N'TECNOLÓGICA', 192, N'PROFESIONAL TÉCNICO', 3, N'EST000689', N'CONSERVACIÓN DE BIENES ARQUEOLÓGICOS', 1, N'sys', CAST(N'2024-06-22T15:38:50.383' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (234, N'TECNOLÓGICA', 193, N'PROFESIONAL TÉCNICO', 3, N'000213025', N'CONSERVACIÓN Y RESTAURACIÓN', 1, N'sys', CAST(N'2024-06-22T15:38:50.383' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (234, N'TECNOLÓGICA', 193, N'PROFESIONAL TÉCNICO', 3, N'000213025', N'CONSERVACIÓN Y RESTAURACIÓN', 1, N'sys', CAST(N'2024-06-22T15:38:50.383' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (235, N'TECNOLÓGICA', 194, N'PROFESIONAL TÉCNICO', 3, N'005315003', N'CONSTRUCCIÓN ARTÍSTICA EN MADERA', 1, N'sys', CAST(N'2024-06-22T15:38:50.383' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (235, N'TECNOLÓGICA', 194, N'PROFESIONAL TÉCNICO', 3, N'005315003', N'CONSTRUCCIÓN ARTÍSTICA EN MADERA', 1, N'sys', CAST(N'2024-06-22T15:38:50.383' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (236, N'TECNOLÓGICA', 195, N'PROFESIONAL TÉCNICO', 3, N'000732035', N'CONSTRUCCIÓN CIVIL', 1, N'sys', CAST(N'2024-06-22T15:38:50.383' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (236, N'TECNOLÓGICA', 195, N'PROFESIONAL TÉCNICO', 3, N'000732035', N'CONSTRUCCIÓN CIVIL', 1, N'sys', CAST(N'2024-06-22T15:38:50.383' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (237, N'TECNOLÓGICA', 196, N'PROFESIONAL TÉCNICO', 3, N'000213035', N'CONSTRUCCIÓN DE ARTE EN MADERA', 1, N'sys', CAST(N'2024-06-22T15:38:50.383' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (237, N'TECNOLÓGICA', 196, N'PROFESIONAL TÉCNICO', 3, N'000213035', N'CONSTRUCCIÓN DE ARTE EN MADERA', 1, N'sys', CAST(N'2024-06-22T15:38:50.383' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (238, N'TECNOLÓGICA', 197, N'PROFESIONAL TÉCNICO', 3, N'A01023003', N'CONSTRUCCIÓN Y MANTENIMIENTO DE CAMINOS FORESTALES', 1, N'sys', CAST(N'2024-06-22T15:38:50.383' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (238, N'TECNOLÓGICA', 197, N'PROFESIONAL TÉCNICO', 3, N'A01023003', N'CONSTRUCCIÓN Y MANTENIMIENTO DE CAMINOS FORESTALES', 1, N'sys', CAST(N'2024-06-22T15:38:50.383' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (239, N'TECNOLÓGICA', 198, N'PROFESIONAL TÉCNICO', 3, N'005315001', N'CONSTRUCCIONES ARTÍSTICAS EN MADERA', 1, N'sys', CAST(N'2024-06-22T15:38:50.383' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (239, N'TECNOLÓGICA', 198, N'PROFESIONAL TÉCNICO', 3, N'005315001', N'CONSTRUCCIONES ARTÍSTICAS EN MADERA', 1, N'sys', CAST(N'2024-06-22T15:38:50.383' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (240, N'TECNOLÓGICA', 199, N'PROFESIONAL TÉCNICO', 3, N'000441025', N'CONTABILIDAD', 1, N'sys', CAST(N'2024-06-22T15:38:50.400' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (240, N'TECNOLÓGICA', 199, N'PROFESIONAL TÉCNICO', 3, N'000441025', N'CONTABILIDAD', 1, N'sys', CAST(N'2024-06-22T15:38:50.400' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (241, N'TECNOLÓGICA', 200, N'PROFESIONAL TÉCNICO', 3, N'000441035', N'CONTABILIDAD COMPUTARIZADA', 1, N'sys', CAST(N'2024-06-22T15:38:50.400' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (241, N'TECNOLÓGICA', 200, N'PROFESIONAL TÉCNICO', 3, N'000441035', N'CONTABILIDAD COMPUTARIZADA', 1, N'sys', CAST(N'2024-06-22T15:38:50.400' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (242, N'TECNOLÓGICA', 201, N'PROFESIONAL TÉCNICO', 3, N'000441045', N'CONTABILIDAD CON MENCIÓN EN FINANZAS', 1, N'sys', CAST(N'2024-06-22T15:38:50.400' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (242, N'TECNOLÓGICA', 201, N'PROFESIONAL TÉCNICO', 3, N'000441045', N'CONTABILIDAD CON MENCIÓN EN FINANZAS', 1, N'sys', CAST(N'2024-06-22T15:38:50.400' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (243, N'TECNOLÓGICA', 202, N'PROFESIONAL TÉCNICO', 3, N'000441055', N'CONTABILIDAD CON MENCIÓN EN PROCESOS DE TRIBUTACIÓN', 1, N'sys', CAST(N'2024-06-22T15:38:50.400' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (243, N'TECNOLÓGICA', 202, N'PROFESIONAL TÉCNICO', 3, N'000441055', N'CONTABILIDAD CON MENCIÓN EN PROCESOS DE TRIBUTACIÓN', 1, N'sys', CAST(N'2024-06-22T15:38:50.400' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (244, N'TECNOLÓGICA', 203, N'PROFESIONAL TÉCNICO', 3, N'000441065', N'CONTABILIDAD CON MENCIÓN EN TRIBUTACIÓN', 1, N'sys', CAST(N'2024-06-22T15:38:50.400' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (244, N'TECNOLÓGICA', 203, N'PROFESIONAL TÉCNICO', 3, N'000441065', N'CONTABILIDAD CON MENCIÓN EN TRIBUTACIÓN', 1, N'sys', CAST(N'2024-06-22T15:38:50.400' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (245, N'TECNOLÓGICA', 204, N'PROFESIONAL TÉCNICO', 3, N'EST000715', N'CONTABILIDAD Y AUDITORIA', 1, N'sys', CAST(N'2024-06-22T15:38:50.400' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (245, N'TECNOLÓGICA', 204, N'PROFESIONAL TÉCNICO', 3, N'EST000715', N'CONTABILIDAD Y AUDITORIA', 1, N'sys', CAST(N'2024-06-22T15:38:50.400' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (246, N'TECNOLÓGICA', 205, N'PROFESIONAL TÉCNICO', 3, N'000441075', N'CONTABILIDAD Y FINANZAS', 1, N'sys', CAST(N'2024-06-22T15:38:50.400' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (246, N'TECNOLÓGICA', 205, N'PROFESIONAL TÉCNICO', 3, N'000441075', N'CONTABILIDAD Y FINANZAS', 1, N'sys', CAST(N'2024-06-22T15:38:50.400' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (247, N'TECNOLÓGICA', 206, N'PROFESIONAL TÉCNICO', 3, N'EST000716', N'CONTABILIDAD Y FINANZAS CORPORATIVAS', 1, N'sys', CAST(N'2024-06-22T15:38:50.400' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (247, N'TECNOLÓGICA', 206, N'PROFESIONAL TÉCNICO', 3, N'EST000716', N'CONTABILIDAD Y FINANZAS CORPORATIVAS', 1, N'sys', CAST(N'2024-06-22T15:38:50.400' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (248, N'TECNOLÓGICA', 207, N'PROFESIONAL TÉCNICO', 3, N'EST000717', N'CONTABILIDAD Y TRIBUTACIÓN', 1, N'sys', CAST(N'2024-06-22T15:38:50.400' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (248, N'TECNOLÓGICA', 207, N'PROFESIONAL TÉCNICO', 3, N'EST000717', N'CONTABILIDAD Y TRIBUTACIÓN', 1, N'sys', CAST(N'2024-06-22T15:38:50.400' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (249, N'TECNOLÓGICA', 208, N'PROFESIONAL TÉCNICO', 3, N'M29692006', N'CONTABILIDAD, FINANZAS Y AUDITORIA', 1, N'sys', CAST(N'2024-06-22T15:38:50.400' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (249, N'TECNOLÓGICA', 208, N'PROFESIONAL TÉCNICO', 3, N'M29692006', N'CONTABILIDAD, FINANZAS Y AUDITORIA', 1, N'sys', CAST(N'2024-06-22T15:38:50.400' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (250, N'TECNOLÓGICA', 209, N'PROFESIONAL TÉCNICO', 3, N'000613015', N'CONTROL DE TRANSITO AÉREO', 1, N'sys', CAST(N'2024-06-22T15:38:50.400' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (250, N'TECNOLÓGICA', 209, N'PROFESIONAL TÉCNICO', 3, N'000613015', N'CONTROL DE TRANSITO AÉREO', 1, N'sys', CAST(N'2024-06-22T15:38:50.400' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (251, N'TECNOLÓGICA', 210, N'PROFESIONAL TÉCNICO', 3, N'000712015', N'CONTROLISTA DE MAQUINAS Y PROCESOS INDUSTRIALES', 1, N'sys', CAST(N'2024-06-22T15:38:50.400' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (251, N'TECNOLÓGICA', 210, N'PROFESIONAL TÉCNICO', 3, N'000712015', N'CONTROLISTA DE MAQUINAS Y PROCESOS INDUSTRIALES', 1, N'sys', CAST(N'2024-06-22T15:38:50.400' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (252, N'TECNOLÓGICA', 211, N'PROFESIONAL TÉCNICO', 3, N'000011015', N'COSMÉTICA DERMATOLÓGICA', 1, N'sys', CAST(N'2024-06-22T15:38:50.400' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (252, N'TECNOLÓGICA', 211, N'PROFESIONAL TÉCNICO', 3, N'000011015', N'COSMÉTICA DERMATOLÓGICA', 1, N'sys', CAST(N'2024-06-22T15:38:50.400' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (253, N'TECNOLÓGICA', 212, N'PROFESIONAL TÉCNICO', 3, N'000011025', N'COSMETOLOGÍA', 1, N'sys', CAST(N'2024-06-22T15:38:50.400' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (253, N'TECNOLÓGICA', 212, N'PROFESIONAL TÉCNICO', 3, N'000011025', N'COSMETOLOGÍA', 1, N'sys', CAST(N'2024-06-22T15:38:50.400' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (254, N'TECNOLÓGICA', 213, N'PROFESIONAL TÉCNICO', 3, N'000011035', N'COSMIATRÍA', 1, N'sys', CAST(N'2024-06-22T15:38:50.400' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (254, N'TECNOLÓGICA', 213, N'PROFESIONAL TÉCNICO', 3, N'000011035', N'COSMIATRÍA', 1, N'sys', CAST(N'2024-06-22T15:38:50.400' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (255, N'TECNOLÓGICA', 214, N'PROFESIONAL TÉCNICO', 3, N'000913025', N'CUIDADOS AUXILIARES DE ENFERMERÍA', 1, N'sys', CAST(N'2024-06-22T15:38:50.400' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (255, N'TECNOLÓGICA', 214, N'PROFESIONAL TÉCNICO', 3, N'000913025', N'CUIDADOS AUXILIARES DE ENFERMERÍA', 1, N'sys', CAST(N'2024-06-22T15:38:50.400' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (256, N'TECNOLÓGICA', 215, N'PROFESIONAL TÉCNICO', 3, N'000031045', N'DEFENSA AÉREA', 1, N'sys', CAST(N'2024-06-22T15:38:50.400' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (256, N'TECNOLÓGICA', 215, N'PROFESIONAL TÉCNICO', 3, N'000031045', N'DEFENSA AÉREA', 1, N'sys', CAST(N'2024-06-22T15:38:50.400' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (257, N'TECNOLÓGICA', 216, N'PROFESIONAL TÉCNICO', 3, N'R33932001', N'DEPORTES', 1, N'sys', CAST(N'2024-06-22T15:38:50.400' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (257, N'TECNOLÓGICA', 216, N'PROFESIONAL TÉCNICO', 3, N'R33932001', N'DEPORTES', 1, N'sys', CAST(N'2024-06-22T15:38:50.400' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (258, N'TECNOLÓGICA', 217, N'PROFESIONAL TÉCNICO', 3, N'000612155', N'DESARROLLO DE SISTEMAS DE INFORMACIÓN', 1, N'sys', CAST(N'2024-06-22T15:38:50.400' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (258, N'TECNOLÓGICA', 217, N'PROFESIONAL TÉCNICO', 3, N'000612155', N'DESARROLLO DE SISTEMAS DE INFORMACIÓN', 1, N'sys', CAST(N'2024-06-22T15:38:50.400' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (259, N'TECNOLÓGICA', 218, N'PROFESIONAL TÉCNICO', 3, N'000712025', N'DESARROLLO DE SISTEMAS DE INFORMACIÓN CON MENCIÓN EN APLICATIVOS MÓVILES', 1, N'sys', CAST(N'2024-06-22T15:38:50.400' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (259, N'TECNOLÓGICA', 218, N'PROFESIONAL TÉCNICO', 3, N'000712025', N'DESARROLLO DE SISTEMAS DE INFORMACIÓN CON MENCIÓN EN APLICATIVOS MÓVILES', 1, N'sys', CAST(N'2024-06-22T15:38:50.400' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (260, N'TECNOLÓGICA', 219, N'PROFESIONAL TÉCNICO', 3, N'000712035', N'DESARROLLO DE SISTEMAS DE INFORMACIÓN CON MENCIÓN EN INTELIGENCIA DE NEGOCIOS', 1, N'sys', CAST(N'2024-06-22T15:38:50.400' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (260, N'TECNOLÓGICA', 219, N'PROFESIONAL TÉCNICO', 3, N'000712035', N'DESARROLLO DE SISTEMAS DE INFORMACIÓN CON MENCIÓN EN INTELIGENCIA DE NEGOCIOS', 1, N'sys', CAST(N'2024-06-22T15:38:50.400' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (261, N'TECNOLÓGICA', 220, N'PROFESIONAL TÉCNICO', 3, N'000712045', N'DESARROLLO DE SISTEMAS DE INFORMACIÓN CON MENCIÓN EN PROCESOS DE AUTOMATIZACIÓN', 1, N'sys', CAST(N'2024-06-22T15:38:50.400' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (261, N'TECNOLÓGICA', 220, N'PROFESIONAL TÉCNICO', 3, N'000712045', N'DESARROLLO DE SISTEMAS DE INFORMACIÓN CON MENCIÓN EN PROCESOS DE AUTOMATIZACIÓN', 1, N'sys', CAST(N'2024-06-22T15:38:50.400' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (262, N'TECNOLÓGICA', 221, N'PROFESIONAL TÉCNICO', 3, N'000612165', N'DESARROLLO DE SOFTWARE', 1, N'sys', CAST(N'2024-06-22T15:38:50.400' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (262, N'TECNOLÓGICA', 221, N'PROFESIONAL TÉCNICO', 3, N'000612165', N'DESARROLLO DE SOFTWARE', 1, N'sys', CAST(N'2024-06-22T15:38:50.400' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (263, N'TECNOLÓGICA', 222, N'PROFESIONAL TÉCNICO', 3, N'004415008', N'DESARROLLO DE SOFTWARE E INTELIGENCIA DE NEGOCIOS', 1, N'sys', CAST(N'2024-06-22T15:38:50.400' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (263, N'TECNOLÓGICA', 222, N'PROFESIONAL TÉCNICO', 3, N'004415008', N'DESARROLLO DE SOFTWARE E INTELIGENCIA DE NEGOCIOS', 1, N'sys', CAST(N'2024-06-22T15:38:50.400' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (264, N'TECNOLÓGICA', 223, N'PROFESIONAL TÉCNICO', 3, N'004415009', N'DESARROLLO DE SOFTWARE Y APLICATIVOS MÓVILES', 1, N'sys', CAST(N'2024-06-22T15:38:50.400' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (264, N'TECNOLÓGICA', 223, N'PROFESIONAL TÉCNICO', 3, N'004415009', N'DESARROLLO DE SOFTWARE Y APLICATIVOS MÓVILES', 1, N'sys', CAST(N'2024-06-22T15:38:50.400' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (265, N'TECNOLÓGICA', 224, N'PROFESIONAL TÉCNICO', 3, N'000732045', N'DIBUJO EN CONSTRUCCIÓN CIVIL', 1, N'sys', CAST(N'2024-06-22T15:38:50.400' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (265, N'TECNOLÓGICA', 224, N'PROFESIONAL TÉCNICO', 3, N'000732045', N'DIBUJO EN CONSTRUCCIÓN CIVIL', 1, N'sys', CAST(N'2024-06-22T15:38:50.400' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (266, N'TECNOLÓGICA', 225, N'PROFESIONAL TÉCNICO', 3, N'005115011', N'DIRECCIÓN DE ANIMACIÓN 3D Y VFX', 1, N'sys', CAST(N'2024-06-22T15:43:11.903' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (266, N'TECNOLÓGICA', 225, N'PROFESIONAL TÉCNICO', 3, N'005115011', N'DIRECCIÓN DE ANIMACIÓN 3D Y VFX', 1, N'sys', CAST(N'2024-06-22T15:43:11.903' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (267, N'TECNOLÓGICA', 226, N'PROFESIONAL TÉCNICO', 3, N'000211145', N'DIRECCIÓN DE ARTES GRÁFICAS Y PUBLICITARIAS', 1, N'sys', CAST(N'2024-06-22T15:43:11.903' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (267, N'TECNOLÓGICA', 226, N'PROFESIONAL TÉCNICO', 3, N'000211145', N'DIRECCIÓN DE ARTES GRÁFICAS Y PUBLICITARIAS', 1, N'sys', CAST(N'2024-06-22T15:43:11.903' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (268, N'TECNOLÓGICA', 227, N'PROFESIONAL TÉCNICO', 3, N'000418045', N'DIRECCIÓN DE EMPRESAS', 1, N'sys', CAST(N'2024-06-22T15:43:11.903' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (268, N'TECNOLÓGICA', 227, N'PROFESIONAL TÉCNICO', 3, N'000418045', N'DIRECCIÓN DE EMPRESAS', 1, N'sys', CAST(N'2024-06-22T15:43:11.903' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (269, N'TECNOLÓGICA', 228, N'PROFESIONAL TÉCNICO', 3, N'000418055', N'DIRECCIÓN DE EMPRESAS Y FINANZAS', 1, N'sys', CAST(N'2024-06-22T15:43:11.903' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (269, N'TECNOLÓGICA', 228, N'PROFESIONAL TÉCNICO', 3, N'000418055', N'DIRECCIÓN DE EMPRESAS Y FINANZAS', 1, N'sys', CAST(N'2024-06-22T15:43:11.903' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (270, N'TECNOLÓGICA', 229, N'PROFESIONAL TÉCNICO', 3, N'R33932002', N'DIRECCIÓN TÉCNICA EN FUTBOL', 1, N'sys', CAST(N'2024-06-22T15:43:11.903' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (270, N'TECNOLÓGICA', 229, N'PROFESIONAL TÉCNICO', 3, N'R33932002', N'DIRECCIÓN TÉCNICA EN FUTBOL', 1, N'sys', CAST(N'2024-06-22T15:43:11.903' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (271, N'TECNOLÓGICA', 230, N'PROFESIONAL TÉCNICO', 3, N'000211155', N'DIRECCIÓN Y DISEÑO GRÁFICO', 1, N'sys', CAST(N'2024-06-22T15:43:11.903' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (271, N'TECNOLÓGICA', 230, N'PROFESIONAL TÉCNICO', 3, N'000211155', N'DIRECCIÓN Y DISEÑO GRÁFICO', 1, N'sys', CAST(N'2024-06-22T15:43:11.903' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (272, N'TECNOLÓGICA', 231, N'PROFESIONAL TÉCNICO', 3, N'000211165', N'DIRECCIÓN Y DISEÑO PUBLICITARIO', 1, N'sys', CAST(N'2024-06-22T15:43:11.903' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (272, N'TECNOLÓGICA', 231, N'PROFESIONAL TÉCNICO', 3, N'000211165', N'DIRECCIÓN Y DISEÑO PUBLICITARIO', 1, N'sys', CAST(N'2024-06-22T15:43:11.903' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (273, N'TECNOLÓGICA', 232, N'PROFESIONAL TÉCNICO', 3, N'000322045', N'DIRECCIÓN Y GUIONIZACIÓN', 1, N'sys', CAST(N'2024-06-22T15:43:11.903' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (273, N'TECNOLÓGICA', 232, N'PROFESIONAL TÉCNICO', 3, N'000322045', N'DIRECCIÓN Y GUIONIZACIÓN', 1, N'sys', CAST(N'2024-06-22T15:43:11.903' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (274, N'TECNOLÓGICA', 233, N'PROFESIONAL TÉCNICO', 3, N'000211175', N'DIRECCIÓN Y PRODUCCIÓN EN RADIO', 1, N'sys', CAST(N'2024-06-22T15:43:11.903' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (274, N'TECNOLÓGICA', 233, N'PROFESIONAL TÉCNICO', 3, N'000211175', N'DIRECCIÓN Y PRODUCCIÓN EN RADIO', 1, N'sys', CAST(N'2024-06-22T15:43:11.903' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (275, N'TECNOLÓGICA', 234, N'PROFESIONAL TÉCNICO', 3, N'000211185', N'DIRECCIÓN Y REALIZACIÓN DE CINE Y TELEVISIÓN', 1, N'sys', CAST(N'2024-06-22T15:43:11.903' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (275, N'TECNOLÓGICA', 234, N'PROFESIONAL TÉCNICO', 3, N'000211185', N'DIRECCIÓN Y REALIZACIÓN DE CINE Y TELEVISIÓN', 1, N'sys', CAST(N'2024-06-22T15:43:11.903' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (276, N'TECNOLÓGICA', 235, N'PROFESIONAL TÉCNICO', 3, N'J26592013', N'DIRECCIÓN, REALIZACIÓN DE CINE Y TV', 1, N'sys', CAST(N'2024-06-22T15:43:11.903' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (276, N'TECNOLÓGICA', 235, N'PROFESIONAL TÉCNICO', 3, N'J26592013', N'DIRECCIÓN, REALIZACIÓN DE CINE Y TV', 1, N'sys', CAST(N'2024-06-22T15:43:11.903' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (277, N'TECNOLÓGICA', 236, N'PROFESIONAL TÉCNICO', 3, N'000212015', N'DISEÑO DE AMBIENTES', 1, N'sys', CAST(N'2024-06-22T15:43:11.907' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (277, N'TECNOLÓGICA', 236, N'PROFESIONAL TÉCNICO', 3, N'000212015', N'DISEÑO DE AMBIENTES', 1, N'sys', CAST(N'2024-06-22T15:43:11.907' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (278, N'TECNOLÓGICA', 237, N'PROFESIONAL TÉCNICO', 3, N'000713015', N'DISEÑO DE ESTRUCTURAS METÁLICAS Y DE CONSTRUCCIÓN', 1, N'sys', CAST(N'2024-06-22T15:43:11.907' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (278, N'TECNOLÓGICA', 237, N'PROFESIONAL TÉCNICO', 3, N'000713015', N'DISEÑO DE ESTRUCTURAS METÁLICAS Y DE CONSTRUCCIÓN', 1, N'sys', CAST(N'2024-06-22T15:43:11.907' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (279, N'TECNOLÓGICA', 238, N'PROFESIONAL TÉCNICO', 3, N'000212025', N'DISEÑO DE INTERIORES', 1, N'sys', CAST(N'2024-06-22T15:43:11.907' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (279, N'TECNOLÓGICA', 238, N'PROFESIONAL TÉCNICO', 3, N'000212025', N'DISEÑO DE INTERIORES', 1, N'sys', CAST(N'2024-06-22T15:43:11.907' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (280, N'TECNOLÓGICA', 239, N'PROFESIONAL TÉCNICO', 3, N'EST000718', N'DISEÑO DE MEDIOS INTERACTIVOS', 1, N'sys', CAST(N'2024-06-22T15:43:11.907' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (280, N'TECNOLÓGICA', 239, N'PROFESIONAL TÉCNICO', 3, N'EST000718', N'DISEÑO DE MEDIOS INTERACTIVOS', 1, N'sys', CAST(N'2024-06-22T15:43:11.907' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (281, N'TECNOLÓGICA', 240, N'PROFESIONAL TÉCNICO', 3, N'000212035', N'DISEÑO DE MODAS', 1, N'sys', CAST(N'2024-06-22T15:43:11.907' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (281, N'TECNOLÓGICA', 240, N'PROFESIONAL TÉCNICO', 3, N'000212035', N'DISEÑO DE MODAS', 1, N'sys', CAST(N'2024-06-22T15:43:11.907' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (282, N'TECNOLÓGICA', 241, N'PROFESIONAL TÉCNICO', 3, N'000212045', N'DISEÑO DE MODAS Y MODISTERÍA INDUSTRIAL', 1, N'sys', CAST(N'2024-06-22T15:43:11.907' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (282, N'TECNOLÓGICA', 241, N'PROFESIONAL TÉCNICO', 3, N'000212045', N'DISEÑO DE MODAS Y MODISTERÍA INDUSTRIAL', 1, N'sys', CAST(N'2024-06-22T15:43:11.907' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (283, N'TECNOLÓGICA', 242, N'PROFESIONAL TÉCNICO', 3, N'000212055', N'DISEÑO DE PRENDAS DE VESTIR', 1, N'sys', CAST(N'2024-06-22T15:43:11.907' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (283, N'TECNOLÓGICA', 242, N'PROFESIONAL TÉCNICO', 3, N'000212055', N'DISEÑO DE PRENDAS DE VESTIR', 1, N'sys', CAST(N'2024-06-22T15:43:11.907' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (284, N'TECNOLÓGICA', 243, N'PROFESIONAL TÉCNICO', 3, N'000212065', N'DISEÑO DE PRODUCTO', 1, N'sys', CAST(N'2024-06-22T15:43:11.907' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (284, N'TECNOLÓGICA', 243, N'PROFESIONAL TÉCNICO', 3, N'000212065', N'DISEÑO DE PRODUCTO', 1, N'sys', CAST(N'2024-06-22T15:43:11.907' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (285, N'TECNOLÓGICA', 244, N'PROFESIONAL TÉCNICO', 3, N'000212075', N'DISEÑO DE PRODUCTOS DE MADERA', 1, N'sys', CAST(N'2024-06-22T15:43:11.907' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (285, N'TECNOLÓGICA', 244, N'PROFESIONAL TÉCNICO', 3, N'000212075', N'DISEÑO DE PRODUCTOS DE MADERA', 1, N'sys', CAST(N'2024-06-22T15:43:11.907' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (286, N'TECNOLÓGICA', 245, N'PROFESIONAL TÉCNICO', 3, N'004415011', N'DISEÑO DE SOFTWARE E INTEGRACIÓN DE SISTEMAS', 1, N'sys', CAST(N'2024-06-22T15:43:11.907' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (286, N'TECNOLÓGICA', 245, N'PROFESIONAL TÉCNICO', 3, N'004415011', N'DISEÑO DE SOFTWARE E INTEGRACIÓN DE SISTEMAS', 1, N'sys', CAST(N'2024-06-22T15:43:11.907' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (287, N'TECNOLÓGICA', 246, N'PROFESIONAL TÉCNICO', 3, N'000211195', N'DISEÑO DE VIDEO JUEGOS Y ENTRETENIMIENTO DIGITAL', 1, N'sys', CAST(N'2024-06-22T15:43:11.907' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (287, N'TECNOLÓGICA', 246, N'PROFESIONAL TÉCNICO', 3, N'000211195', N'DISEÑO DE VIDEO JUEGOS Y ENTRETENIMIENTO DIGITAL', 1, N'sys', CAST(N'2024-06-22T15:43:11.907' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (288, N'TECNOLÓGICA', 247, N'PROFESIONAL TÉCNICO', 3, N'000211205', N'DISEÑO DE VIDEOJUEGOS', 1, N'sys', CAST(N'2024-06-22T15:43:11.907' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (288, N'TECNOLÓGICA', 247, N'PROFESIONAL TÉCNICO', 3, N'000211205', N'DISEÑO DE VIDEOJUEGOS', 1, N'sys', CAST(N'2024-06-22T15:43:11.907' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (289, N'TECNOLÓGICA', 248, N'PROFESIONAL TÉCNICO', 3, N'000212085', N'DISEÑO ESCENOGRÁFICO', 1, N'sys', CAST(N'2024-06-22T15:43:11.907' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (289, N'TECNOLÓGICA', 248, N'PROFESIONAL TÉCNICO', 3, N'000212085', N'DISEÑO ESCENOGRÁFICO', 1, N'sys', CAST(N'2024-06-22T15:43:11.907' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (290, N'TECNOLÓGICA', 249, N'PROFESIONAL TÉCNICO', 3, N'EST000719', N'DISEÑO ESTRATÉGICO PARA LOS NEGOCIOS', 1, N'sys', CAST(N'2024-06-22T15:43:11.907' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (290, N'TECNOLÓGICA', 249, N'PROFESIONAL TÉCNICO', 3, N'EST000719', N'DISEÑO ESTRATÉGICO PARA LOS NEGOCIOS', 1, N'sys', CAST(N'2024-06-22T15:43:11.907' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (291, N'TECNOLÓGICA', 250, N'PROFESIONAL TÉCNICO', 3, N'000211215', N'DISEÑO GRÁFICO', 1, N'sys', CAST(N'2024-06-22T15:43:11.907' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (291, N'TECNOLÓGICA', 250, N'PROFESIONAL TÉCNICO', 3, N'000211215', N'DISEÑO GRÁFICO', 1, N'sys', CAST(N'2024-06-22T15:43:11.907' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (292, N'TECNOLÓGICA', 251, N'PROFESIONAL TÉCNICO', 3, N'000211225', N'DISEÑO GRÁFICO DIGITAL', 1, N'sys', CAST(N'2024-06-22T15:43:11.910' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (292, N'TECNOLÓGICA', 251, N'PROFESIONAL TÉCNICO', 3, N'000211225', N'DISEÑO GRÁFICO DIGITAL', 1, N'sys', CAST(N'2024-06-22T15:43:11.910' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (293, N'TECNOLÓGICA', 252, N'PROFESIONAL TÉCNICO', 3, N'EST000720', N'DISEÑO GRÁFICO PUBLICITARIO', 1, N'sys', CAST(N'2024-06-22T15:43:11.910' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (293, N'TECNOLÓGICA', 252, N'PROFESIONAL TÉCNICO', 3, N'EST000720', N'DISEÑO GRÁFICO PUBLICITARIO', 1, N'sys', CAST(N'2024-06-22T15:43:11.910' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (294, N'TECNOLÓGICA', 253, N'PROFESIONAL TÉCNICO', 3, N'002225007', N'DISEÑO GRÁFICO Y MULTIMEDIA', 1, N'sys', CAST(N'2024-06-22T15:43:11.910' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (294, N'TECNOLÓGICA', 253, N'PROFESIONAL TÉCNICO', 3, N'002225007', N'DISEÑO GRÁFICO Y MULTIMEDIA', 1, N'sys', CAST(N'2024-06-22T15:43:11.910' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (295, N'TECNOLÓGICA', 254, N'PROFESIONAL TÉCNICO', 3, N'000211235', N'DISEÑO GRÁFICO Y PUBLICIDAD DIGITAL', 1, N'sys', CAST(N'2024-06-22T15:43:11.910' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (295, N'TECNOLÓGICA', 254, N'PROFESIONAL TÉCNICO', 3, N'000211235', N'DISEÑO GRÁFICO Y PUBLICIDAD DIGITAL', 1, N'sys', CAST(N'2024-06-22T15:43:11.910' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (296, N'TECNOLÓGICA', 255, N'PROFESIONAL TÉCNICO', 3, N'000211245', N'DISEÑO GRÁFICO Y PUBLICITARIO', 1, N'sys', CAST(N'2024-06-22T15:43:11.910' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (296, N'TECNOLÓGICA', 255, N'PROFESIONAL TÉCNICO', 3, N'000211245', N'DISEÑO GRÁFICO Y PUBLICITARIO', 1, N'sys', CAST(N'2024-06-22T15:43:11.910' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (297, N'TECNOLÓGICA', 256, N'PROFESIONAL TÉCNICO', 3, N'000212095', N'DISEÑO INDUSTRIAL', 1, N'sys', CAST(N'2024-06-22T15:43:11.910' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (297, N'TECNOLÓGICA', 256, N'PROFESIONAL TÉCNICO', 3, N'000212095', N'DISEÑO INDUSTRIAL', 1, N'sys', CAST(N'2024-06-22T15:43:11.910' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (298, N'TECNOLÓGICA', 257, N'PROFESIONAL TÉCNICO', 3, N'000211255', N'DISEÑO PUBLICITARIO', 1, N'sys', CAST(N'2024-06-22T15:43:11.910' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (298, N'TECNOLÓGICA', 257, N'PROFESIONAL TÉCNICO', 3, N'000211255', N'DISEÑO PUBLICITARIO', 1, N'sys', CAST(N'2024-06-22T15:43:11.910' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (299, N'TECNOLÓGICA', 258, N'PROFESIONAL TÉCNICO', 3, N'000211265', N'DISEÑO TÉCNICO', 1, N'sys', CAST(N'2024-06-22T15:43:11.910' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (299, N'TECNOLÓGICA', 258, N'PROFESIONAL TÉCNICO', 3, N'000211265', N'DISEÑO TÉCNICO', 1, N'sys', CAST(N'2024-06-22T15:43:11.910' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (300, N'TECNOLÓGICA', 259, N'PROFESIONAL TÉCNICO', 3, N'000723015', N'DISEÑO TEXTIL', 1, N'sys', CAST(N'2024-06-22T15:43:11.910' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (300, N'TECNOLÓGICA', 259, N'PROFESIONAL TÉCNICO', 3, N'000723015', N'DISEÑO TEXTIL', 1, N'sys', CAST(N'2024-06-22T15:43:11.910' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (301, N'TECNOLÓGICA', 260, N'PROFESIONAL TÉCNICO', 3, N'002225011', N'DISEÑO WEB & MULTIMEDIA', 1, N'sys', CAST(N'2024-06-22T15:43:11.910' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (301, N'TECNOLÓGICA', 260, N'PROFESIONAL TÉCNICO', 3, N'002225011', N'DISEÑO WEB & MULTIMEDIA', 1, N'sys', CAST(N'2024-06-22T15:43:11.910' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (302, N'TECNOLÓGICA', 261, N'PROFESIONAL TÉCNICO', 3, N'000211275', N'DISEÑO WEB Y MULTIMEDIA', 1, N'sys', CAST(N'2024-06-22T15:43:11.910' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (302, N'TECNOLÓGICA', 261, N'PROFESIONAL TÉCNICO', 3, N'000211275', N'DISEÑO WEB Y MULTIMEDIA', 1, N'sys', CAST(N'2024-06-22T15:43:11.910' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (303, N'TECNOLÓGICA', 262, N'PROFESIONAL TÉCNICO', 3, N'002225008', N'DISEÑO Y DECORACIÓN DE INTERIORES', 1, N'sys', CAST(N'2024-06-22T15:43:11.910' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (303, N'TECNOLÓGICA', 262, N'PROFESIONAL TÉCNICO', 3, N'002225008', N'DISEÑO Y DECORACIÓN DE INTERIORES', 1, N'sys', CAST(N'2024-06-22T15:43:11.910' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (304, N'TECNOLÓGICA', 263, N'PROFESIONAL TÉCNICO', 3, N'000211285', N'DISEÑO Y DESARROLLO DE SIMULADORES Y VIDEOJUEGOS', 1, N'sys', CAST(N'2024-06-22T15:43:11.910' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (304, N'TECNOLÓGICA', 263, N'PROFESIONAL TÉCNICO', 3, N'000211285', N'DISEÑO Y DESARROLLO DE SIMULADORES Y VIDEOJUEGOS', 1, N'sys', CAST(N'2024-06-22T15:43:11.910' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (305, N'TECNOLÓGICA', 264, N'PROFESIONAL TÉCNICO', 3, N'000612175', N'DISEÑO Y DESARROLLO DE SOFTWARE', 1, N'sys', CAST(N'2024-06-22T15:43:11.910' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (305, N'TECNOLÓGICA', 264, N'PROFESIONAL TÉCNICO', 3, N'000612175', N'DISEÑO Y DESARROLLO DE SOFTWARE', 1, N'sys', CAST(N'2024-06-22T15:43:11.910' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (306, N'TECNOLÓGICA', 265, N'PROFESIONAL TÉCNICO', 3, N'EST000721', N'DISEÑO Y DESARROLLO DE SOFTWARE Y PRUEBAS DE SOLUCIONES MULTIPLATAFORMA', 1, N'sys', CAST(N'2024-06-22T15:43:11.910' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (306, N'TECNOLÓGICA', 265, N'PROFESIONAL TÉCNICO', 3, N'EST000721', N'DISEÑO Y DESARROLLO DE SOFTWARE Y PRUEBAS DE SOLUCIONES MULTIPLATAFORMA', 1, N'sys', CAST(N'2024-06-22T15:43:11.910' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (307, N'TECNOLÓGICA', 266, N'PROFESIONAL TÉCNICO', 3, N'EST000722', N'DISEÑO Y DESARROLLO DE SOFTWARE Y SOLUCIONES DE INTELIGENCIA DE NEGOCIOS', 1, N'sys', CAST(N'2024-06-22T15:43:11.910' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (307, N'TECNOLÓGICA', 266, N'PROFESIONAL TÉCNICO', 3, N'EST000722', N'DISEÑO Y DESARROLLO DE SOFTWARE Y SOLUCIONES DE INTELIGENCIA DE NEGOCIOS', 1, N'sys', CAST(N'2024-06-22T15:43:11.910' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (308, N'TECNOLÓGICA', 267, N'PROFESIONAL TÉCNICO', 3, N'EST000723', N'DISEÑO Y DESARROLLO DE SOFTWARE Y SOLUCIONES MÓVILES', 1, N'sys', CAST(N'2024-06-22T15:43:11.910' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (308, N'TECNOLÓGICA', 267, N'PROFESIONAL TÉCNICO', 3, N'EST000723', N'DISEÑO Y DESARROLLO DE SOFTWARE Y SOLUCIONES MÓVILES', 1, N'sys', CAST(N'2024-06-22T15:43:11.910' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (309, N'TECNOLÓGICA', 268, N'PROFESIONAL TÉCNICO', 3, N'EST000724', N'DISEÑO Y DESARROLLO DE SOFTWARE Y SOLUCIONES WEB', 1, N'sys', CAST(N'2024-06-22T15:43:11.910' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (309, N'TECNOLÓGICA', 268, N'PROFESIONAL TÉCNICO', 3, N'EST000724', N'DISEÑO Y DESARROLLO DE SOFTWARE Y SOLUCIONES WEB', 1, N'sys', CAST(N'2024-06-22T15:43:11.910' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (310, N'TECNOLÓGICA', 269, N'PROFESIONAL TÉCNICO', 3, N'EST000725', N'DISEÑO Y DESARROLLO DE SOFTWARE Y TÉCNICAS DE HACKING ÉTICO', 1, N'sys', CAST(N'2024-06-22T15:43:11.910' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (310, N'TECNOLÓGICA', 269, N'PROFESIONAL TÉCNICO', 3, N'EST000725', N'DISEÑO Y DESARROLLO DE SOFTWARE Y TÉCNICAS DE HACKING ÉTICO', 1, N'sys', CAST(N'2024-06-22T15:43:11.910' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (311, N'TECNOLÓGICA', 270, N'PROFESIONAL TÉCNICO', 3, N'000211295', N'DISEÑO Y DESARROLLO DE VIDEOJUEGOS', 1, N'sys', CAST(N'2024-06-22T15:43:11.910' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (311, N'TECNOLÓGICA', 270, N'PROFESIONAL TÉCNICO', 3, N'000211295', N'DISEÑO Y DESARROLLO DE VIDEOJUEGOS', 1, N'sys', CAST(N'2024-06-22T15:43:11.910' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (312, N'TECNOLÓGICA', 271, N'PROFESIONAL TÉCNICO', 3, N'000211305', N'DISEÑO Y DESARROLLO PARA MEDIOS DIGITALES', 1, N'sys', CAST(N'2024-06-22T15:43:11.910' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (312, N'TECNOLÓGICA', 271, N'PROFESIONAL TÉCNICO', 3, N'000211305', N'DISEÑO Y DESARROLLO PARA MEDIOS DIGITALES', 1, N'sys', CAST(N'2024-06-22T15:43:11.910' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (313, N'TECNOLÓGICA', 272, N'PROFESIONAL TÉCNICO', 3, N'000612185', N'DISEÑO Y DESARROLLO WEB', 1, N'sys', CAST(N'2024-06-22T15:43:11.910' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (313, N'TECNOLÓGICA', 272, N'PROFESIONAL TÉCNICO', 3, N'000612185', N'DISEÑO Y DESARROLLO WEB', 1, N'sys', CAST(N'2024-06-22T15:43:11.910' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (314, N'TECNOLÓGICA', 273, N'PROFESIONAL TÉCNICO', 3, N'000212105', N'DISEÑO Y GESTIÓN DE LA MODA', 1, N'sys', CAST(N'2024-06-22T15:43:11.910' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (314, N'TECNOLÓGICA', 273, N'PROFESIONAL TÉCNICO', 3, N'000212105', N'DISEÑO Y GESTIÓN DE LA MODA', 1, N'sys', CAST(N'2024-06-22T15:43:11.910' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (315, N'TECNOLÓGICA', 274, N'PROFESIONAL TÉCNICO', 3, N'000723025', N'DISEÑO Y PRODUCCIÓN DE TEXTILES', 1, N'sys', CAST(N'2024-06-22T15:43:11.910' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (315, N'TECNOLÓGICA', 274, N'PROFESIONAL TÉCNICO', 3, N'000723025', N'DISEÑO Y PRODUCCIÓN DE TEXTILES', 1, N'sys', CAST(N'2024-06-22T15:43:11.910' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (316, N'TECNOLÓGICA', 275, N'PROFESIONAL TÉCNICO', 3, N'005285003', N'DISEÑO Y PRODUCCIÓN TEXTIL', 1, N'sys', CAST(N'2024-06-22T15:43:11.913' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (316, N'TECNOLÓGICA', 275, N'PROFESIONAL TÉCNICO', 3, N'005285003', N'DISEÑO Y PRODUCCIÓN TEXTIL', 1, N'sys', CAST(N'2024-06-22T15:43:11.913' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (317, N'TECNOLÓGICA', 276, N'PROFESIONAL TÉCNICO', 3, N'000612195', N'DISEÑO Y PROGRAMACIÓN WEB', 1, N'sys', CAST(N'2024-06-22T15:43:11.913' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (317, N'TECNOLÓGICA', 276, N'PROFESIONAL TÉCNICO', 3, N'000612195', N'DISEÑO Y PROGRAMACIÓN WEB', 1, N'sys', CAST(N'2024-06-22T15:43:11.913' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (318, N'TECNOLÓGICA', 277, N'PROFESIONAL TÉCNICO', 3, N'001615004', N'EBANISTERÍA', 1, N'sys', CAST(N'2024-06-22T15:43:11.913' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (318, N'TECNOLÓGICA', 277, N'PROFESIONAL TÉCNICO', 3, N'001615004', N'EBANISTERÍA', 1, N'sys', CAST(N'2024-06-22T15:43:11.913' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (319, N'TECNOLÓGICA', 278, N'PROFESIONAL TÉCNICO', 3, N'000014075', N'ECOLOGÍA TURÍSTICA', 1, N'sys', CAST(N'2024-06-22T15:43:11.913' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (319, N'TECNOLÓGICA', 278, N'PROFESIONAL TÉCNICO', 3, N'000014075', N'ECOLOGÍA TURÍSTICA', 1, N'sys', CAST(N'2024-06-22T15:43:11.913' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (320, N'TECNOLÓGICA', 279, N'PROFESIONAL TÉCNICO', 3, N'000014085', N'ECOTURISMO Y GESTIÓN AMBIENTAL', 1, N'sys', CAST(N'2024-06-22T15:43:11.913' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (320, N'TECNOLÓGICA', 279, N'PROFESIONAL TÉCNICO', 3, N'000014085', N'ECOTURISMO Y GESTIÓN AMBIENTAL', 1, N'sys', CAST(N'2024-06-22T15:43:11.913' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (321, N'TECNOLÓGICA', 280, N'PROFESIONAL TÉCNICO', 3, N'000732055', N'EDIFICACIONES', 1, N'sys', CAST(N'2024-06-22T15:43:11.913' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (321, N'TECNOLÓGICA', 280, N'PROFESIONAL TÉCNICO', 3, N'000732055', N'EDIFICACIONES', 1, N'sys', CAST(N'2024-06-22T15:43:11.913' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (322, N'TECNOLÓGICA', 281, N'PROFESIONAL TÉCNICO', 3, N'000151015', N'EDUCACIÓN ARTÍSTICA', 1, N'sys', CAST(N'2024-06-22T16:02:57.223' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (322, N'TECNOLÓGICA', 281, N'PROFESIONAL TÉCNICO', 3, N'000151015', N'EDUCACIÓN ARTÍSTICA', 1, N'sys', CAST(N'2024-06-22T16:02:57.223' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (323, N'TECNOLÓGICA', 282, N'PROFESIONAL TÉCNICO', 3, N'000121015', N'EDUCACIÓN EN COMPUTACIÓN E INFORMÁTICA', 1, N'sys', CAST(N'2024-06-22T16:02:57.227' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (323, N'TECNOLÓGICA', 282, N'PROFESIONAL TÉCNICO', 3, N'000121015', N'EDUCACIÓN EN COMPUTACIÓN E INFORMÁTICA', 1, N'sys', CAST(N'2024-06-22T16:02:57.227' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (324, N'TECNOLÓGICA', 283, N'PROFESIONAL TÉCNICO', 3, N'000131015', N'EDUCACIÓN FÍSICA', 1, N'sys', CAST(N'2024-06-22T16:02:57.227' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (324, N'TECNOLÓGICA', 283, N'PROFESIONAL TÉCNICO', 3, N'000131015', N'EDUCACIÓN FÍSICA', 1, N'sys', CAST(N'2024-06-22T16:02:57.227' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (325, N'TECNOLÓGICA', 284, N'PROFESIONAL TÉCNICO', 3, N'000111015', N'EDUCACIÓN INICIAL', 1, N'sys', CAST(N'2024-06-22T16:02:57.227' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (325, N'TECNOLÓGICA', 284, N'PROFESIONAL TÉCNICO', 3, N'000111015', N'EDUCACIÓN INICIAL', 1, N'sys', CAST(N'2024-06-22T16:02:57.227' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (326, N'TECNOLÓGICA', 285, N'PROFESIONAL TÉCNICO', 3, N'000112015', N'EDUCACIÓN PRIMARIA', 1, N'sys', CAST(N'2024-06-22T16:02:57.227' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (326, N'TECNOLÓGICA', 285, N'PROFESIONAL TÉCNICO', 3, N'000112015', N'EDUCACIÓN PRIMARIA', 1, N'sys', CAST(N'2024-06-22T16:02:57.227' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (327, N'TECNOLÓGICA', 286, N'PROFESIONAL TÉCNICO', 3, N'000112025', N'EDUCACIÓN PRIMARIA (INTERCULTURAL Y BILINGÜE)', 1, N'sys', CAST(N'2024-06-22T16:02:57.227' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (327, N'TECNOLÓGICA', 286, N'PROFESIONAL TÉCNICO', 3, N'000112025', N'EDUCACIÓN PRIMARIA (INTERCULTURAL Y BILINGÜE)', 1, N'sys', CAST(N'2024-06-22T16:02:57.227' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (328, N'TECNOLÓGICA', 287, N'PROFESIONAL TÉCNICO', 3, N'000121055', N'EDUCACIÓN SECUNDARIA - CIENCIA, TECNOLOGÍA Y AMBIENTE', 1, N'sys', CAST(N'2024-06-22T16:02:57.227' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (328, N'TECNOLÓGICA', 287, N'PROFESIONAL TÉCNICO', 3, N'000121055', N'EDUCACIÓN SECUNDARIA - CIENCIA, TECNOLOGÍA Y AMBIENTE', 1, N'sys', CAST(N'2024-06-22T16:02:57.227' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (329, N'TECNOLÓGICA', 288, N'PROFESIONAL TÉCNICO', 3, N'000121065', N'EDUCACIÓN SECUNDARIA - CIENCIAS SOCIALES', 1, N'sys', CAST(N'2024-06-22T16:02:57.227' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (329, N'TECNOLÓGICA', 288, N'PROFESIONAL TÉCNICO', 3, N'000121065', N'EDUCACIÓN SECUNDARIA - CIENCIAS SOCIALES', 1, N'sys', CAST(N'2024-06-22T16:02:57.227' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (330, N'TECNOLÓGICA', 289, N'PROFESIONAL TÉCNICO', 3, N'000121075', N'EDUCACIÓN SECUNDARIA - COMUNICACIÓN', 1, N'sys', CAST(N'2024-06-22T16:02:57.227' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (330, N'TECNOLÓGICA', 289, N'PROFESIONAL TÉCNICO', 3, N'000121075', N'EDUCACIÓN SECUNDARIA - COMUNICACIÓN', 1, N'sys', CAST(N'2024-06-22T16:02:57.227' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (331, N'TECNOLÓGICA', 290, N'PROFESIONAL TÉCNICO', 3, N'000121085', N'EDUCACIÓN SECUNDARIA - MATEMÁTICA', 1, N'sys', CAST(N'2024-06-22T16:02:57.227' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (331, N'TECNOLÓGICA', 290, N'PROFESIONAL TÉCNICO', 3, N'000121085', N'EDUCACIÓN SECUNDARIA - MATEMÁTICA', 1, N'sys', CAST(N'2024-06-22T16:02:57.227' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (332, N'TECNOLÓGICA', 291, N'PROFESIONAL TÉCNICO', 3, N'000311035', N'ELABORACIÓN Y EVALUACIÓN DE PROYECTOS', 1, N'sys', CAST(N'2024-06-22T16:02:57.227' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (332, N'TECNOLÓGICA', 291, N'PROFESIONAL TÉCNICO', 3, N'000311035', N'ELABORACIÓN Y EVALUACIÓN DE PROYECTOS', 1, N'sys', CAST(N'2024-06-22T16:02:57.227' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (333, N'TECNOLÓGICA', 292, N'PROFESIONAL TÉCNICO', 3, N'000711015', N'ELECTRICIDAD', 1, N'sys', CAST(N'2024-06-22T16:02:57.227' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (333, N'TECNOLÓGICA', 292, N'PROFESIONAL TÉCNICO', 3, N'000711015', N'ELECTRICIDAD', 1, N'sys', CAST(N'2024-06-22T16:02:57.227' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (334, N'TECNOLÓGICA', 293, N'PROFESIONAL TÉCNICO', 3, N'D19353001', N'ELECTRICIDAD INDUSTRIAL', 1, N'sys', CAST(N'2024-06-22T16:02:57.227' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (334, N'TECNOLÓGICA', 293, N'PROFESIONAL TÉCNICO', 3, N'D19353001', N'ELECTRICIDAD INDUSTRIAL', 1, N'sys', CAST(N'2024-06-22T16:02:57.227' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (335, N'TECNOLÓGICA', 294, N'PROFESIONAL TÉCNICO', 3, N'000711035', N'ELECTRICIDAD INDUSTRIAL CON MENCIÓN EN SISTEMAS ELÉCTRICOS DE POTENCIA', 1, N'sys', CAST(N'2024-06-22T16:02:57.227' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (335, N'TECNOLÓGICA', 294, N'PROFESIONAL TÉCNICO', 3, N'000711035', N'ELECTRICIDAD INDUSTRIAL CON MENCIÓN EN SISTEMAS ELÉCTRICOS DE POTENCIA', 1, N'sys', CAST(N'2024-06-22T16:02:57.227' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (336, N'TECNOLÓGICA', 295, N'PROFESIONAL TÉCNICO', 3, N'000711025', N'ELECTRICISTA INDUSTRIAL', 1, N'sys', CAST(N'2024-06-22T16:02:57.227' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (336, N'TECNOLÓGICA', 295, N'PROFESIONAL TÉCNICO', 3, N'000711025', N'ELECTRICISTA INDUSTRIAL', 1, N'sys', CAST(N'2024-06-22T16:02:57.227' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (337, N'TECNOLÓGICA', 296, N'PROFESIONAL TÉCNICO', 3, N'000712055', N'ELECTRÓNICA', 1, N'sys', CAST(N'2024-06-22T16:02:57.227' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (337, N'TECNOLÓGICA', 296, N'PROFESIONAL TÉCNICO', 3, N'000712055', N'ELECTRÓNICA', 1, N'sys', CAST(N'2024-06-22T16:02:57.227' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (338, N'TECNOLÓGICA', 297, N'PROFESIONAL TÉCNICO', 3, N'000712065', N'ELECTRÓNICA AERONÁUTICA', 1, N'sys', CAST(N'2024-06-22T16:02:57.227' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (338, N'TECNOLÓGICA', 297, N'PROFESIONAL TÉCNICO', 3, N'000712065', N'ELECTRÓNICA AERONÁUTICA', 1, N'sys', CAST(N'2024-06-22T16:02:57.227' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (339, N'TECNOLÓGICA', 298, N'PROFESIONAL TÉCNICO', 3, N'000712075', N'ELECTRÓNICA DE MICROCOMPUTADORAS', 1, N'sys', CAST(N'2024-06-22T16:02:57.227' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (339, N'TECNOLÓGICA', 298, N'PROFESIONAL TÉCNICO', 3, N'000712075', N'ELECTRÓNICA DE MICROCOMPUTADORAS', 1, N'sys', CAST(N'2024-06-22T16:02:57.227' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (340, N'TECNOLÓGICA', 299, N'PROFESIONAL TÉCNICO', 3, N'000712085', N'ELECTRÓNICA DE SISTEMAS COMPUTARIZADOS', 1, N'sys', CAST(N'2024-06-22T16:02:57.230' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (340, N'TECNOLÓGICA', 299, N'PROFESIONAL TÉCNICO', 3, N'000712085', N'ELECTRÓNICA DE SISTEMAS COMPUTARIZADOS', 1, N'sys', CAST(N'2024-06-22T16:02:57.230' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (341, N'TECNOLÓGICA', 300, N'PROFESIONAL TÉCNICO', 3, N'000712095', N'ELECTRÓNICA DE SISTEMAS INDUSTRIALES', 1, N'sys', CAST(N'2024-06-22T16:02:57.230' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (341, N'TECNOLÓGICA', 300, N'PROFESIONAL TÉCNICO', 3, N'000712095', N'ELECTRÓNICA DE SISTEMAS INDUSTRIALES', 1, N'sys', CAST(N'2024-06-22T16:02:57.230' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (342, N'TECNOLÓGICA', 301, N'PROFESIONAL TÉCNICO', 3, N'000712105', N'ELECTRÓNICA DIGITAL', 1, N'sys', CAST(N'2024-06-22T16:02:57.230' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (342, N'TECNOLÓGICA', 301, N'PROFESIONAL TÉCNICO', 3, N'000712105', N'ELECTRÓNICA DIGITAL', 1, N'sys', CAST(N'2024-06-22T16:02:57.230' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (343, N'TECNOLÓGICA', 302, N'PROFESIONAL TÉCNICO', 3, N'000712115', N'ELECTRÓNICA INDUSTRIAL', 1, N'sys', CAST(N'2024-06-22T16:02:57.230' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (343, N'TECNOLÓGICA', 302, N'PROFESIONAL TÉCNICO', 3, N'000712115', N'ELECTRÓNICA INDUSTRIAL', 1, N'sys', CAST(N'2024-06-22T16:02:57.230' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (344, N'TECNOLÓGICA', 303, N'PROFESIONAL TÉCNICO', 3, N'000712125', N'ELECTRÓNICA INDUSTRIAL CON MENCIÓN EN AUTOMATIZACIÓN Y CONTROL INDUSTRIAL', 1, N'sys', CAST(N'2024-06-22T16:02:57.230' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (344, N'TECNOLÓGICA', 303, N'PROFESIONAL TÉCNICO', 3, N'000712125', N'ELECTRÓNICA INDUSTRIAL CON MENCIÓN EN AUTOMATIZACIÓN Y CONTROL INDUSTRIAL', 1, N'sys', CAST(N'2024-06-22T16:02:57.230' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (345, N'TECNOLÓGICA', 304, N'PROFESIONAL TÉCNICO', 3, N'000712135', N'ELECTRÓNICA Y AUTOMATIZACIÓN INDUSTRIAL', 1, N'sys', CAST(N'2024-06-22T16:02:57.230' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (345, N'TECNOLÓGICA', 304, N'PROFESIONAL TÉCNICO', 3, N'000712135', N'ELECTRÓNICA Y AUTOMATIZACIÓN INDUSTRIAL', 1, N'sys', CAST(N'2024-06-22T16:02:57.230' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (346, N'TECNOLÓGICA', 305, N'PROFESIONAL TÉCNICO', 3, N'000712145', N'ELECTRÓNICO INDUSTRIAL', 1, N'sys', CAST(N'2024-06-22T16:02:57.230' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (346, N'TECNOLÓGICA', 305, N'PROFESIONAL TÉCNICO', 3, N'000712145', N'ELECTRÓNICO INDUSTRIAL', 1, N'sys', CAST(N'2024-06-22T16:02:57.230' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (347, N'TECNOLÓGICA', 306, N'PROFESIONAL TÉCNICO', 3, N'000712155', N'ELECTROTECNIA INDUSTRIAL', 1, N'sys', CAST(N'2024-06-22T16:02:57.230' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (347, N'TECNOLÓGICA', 306, N'PROFESIONAL TÉCNICO', 3, N'000712155', N'ELECTROTECNIA INDUSTRIAL', 1, N'sys', CAST(N'2024-06-22T16:02:57.230' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (348, N'TECNOLÓGICA', 307, N'PROFESIONAL TÉCNICO', 3, N'000712165', N'ELECTROTECNIA INDUSTRIAL CON MENCIÓN EN ENERGÍA RENOVABLES Y EFICIENCIA ENERGÉTICA', 1, N'sys', CAST(N'2024-06-22T16:02:57.230' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (348, N'TECNOLÓGICA', 307, N'PROFESIONAL TÉCNICO', 3, N'000712165', N'ELECTROTECNIA INDUSTRIAL CON MENCIÓN EN ENERGÍA RENOVABLES Y EFICIENCIA ENERGÉTICA', 1, N'sys', CAST(N'2024-06-22T16:02:57.230' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (349, N'TECNOLÓGICA', 308, N'PROFESIONAL TÉCNICO', 3, N'EST000690', N'ENFERMERÍA', 1, N'sys', CAST(N'2024-06-22T16:02:57.233' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (349, N'TECNOLÓGICA', 308, N'PROFESIONAL TÉCNICO', 3, N'EST000690', N'ENFERMERÍA', 1, N'sys', CAST(N'2024-06-22T16:02:57.233' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (350, N'TECNOLÓGICA', 309, N'PROFESIONAL TÉCNICO', 3, N'000913035', N'ENFERMERÍA TÉCNICA', 1, N'sys', CAST(N'2024-06-22T16:02:57.233' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (350, N'TECNOLÓGICA', 309, N'PROFESIONAL TÉCNICO', 3, N'000913035', N'ENFERMERÍA TÉCNICA', 1, N'sys', CAST(N'2024-06-22T16:02:57.233' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (351, N'TECNOLÓGICA', 310, N'PROFESIONAL TÉCNICO', 3, N'007145002', N'ENFERMERÍA TÉCNICA INTERCULTURAL BILINGÜE AMAZÓNICA', 1, N'sys', CAST(N'2024-06-22T16:02:57.233' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (351, N'TECNOLÓGICA', 310, N'PROFESIONAL TÉCNICO', 3, N'007145002', N'ENFERMERÍA TÉCNICA INTERCULTURAL BILINGÜE AMAZÓNICA', 1, N'sys', CAST(N'2024-06-22T16:02:57.233' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (352, N'TECNOLÓGICA', 311, N'PROFESIONAL TÉCNICO', 3, N'000013015', N'ENTRENAMIENTO DEPORTIVO', 1, N'sys', CAST(N'2024-06-22T16:02:57.233' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (352, N'TECNOLÓGICA', 311, N'PROFESIONAL TÉCNICO', 3, N'000013015', N'ENTRENAMIENTO DEPORTIVO', 1, N'sys', CAST(N'2024-06-22T16:02:57.233' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (353, N'TECNOLÓGICA', 312, N'PROFESIONAL TÉCNICO', 3, N'008125001', N'ESTÉTICA, IMAGEN Y ESTILO', 1, N'sys', CAST(N'2024-06-22T16:02:57.233' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (353, N'TECNOLÓGICA', 312, N'PROFESIONAL TÉCNICO', 3, N'008125001', N'ESTÉTICA, IMAGEN Y ESTILO', 1, N'sys', CAST(N'2024-06-22T16:02:57.233' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (354, N'TECNOLÓGICA', 313, N'PROFESIONAL TÉCNICO', 3, N'S34963002', N'ESTETICISMO (EX COSMIATRÍA)', 1, N'sys', CAST(N'2024-06-22T16:02:57.233' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (354, N'TECNOLÓGICA', 313, N'PROFESIONAL TÉCNICO', 3, N'S34963002', N'ESTETICISMO (EX COSMIATRÍA)', 1, N'sys', CAST(N'2024-06-22T16:02:57.233' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (355, N'TECNOLÓGICA', 314, N'PROFESIONAL TÉCNICO', 3, N'005275001', N'EXPLOTACIÓN DE MINAS', 1, N'sys', CAST(N'2024-06-22T16:02:57.233' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (355, N'TECNOLÓGICA', 314, N'PROFESIONAL TÉCNICO', 3, N'005275001', N'EXPLOTACIÓN DE MINAS', 1, N'sys', CAST(N'2024-06-22T16:02:57.233' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (356, N'TECNOLÓGICA', 315, N'PROFESIONAL TÉCNICO', 3, N'000724025', N'EXPLOTACIÓN MINERA', 1, N'sys', CAST(N'2024-06-22T16:02:57.233' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (356, N'TECNOLÓGICA', 315, N'PROFESIONAL TÉCNICO', 3, N'000724025', N'EXPLOTACIÓN MINERA', 1, N'sys', CAST(N'2024-06-22T16:02:57.233' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (357, N'TECNOLÓGICA', 316, N'PROFESIONAL TÉCNICO', 3, N'000917015', N'FARMACIA', 1, N'sys', CAST(N'2024-06-22T16:02:57.233' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (357, N'TECNOLÓGICA', 316, N'PROFESIONAL TÉCNICO', 3, N'000917015', N'FARMACIA', 1, N'sys', CAST(N'2024-06-22T16:02:57.233' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (358, N'TECNOLÓGICA', 317, N'PROFESIONAL TÉCNICO', 3, N'Q32863004', N'FARMACIA TÉCNICA', 1, N'sys', CAST(N'2024-06-22T16:02:57.233' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (358, N'TECNOLÓGICA', 317, N'PROFESIONAL TÉCNICO', 3, N'Q32863004', N'FARMACIA TÉCNICA', 1, N'sys', CAST(N'2024-06-22T16:02:57.233' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (359, N'TECNOLÓGICA', 318, N'PROFESIONAL TÉCNICO', 3, N'000412075', N'FINANZAS', 1, N'sys', CAST(N'2024-06-22T16:02:57.233' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (359, N'TECNOLÓGICA', 318, N'PROFESIONAL TÉCNICO', 3, N'000412075', N'FINANZAS', 1, N'sys', CAST(N'2024-06-22T16:02:57.233' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (360, N'TECNOLÓGICA', 319, N'PROFESIONAL TÉCNICO', 3, N'000916015', N'FISIOTERAPIA Y REHABILITACIÓN', 1, N'sys', CAST(N'2024-06-22T16:02:57.233' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (360, N'TECNOLÓGICA', 319, N'PROFESIONAL TÉCNICO', 3, N'000916015', N'FISIOTERAPIA Y REHABILITACIÓN', 1, N'sys', CAST(N'2024-06-22T16:02:57.233' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (361, N'TECNOLÓGICA', 320, N'PROFESIONAL TÉCNICO', 3, N'000821025', N'FORESTAL', 1, N'sys', CAST(N'2024-06-22T16:02:57.233' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (361, N'TECNOLÓGICA', 320, N'PROFESIONAL TÉCNICO', 3, N'000821025', N'FORESTAL', 1, N'sys', CAST(N'2024-06-22T16:02:57.233' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (362, N'TECNOLÓGICA', 321, N'PROFESIONAL TÉCNICO', 3, N'006125002', N'FORESTALES', 1, N'sys', CAST(N'2024-06-22T16:02:57.233' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (362, N'TECNOLÓGICA', 321, N'PROFESIONAL TÉCNICO', 3, N'006125002', N'FORESTALES', 1, N'sys', CAST(N'2024-06-22T16:02:57.233' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (363, N'TECNOLÓGICA', 322, N'PROFESIONAL TÉCNICO', 3, N'000211315', N'FOTOGRAFÍA', 1, N'sys', CAST(N'2024-06-22T16:02:57.233' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (363, N'TECNOLÓGICA', 322, N'PROFESIONAL TÉCNICO', 3, N'000211315', N'FOTOGRAFÍA', 1, N'sys', CAST(N'2024-06-22T16:02:57.233' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (364, N'TECNOLÓGICA', 323, N'PROFESIONAL TÉCNICO', 3, N'000211325', N'FOTOGRAFÍA E IMAGEN DIGITAL', 1, N'sys', CAST(N'2024-06-22T16:02:57.233' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (364, N'TECNOLÓGICA', 323, N'PROFESIONAL TÉCNICO', 3, N'000211325', N'FOTOGRAFÍA E IMAGEN DIGITAL', 1, N'sys', CAST(N'2024-06-22T16:02:57.233' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (365, N'TECNOLÓGICA', 324, N'PROFESIONAL TÉCNICO', 3, N'EST000726', N'FOTOGRAFÍA Y PRODUCCIÓN DE IMAGEN', 1, N'sys', CAST(N'2024-06-22T16:02:57.233' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (365, N'TECNOLÓGICA', 324, N'PROFESIONAL TÉCNICO', 3, N'EST000726', N'FOTOGRAFÍA Y PRODUCCIÓN DE IMAGEN', 1, N'sys', CAST(N'2024-06-22T16:02:57.233' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (366, N'TECNOLÓGICA', 325, N'PROFESIONAL TÉCNICO', 3, N'000811035', N'FRUTICULTURA', 1, N'sys', CAST(N'2024-06-22T16:02:57.233' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (366, N'TECNOLÓGICA', 325, N'PROFESIONAL TÉCNICO', 3, N'000811035', N'FRUTICULTURA', 1, N'sys', CAST(N'2024-06-22T16:02:57.233' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (367, N'TECNOLÓGICA', 326, N'PROFESIONAL TÉCNICO', 3, N'000811045', N'FRUTICULTURA Y OLIVICULTURA', 1, N'sys', CAST(N'2024-06-22T16:02:57.233' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (367, N'TECNOLÓGICA', 326, N'PROFESIONAL TÉCNICO', 3, N'000811045', N'FRUTICULTURA Y OLIVICULTURA', 1, N'sys', CAST(N'2024-06-22T16:02:57.233' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (368, N'TECNOLÓGICA', 327, N'PROFESIONAL TÉCNICO', 3, N'000031055', N'FUERZAS ESPECIALES', 1, N'sys', CAST(N'2024-06-22T16:02:57.233' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (368, N'TECNOLÓGICA', 327, N'PROFESIONAL TÉCNICO', 3, N'000031055', N'FUERZAS ESPECIALES', 1, N'sys', CAST(N'2024-06-22T16:02:57.233' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (369, N'TECNOLÓGICA', 328, N'PROFESIONAL TÉCNICO', 3, N'000012115', N'GASTRONOMÍA', 1, N'sys', CAST(N'2024-06-22T16:02:57.237' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (369, N'TECNOLÓGICA', 328, N'PROFESIONAL TÉCNICO', 3, N'000012115', N'GASTRONOMÍA', 1, N'sys', CAST(N'2024-06-22T16:02:57.237' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (370, N'TECNOLÓGICA', 329, N'PROFESIONAL TÉCNICO', 3, N'000721015', N'GASTRONOMÍA INDUSTRIAL', 1, N'sys', CAST(N'2024-06-22T16:02:57.237' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (370, N'TECNOLÓGICA', 329, N'PROFESIONAL TÉCNICO', 3, N'000721015', N'GASTRONOMÍA INDUSTRIAL', 1, N'sys', CAST(N'2024-06-22T16:02:57.237' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (371, N'TECNOLÓGICA', 330, N'PROFESIONAL TÉCNICO', 3, N'000012125', N'GASTRONOMÍA Y ARTE CULINARIO', 1, N'sys', CAST(N'2024-06-22T16:02:57.237' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (371, N'TECNOLÓGICA', 330, N'PROFESIONAL TÉCNICO', 3, N'000012125', N'GASTRONOMÍA Y ARTE CULINARIO', 1, N'sys', CAST(N'2024-06-22T16:02:57.237' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (372, N'TECNOLÓGICA', 331, N'PROFESIONAL TÉCNICO', 3, N'000532015', N'GEOLOGÍA DE MINAS', 1, N'sys', CAST(N'2024-06-22T16:02:57.237' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (372, N'TECNOLÓGICA', 331, N'PROFESIONAL TÉCNICO', 3, N'000532015', N'GEOLOGÍA DE MINAS', 1, N'sys', CAST(N'2024-06-22T16:02:57.237' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (373, N'TECNOLÓGICA', 332, N'PROFESIONAL TÉCNICO', 3, N'000732065', N'GEOMÁTICA', 1, N'sys', CAST(N'2024-06-22T16:02:57.237' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (373, N'TECNOLÓGICA', 332, N'PROFESIONAL TÉCNICO', 3, N'000732065', N'GEOMÁTICA', 1, N'sys', CAST(N'2024-06-22T16:02:57.237' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (374, N'TECNOLÓGICA', 333, N'PROFESIONAL TÉCNICO', 3, N'000418065', N'GERENCIA', 1, N'sys', CAST(N'2024-06-22T16:02:57.237' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (374, N'TECNOLÓGICA', 333, N'PROFESIONAL TÉCNICO', 3, N'000418065', N'GERENCIA', 1, N'sys', CAST(N'2024-06-22T16:02:57.237' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (375, N'TECNOLÓGICA', 334, N'PROFESIONAL TÉCNICO', 3, N'003325006', N'GESTIÓN AMBIENTAL', 1, N'sys', CAST(N'2024-06-22T16:02:57.237' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (375, N'TECNOLÓGICA', 334, N'PROFESIONAL TÉCNICO', 3, N'003325006', N'GESTIÓN AMBIENTAL', 1, N'sys', CAST(N'2024-06-22T16:02:57.237' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (376, N'TECNOLÓGICA', 335, N'PROFESIONAL TÉCNICO', 3, N'005945001', N'GESTIÓN AMBIENTAL Y DESARROLLO SOSTENIBLE', 1, N'sys', CAST(N'2024-06-22T16:02:57.237' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (376, N'TECNOLÓGICA', 335, N'PROFESIONAL TÉCNICO', 3, N'005945001', N'GESTIÓN AMBIENTAL Y DESARROLLO SOSTENIBLE', 1, N'sys', CAST(N'2024-06-22T16:02:57.237' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (377, N'TECNOLÓGICA', 336, N'PROFESIONAL TÉCNICO', 3, N'000413235', N'GESTIÓN COMERCIAL', 1, N'sys', CAST(N'2024-06-22T16:02:57.237' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (377, N'TECNOLÓGICA', 336, N'PROFESIONAL TÉCNICO', 3, N'000413235', N'GESTIÓN COMERCIAL', 1, N'sys', CAST(N'2024-06-22T16:02:57.237' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (378, N'TECNOLÓGICA', 337, N'PROFESIONAL TÉCNICO', 3, N'EST000727', N'GESTIÓN COMERCIAL CON MENCIÓN EN ESPACIOS DE PUNTO DE VENTA', 1, N'sys', CAST(N'2024-06-22T16:06:01.677' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (378, N'TECNOLÓGICA', 337, N'PROFESIONAL TÉCNICO', 3, N'EST000727', N'GESTIÓN COMERCIAL CON MENCIÓN EN ESPACIOS DE PUNTO DE VENTA', 1, N'sys', CAST(N'2024-06-22T16:06:01.677' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (379, N'TECNOLÓGICA', 338, N'PROFESIONAL TÉCNICO', 3, N'000413245', N'GESTIÓN COMERCIAL CON MENCIÓN EN ESPACIOS DE PUNTOS DE VENTA', 1, N'sys', CAST(N'2024-06-22T16:06:01.677' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (379, N'TECNOLÓGICA', 338, N'PROFESIONAL TÉCNICO', 3, N'000413245', N'GESTIÓN COMERCIAL CON MENCIÓN EN ESPACIOS DE PUNTOS DE VENTA', 1, N'sys', CAST(N'2024-06-22T16:06:01.677' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (380, N'TECNOLÓGICA', 339, N'PROFESIONAL TÉCNICO', 3, N'000412085', N'GESTIÓN COMERCIAL DE PRODUCTOS Y SERVICIOS BANCARIOS Y FINANCIEROS', 1, N'sys', CAST(N'2024-06-22T16:06:01.677' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (380, N'TECNOLÓGICA', 339, N'PROFESIONAL TÉCNICO', 3, N'000412085', N'GESTIÓN COMERCIAL DE PRODUCTOS Y SERVICIOS BANCARIOS Y FINANCIEROS', 1, N'sys', CAST(N'2024-06-22T16:06:01.677' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (381, N'TECNOLÓGICA', 340, N'PROFESIONAL TÉCNICO', 3, N'O30843001', N'GESTIÓN DE CENTROS DE CONTROL', 1, N'sys', CAST(N'2024-06-22T16:06:01.677' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (381, N'TECNOLÓGICA', 340, N'PROFESIONAL TÉCNICO', 3, N'O30843001', N'GESTIÓN DE CENTROS DE CONTROL', 1, N'sys', CAST(N'2024-06-22T16:06:01.677' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (382, N'TECNOLÓGICA', 341, N'PROFESIONAL TÉCNICO', 3, N'000721025', N'GESTIÓN DE INDUSTRIAS ALIMENTARIAS', 1, N'sys', CAST(N'2024-06-22T16:06:01.680' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (382, N'TECNOLÓGICA', 341, N'PROFESIONAL TÉCNICO', 3, N'000721025', N'GESTIÓN DE INDUSTRIAS ALIMENTARIAS', 1, N'sys', CAST(N'2024-06-22T16:06:01.680' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (383, N'TECNOLÓGICA', 342, N'PROFESIONAL TÉCNICO', 3, N'F20412004', N'GESTIÓN DE LA CONSTRUCCIÓN', 1, N'sys', CAST(N'2024-06-22T16:06:01.680' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (383, N'TECNOLÓGICA', 342, N'PROFESIONAL TÉCNICO', 3, N'F20412004', N'GESTIÓN DE LA CONSTRUCCIÓN', 1, N'sys', CAST(N'2024-06-22T16:06:01.680' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (384, N'TECNOLÓGICA', 343, N'PROFESIONAL TÉCNICO', 3, N'000732075', N'GESTIÓN DE LA CONSTRUCCIÓN CIVIL', 1, N'sys', CAST(N'2024-06-22T16:06:01.680' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (384, N'TECNOLÓGICA', 343, N'PROFESIONAL TÉCNICO', 3, N'000732075', N'GESTIÓN DE LA CONSTRUCCIÓN CIVIL', 1, N'sys', CAST(N'2024-06-22T16:06:01.680' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (385, N'TECNOLÓGICA', 344, N'PROFESIONAL TÉCNICO', 3, N'C07142003', N'GESTIÓN DE LA MODA Y CONFECCIONES', 1, N'sys', CAST(N'2024-06-22T16:06:01.680' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (385, N'TECNOLÓGICA', 344, N'PROFESIONAL TÉCNICO', 3, N'C07142003', N'GESTIÓN DE LA MODA Y CONFECCIONES', 1, N'sys', CAST(N'2024-06-22T16:06:01.680' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (386, N'TECNOLÓGICA', 345, N'PROFESIONAL TÉCNICO', 3, N'000723035', N'GESTIÓN DE LA PRODUCCIÓN DE PRENDAS DE VESTIR', 1, N'sys', CAST(N'2024-06-22T16:06:01.680' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (386, N'TECNOLÓGICA', 345, N'PROFESIONAL TÉCNICO', 3, N'000723035', N'GESTIÓN DE LA PRODUCCIÓN DE PRENDAS DE VESTIR', 1, N'sys', CAST(N'2024-06-22T16:06:01.680' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (387, N'TECNOLÓGICA', 346, N'PROFESIONAL TÉCNICO', 3, N'000732085', N'GESTIÓN DE LA PRODUCCIÓN EN LA INDUSTRIA DE LA CONSTRUCCIÓN', 1, N'sys', CAST(N'2024-06-22T16:06:01.680' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (387, N'TECNOLÓGICA', 346, N'PROFESIONAL TÉCNICO', 3, N'000732085', N'GESTIÓN DE LA PRODUCCIÓN EN LA INDUSTRIA DE LA CONSTRUCCIÓN', 1, N'sys', CAST(N'2024-06-22T16:06:01.680' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (388, N'TECNOLÓGICA', 347, N'PROFESIONAL TÉCNICO', 3, N'000723045', N'GESTIÓN DE LA PRODUCCIÓN EN LA INDUSTRIA DE LAS CONFECCIONES', 1, N'sys', CAST(N'2024-06-22T16:06:01.680' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (388, N'TECNOLÓGICA', 347, N'PROFESIONAL TÉCNICO', 3, N'000723045', N'GESTIÓN DE LA PRODUCCIÓN EN LA INDUSTRIA DE LAS CONFECCIONES', 1, N'sys', CAST(N'2024-06-22T16:06:01.680' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (389, N'TECNOLÓGICA', 348, N'PROFESIONAL TÉCNICO', 3, N'000413295', N'GESTIÓN DE LOGÍSTICA', 1, N'sys', CAST(N'2024-06-22T16:06:01.680' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (389, N'TECNOLÓGICA', 348, N'PROFESIONAL TÉCNICO', 3, N'000413295', N'GESTIÓN DE LOGÍSTICA', 1, N'sys', CAST(N'2024-06-22T16:06:01.680' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (390, N'TECNOLÓGICA', 349, N'PROFESIONAL TÉCNICO', 3, N'000413255', N'GESTIÓN DE LOGÍSTICA CON MENCIÓN EN COMERCIO INTERNACIONAL', 1, N'sys', CAST(N'2024-06-22T16:06:01.680' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (390, N'TECNOLÓGICA', 349, N'PROFESIONAL TÉCNICO', 3, N'000413255', N'GESTIÓN DE LOGÍSTICA CON MENCIÓN EN COMERCIO INTERNACIONAL', 1, N'sys', CAST(N'2024-06-22T16:06:01.680' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (391, N'TECNOLÓGICA', 350, N'PROFESIONAL TÉCNICO', 3, N'000413265', N'GESTIÓN DE LOGÍSTICA CON MENCIÓN EN LA CADENA DE ABASTECIMIENTO', 1, N'sys', CAST(N'2024-06-22T16:06:01.680' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (391, N'TECNOLÓGICA', 350, N'PROFESIONAL TÉCNICO', 3, N'000413265', N'GESTIÓN DE LOGÍSTICA CON MENCIÓN EN LA CADENA DE ABASTECIMIENTO', 1, N'sys', CAST(N'2024-06-22T16:06:01.680' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (392, N'TECNOLÓGICA', 351, N'PROFESIONAL TÉCNICO', 3, N'000723055', N'GESTIÓN DE MODAS Y CONFECCIONES', 1, N'sys', CAST(N'2024-06-22T16:06:01.680' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (392, N'TECNOLÓGICA', 351, N'PROFESIONAL TÉCNICO', 3, N'000723055', N'GESTIÓN DE MODAS Y CONFECCIONES', 1, N'sys', CAST(N'2024-06-22T16:06:01.680' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (393, N'TECNOLÓGICA', 352, N'PROFESIONAL TÉCNICO', 3, N'EST000728', N'GESTIÓN DE PRODUCCIÓN DE PRENDAS DE VESTIR', 1, N'sys', CAST(N'2024-06-22T16:06:01.680' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (393, N'TECNOLÓGICA', 352, N'PROFESIONAL TÉCNICO', 3, N'EST000728', N'GESTIÓN DE PRODUCCIÓN DE PRENDAS DE VESTIR', 1, N'sys', CAST(N'2024-06-22T16:06:01.680' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (394, N'TECNOLÓGICA', 353, N'PROFESIONAL TÉCNICO', 3, N'000413275', N'GESTIÓN DE PRODUCCIÓN INDUSTRIAL', 1, N'sys', CAST(N'2024-06-22T16:06:01.680' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (394, N'TECNOLÓGICA', 353, N'PROFESIONAL TÉCNICO', 3, N'000413275', N'GESTIÓN DE PRODUCCIÓN INDUSTRIAL', 1, N'sys', CAST(N'2024-06-22T16:06:01.680' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (395, N'TECNOLÓGICA', 354, N'PROFESIONAL TÉCNICO', 3, N'000811055', N'GESTIÓN DE RECURSOS HÍDRICOS', 1, N'sys', CAST(N'2024-06-22T16:06:01.680' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (395, N'TECNOLÓGICA', 354, N'PROFESIONAL TÉCNICO', 3, N'000811055', N'GESTIÓN DE RECURSOS HÍDRICOS', 1, N'sys', CAST(N'2024-06-22T16:06:01.680' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (396, N'TECNOLÓGICA', 355, N'PROFESIONAL TÉCNICO', 3, N'000418025', N'GESTIÓN DE RECURSOS HUMANOS', 1, N'sys', CAST(N'2024-06-22T16:06:01.680' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (396, N'TECNOLÓGICA', 355, N'PROFESIONAL TÉCNICO', 3, N'000418025', N'GESTIÓN DE RECURSOS HUMANOS', 1, N'sys', CAST(N'2024-06-22T16:06:01.680' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (397, N'TECNOLÓGICA', 356, N'PROFESIONAL TÉCNICO', 3, N'EST000729', N'GESTIÓN DE SALUD Y SEGURIDAD EN EL TRABAJO', 1, N'sys', CAST(N'2024-06-22T16:06:01.680' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (397, N'TECNOLÓGICA', 356, N'PROFESIONAL TÉCNICO', 3, N'EST000729', N'GESTIÓN DE SALUD Y SEGURIDAD EN EL TRABAJO', 1, N'sys', CAST(N'2024-06-22T16:06:01.680' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (398, N'TECNOLÓGICA', 357, N'PROFESIONAL TÉCNICO', 3, N'000022015', N'GESTIÓN DE SEGURIDAD Y SALUD EN EL TRABAJO', 1, N'sys', CAST(N'2024-06-22T16:06:01.680' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (398, N'TECNOLÓGICA', 357, N'PROFESIONAL TÉCNICO', 3, N'000022015', N'GESTIÓN DE SEGURIDAD Y SALUD EN EL TRABAJO', 1, N'sys', CAST(N'2024-06-22T16:06:01.680' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (399, N'TECNOLÓGICA', 358, N'PROFESIONAL TÉCNICO', 3, N'000612205', N'GESTIÓN DE SISTEMAS DE INFORMACIÓN', 1, N'sys', CAST(N'2024-06-22T16:06:01.680' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (399, N'TECNOLÓGICA', 358, N'PROFESIONAL TÉCNICO', 3, N'000612205', N'GESTIÓN DE SISTEMAS DE INFORMACIÓN', 1, N'sys', CAST(N'2024-06-22T16:06:01.680' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (400, N'TECNOLÓGICA', 359, N'PROFESIONAL TÉCNICO', 3, N'000413285', N'GESTIÓN DE TRANSPORTE Y DISTRIBUCIÓN', 1, N'sys', CAST(N'2024-06-22T16:06:01.680' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (400, N'TECNOLÓGICA', 359, N'PROFESIONAL TÉCNICO', 3, N'000413285', N'GESTIÓN DE TRANSPORTE Y DISTRIBUCIÓN', 1, N'sys', CAST(N'2024-06-22T16:06:01.680' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (401, N'TECNOLÓGICA', 360, N'PROFESIONAL TÉCNICO', 3, N'000418075', N'GESTIÓN DEL EMPRENDIMIENTO', 1, N'sys', CAST(N'2024-06-22T16:06:01.680' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (401, N'TECNOLÓGICA', 360, N'PROFESIONAL TÉCNICO', 3, N'000418075', N'GESTIÓN DEL EMPRENDIMIENTO', 1, N'sys', CAST(N'2024-06-22T16:06:01.680' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (402, N'TECNOLÓGICA', 361, N'PROFESIONAL TÉCNICO', 3, N'000013025', N'GESTIÓN DEPORTIVA', 1, N'sys', CAST(N'2024-06-22T16:06:01.680' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (402, N'TECNOLÓGICA', 361, N'PROFESIONAL TÉCNICO', 3, N'000013025', N'GESTIÓN DEPORTIVA', 1, N'sys', CAST(N'2024-06-22T16:06:01.680' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (403, N'TECNOLÓGICA', 362, N'PROFESIONAL TÉCNICO', 3, N'003365001', N'GESTIÓN PÚBLICA', 1, N'sys', CAST(N'2024-06-22T16:06:01.683' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (403, N'TECNOLÓGICA', 362, N'PROFESIONAL TÉCNICO', 3, N'003365001', N'GESTIÓN PÚBLICA', 1, N'sys', CAST(N'2024-06-22T16:06:01.683' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (404, N'TECNOLÓGICA', 363, N'PROFESIONAL TÉCNICO', 3, N'000723065', N'GESTIÓN TEXTIL', 1, N'sys', CAST(N'2024-06-22T16:06:01.683' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (404, N'TECNOLÓGICA', 363, N'PROFESIONAL TÉCNICO', 3, N'000723065', N'GESTIÓN TEXTIL', 1, N'sys', CAST(N'2024-06-22T16:06:01.683' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (405, N'TECNOLÓGICA', 364, N'PROFESIONAL TÉCNICO', 3, N'000413305', N'GESTIÓN Y ADMINISTRACIÓN DE NEGOCIOS', 1, N'sys', CAST(N'2024-06-22T16:06:01.683' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (405, N'TECNOLÓGICA', 364, N'PROFESIONAL TÉCNICO', 3, N'000413305', N'GESTIÓN Y ADMINISTRACIÓN DE NEGOCIOS', 1, N'sys', CAST(N'2024-06-22T16:06:01.683' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (406, N'TECNOLÓGICA', 365, N'PROFESIONAL TÉCNICO', 3, N'000713025', N'GESTIÓN Y MANTENIMIENTO DE MAQUINARIA INDUSTRIAL', 1, N'sys', CAST(N'2024-06-22T16:06:01.683' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (406, N'TECNOLÓGICA', 365, N'PROFESIONAL TÉCNICO', 3, N'000713025', N'GESTIÓN Y MANTENIMIENTO DE MAQUINARIA INDUSTRIAL', 1, N'sys', CAST(N'2024-06-22T16:06:01.683' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (407, N'TECNOLÓGICA', 366, N'PROFESIONAL TÉCNICO', 3, N'000713035', N'GESTIÓN Y MANTENIMIENTO DE MAQUINARIA PESADA', 1, N'sys', CAST(N'2024-06-22T16:06:01.683' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (407, N'TECNOLÓGICA', 366, N'PROFESIONAL TÉCNICO', 3, N'000713035', N'GESTIÓN Y MANTENIMIENTO DE MAQUINARIA PESADA', 1, N'sys', CAST(N'2024-06-22T16:06:01.683' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (408, N'TECNOLÓGICA', 367, N'PROFESIONAL TÉCNICO', 3, N'000014095', N'GUÍA OFICIAL DE CAMINATA', 1, N'sys', CAST(N'2024-06-22T16:06:01.683' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (408, N'TECNOLÓGICA', 367, N'PROFESIONAL TÉCNICO', 3, N'000014095', N'GUÍA OFICIAL DE CAMINATA', 1, N'sys', CAST(N'2024-06-22T16:06:01.683' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (409, N'TECNOLÓGICA', 368, N'PROFESIONAL TÉCNICO', 3, N'000014105', N'GUÍA OFICIAL DE MONTAÑA', 1, N'sys', CAST(N'2024-06-22T16:06:01.683' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (409, N'TECNOLÓGICA', 368, N'PROFESIONAL TÉCNICO', 3, N'000014105', N'GUÍA OFICIAL DE MONTAÑA', 1, N'sys', CAST(N'2024-06-22T16:06:01.683' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (410, N'TECNOLÓGICA', 369, N'PROFESIONAL TÉCNICO', 3, N'M29793003', N'GUÍA OFICIAL DE MONTAÑA', 1, N'sys', CAST(N'2024-06-22T16:06:01.683' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (410, N'TECNOLÓGICA', 369, N'PROFESIONAL TÉCNICO', 3, N'M29793003', N'GUÍA OFICIAL DE MONTAÑA', 1, N'sys', CAST(N'2024-06-22T16:06:01.683' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (411, N'TECNOLÓGICA', 370, N'PROFESIONAL TÉCNICO', 3, N'000014115', N'GUÍA OFICIAL DE TURISMO', 1, N'sys', CAST(N'2024-06-22T16:06:01.683' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (411, N'TECNOLÓGICA', 370, N'PROFESIONAL TÉCNICO', 3, N'000014115', N'GUÍA OFICIAL DE TURISMO', 1, N'sys', CAST(N'2024-06-22T16:06:01.683' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (412, N'TECNOLÓGICA', 371, N'PROFESIONAL TÉCNICO', 3, N'000831045', N'HIDROGRAFÍA Y NAVEGACIÓN', 1, N'sys', CAST(N'2024-06-22T16:06:01.683' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (412, N'TECNOLÓGICA', 371, N'PROFESIONAL TÉCNICO', 3, N'000831045', N'HIDROGRAFÍA Y NAVEGACIÓN', 1, N'sys', CAST(N'2024-06-22T16:06:01.683' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (413, N'TECNOLÓGICA', 372, N'PROFESIONAL TÉCNICO', 3, N'000812015', N'HORTICULTURA', 1, N'sys', CAST(N'2024-06-22T16:06:01.683' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (413, N'TECNOLÓGICA', 372, N'PROFESIONAL TÉCNICO', 3, N'000812015', N'HORTICULTURA', 1, N'sys', CAST(N'2024-06-22T16:06:01.683' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (414, N'TECNOLÓGICA', 373, N'PROFESIONAL TÉCNICO', 3, N'000012135', N'HOSTELERÍA', 1, N'sys', CAST(N'2024-06-22T16:06:01.683' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (414, N'TECNOLÓGICA', 373, N'PROFESIONAL TÉCNICO', 3, N'000012135', N'HOSTELERÍA', 1, N'sys', CAST(N'2024-06-22T16:06:01.683' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (415, N'TECNOLÓGICA', 374, N'PROFESIONAL TÉCNICO', 3, N'000012145', N'HOTELES Y RESTAURANTES', 1, N'sys', CAST(N'2024-06-22T16:06:01.683' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (415, N'TECNOLÓGICA', 374, N'PROFESIONAL TÉCNICO', 3, N'000012145', N'HOTELES Y RESTAURANTES', 1, N'sys', CAST(N'2024-06-22T16:06:01.683' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (416, N'TECNOLÓGICA', 375, N'PROFESIONAL TÉCNICO', 3, N'A01023002', N'IDENTIFICACIÓN DE ESPECIES MADERABLES', 1, N'sys', CAST(N'2024-06-22T16:06:01.683' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (416, N'TECNOLÓGICA', 375, N'PROFESIONAL TÉCNICO', 3, N'A01023002', N'IDENTIFICACIÓN DE ESPECIES MADERABLES', 1, N'sys', CAST(N'2024-06-22T16:06:01.683' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (417, N'TECNOLÓGICA', 376, N'PROFESIONAL TÉCNICO', 3, N'000723075', N'INDUSTRIA DEL CUERO', 1, N'sys', CAST(N'2024-06-22T16:06:01.683' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (417, N'TECNOLÓGICA', 376, N'PROFESIONAL TÉCNICO', 3, N'000723075', N'INDUSTRIA DEL CUERO', 1, N'sys', CAST(N'2024-06-22T16:06:01.683' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (418, N'TECNOLÓGICA', 377, N'PROFESIONAL TÉCNICO', 3, N'000723085', N'INDUSTRIA DEL VESTIDO', 1, N'sys', CAST(N'2024-06-22T16:06:01.683' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (418, N'TECNOLÓGICA', 377, N'PROFESIONAL TÉCNICO', 3, N'000723085', N'INDUSTRIA DEL VESTIDO', 1, N'sys', CAST(N'2024-06-22T16:06:01.683' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (419, N'TECNOLÓGICA', 378, N'PROFESIONAL TÉCNICO', 3, N'000722015', N'INDUSTRIAL Y SISTEMAS', 1, N'sys', CAST(N'2024-06-22T16:06:01.683' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (419, N'TECNOLÓGICA', 378, N'PROFESIONAL TÉCNICO', 3, N'000722015', N'INDUSTRIAL Y SISTEMAS', 1, N'sys', CAST(N'2024-06-22T16:06:01.683' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (420, N'TECNOLÓGICA', 379, N'PROFESIONAL TÉCNICO', 3, N'000721035', N'INDUSTRIAS ALIMENTARIAS', 1, N'sys', CAST(N'2024-06-22T16:06:01.683' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (420, N'TECNOLÓGICA', 379, N'PROFESIONAL TÉCNICO', 3, N'000721035', N'INDUSTRIAS ALIMENTARIAS', 1, N'sys', CAST(N'2024-06-22T16:06:01.683' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (421, N'TECNOLÓGICA', 380, N'PROFESIONAL TÉCNICO', 3, N'000721045', N'INDUSTRIAS ALIMENTARIAS LÁCTEAS', 1, N'sys', CAST(N'2024-06-22T16:06:01.683' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (421, N'TECNOLÓGICA', 380, N'PROFESIONAL TÉCNICO', 3, N'000721045', N'INDUSTRIAS ALIMENTARIAS LÁCTEAS', 1, N'sys', CAST(N'2024-06-22T16:06:01.683' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (422, N'TECNOLÓGICA', 381, N'PROFESIONAL TÉCNICO', 3, N'000031065', N'INFANTERÍA DE MARINA', 1, N'sys', CAST(N'2024-06-22T16:06:01.683' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (422, N'TECNOLÓGICA', 381, N'PROFESIONAL TÉCNICO', 3, N'000031065', N'INFANTERÍA DE MARINA', 1, N'sys', CAST(N'2024-06-22T16:06:01.683' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (423, N'TECNOLÓGICA', 382, N'PROFESIONAL TÉCNICO', 3, N'000014125', N'INFORMACIÓN TURÍSTICA', 1, N'sys', CAST(N'2024-06-22T16:06:01.683' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (423, N'TECNOLÓGICA', 382, N'PROFESIONAL TÉCNICO', 3, N'000014125', N'INFORMACIÓN TURÍSTICA', 1, N'sys', CAST(N'2024-06-22T16:06:01.683' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (424, N'TECNOLÓGICA', 383, N'PROFESIONAL TÉCNICO', 3, N'000612215', N'INFORMÁTICA', 1, N'sys', CAST(N'2024-06-22T16:06:01.687' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (424, N'TECNOLÓGICA', 383, N'PROFESIONAL TÉCNICO', 3, N'000612215', N'INFORMÁTICA', 1, N'sys', CAST(N'2024-06-22T16:06:01.687' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (425, N'TECNOLÓGICA', 384, N'PROFESIONAL TÉCNICO', 3, N'004415016', N'INGENIERÍA DE DESARROLLO DE JUEGOS', 1, N'sys', CAST(N'2024-06-22T16:06:01.687' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (425, N'TECNOLÓGICA', 384, N'PROFESIONAL TÉCNICO', 3, N'004415016', N'INGENIERÍA DE DESARROLLO DE JUEGOS', 1, N'sys', CAST(N'2024-06-22T16:06:01.687' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (426, N'TECNOLÓGICA', 385, N'PROFESIONAL TÉCNICO', 3, N'005125008', N'INGENIERÍA DE REDES Y COMUNICACIONES', 1, N'sys', CAST(N'2024-06-22T16:06:01.687' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (426, N'TECNOLÓGICA', 385, N'PROFESIONAL TÉCNICO', 3, N'005125008', N'INGENIERÍA DE REDES Y COMUNICACIONES', 1, N'sys', CAST(N'2024-06-22T16:06:01.687' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (427, N'TECNOLÓGICA', 386, N'PROFESIONAL TÉCNICO', 3, N'005115007', N'INGENIERÍA DE SISTEMAS DE INFORMACIÓN', 1, N'sys', CAST(N'2024-06-22T16:06:01.687' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (427, N'TECNOLÓGICA', 386, N'PROFESIONAL TÉCNICO', 3, N'005115007', N'INGENIERÍA DE SISTEMAS DE INFORMACIÓN', 1, N'sys', CAST(N'2024-06-22T16:06:01.687' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (428, N'TECNOLÓGICA', 387, N'PROFESIONAL TÉCNICO', 3, N'005115006', N'INGENIERÍA DE SOFTWARE', 1, N'sys', CAST(N'2024-06-22T16:06:01.687' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (428, N'TECNOLÓGICA', 387, N'PROFESIONAL TÉCNICO', 3, N'005115006', N'INGENIERÍA DE SOFTWARE', 1, N'sys', CAST(N'2024-06-22T16:06:01.687' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (429, N'TECNOLÓGICA', 388, N'PROFESIONAL TÉCNICO', 3, N'000613025', N'INGENIERÍA DE TELECOMUNICACIONES', 1, N'sys', CAST(N'2024-06-22T16:06:01.687' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (429, N'TECNOLÓGICA', 388, N'PROFESIONAL TÉCNICO', 3, N'000613025', N'INGENIERÍA DE TELECOMUNICACIONES', 1, N'sys', CAST(N'2024-06-22T16:06:01.687' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (430, N'TECNOLÓGICA', 389, N'PROFESIONAL TÉCNICO', 3, N'000613035', N'INGENIERÍA DE TELEMÁTICA', 1, N'sys', CAST(N'2024-06-22T16:06:01.687' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (430, N'TECNOLÓGICA', 389, N'PROFESIONAL TÉCNICO', 3, N'000613035', N'INGENIERÍA DE TELEMÁTICA', 1, N'sys', CAST(N'2024-06-22T16:06:01.687' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (431, N'TECNOLÓGICA', 390, N'PROFESIONAL TÉCNICO', 3, N'000714055', N'INSPECCIÓN Y MANTENIMIENTO AERONÁUTICO', 1, N'sys', CAST(N'2024-06-22T16:06:01.687' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (431, N'TECNOLÓGICA', 390, N'PROFESIONAL TÉCNICO', 3, N'000714055', N'INSPECCIÓN Y MANTENIMIENTO AERONÁUTICO', 1, N'sys', CAST(N'2024-06-22T16:06:01.687' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (432, N'TECNOLÓGICA', 391, N'PROFESIONAL TÉCNICO', 3, N'000031075', N'INTELIGENCIA', 1, N'sys', CAST(N'2024-06-22T16:06:01.687' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (432, N'TECNOLÓGICA', 391, N'PROFESIONAL TÉCNICO', 3, N'000031075', N'INTELIGENCIA', 1, N'sys', CAST(N'2024-06-22T16:06:01.687' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (433, N'TECNOLÓGICA', 392, N'PROFESIONAL TÉCNICO', 3, N'000231015', N'INTERPRETACIÓN DE IDIOMAS', 1, N'sys', CAST(N'2024-06-22T16:06:01.687' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (433, N'TECNOLÓGICA', 392, N'PROFESIONAL TÉCNICO', 3, N'000231015', N'INTERPRETACIÓN DE IDIOMAS', 1, N'sys', CAST(N'2024-06-22T16:06:01.687' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (434, N'TECNOLÓGICA', 393, N'PROFESIONAL TÉCNICO', 3, N'000913045', N'INYECTABLES Y PRIMEROS AUXILIOS', 1, N'sys', CAST(N'2024-06-22T16:09:56.433' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (434, N'TECNOLÓGICA', 393, N'PROFESIONAL TÉCNICO', 3, N'000913045', N'INYECTABLES Y PRIMEROS AUXILIOS', 1, N'sys', CAST(N'2024-06-22T16:09:56.433' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (435, N'TECNOLÓGICA', 394, N'PROFESIONAL TÉCNICO', 3, N'000915015', N'LABORATORIO CLÍNICO', 1, N'sys', CAST(N'2024-06-22T16:09:56.433' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (435, N'TECNOLÓGICA', 394, N'PROFESIONAL TÉCNICO', 3, N'000915015', N'LABORATORIO CLÍNICO', 1, N'sys', CAST(N'2024-06-22T16:09:56.433' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (436, N'TECNOLÓGICA', 395, N'PROFESIONAL TÉCNICO', 3, N'000915025', N'LABORATORIO CLÍNICO Y ANATOMÍA PATOLÓGICA', 1, N'sys', CAST(N'2024-06-22T16:09:56.433' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (436, N'TECNOLÓGICA', 395, N'PROFESIONAL TÉCNICO', 3, N'000915025', N'LABORATORIO CLÍNICO Y ANATOMÍA PATOLÓGICA', 1, N'sys', CAST(N'2024-06-22T16:09:56.433' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (437, N'TECNOLÓGICA', 396, N'PROFESIONAL TÉCNICO', 3, N'000732095', N'LABORATORIO DE SUELOS, CONCRETO Y ASFALTO', 1, N'sys', CAST(N'2024-06-22T16:09:56.433' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (437, N'TECNOLÓGICA', 396, N'PROFESIONAL TÉCNICO', 3, N'000732095', N'LABORATORIO DE SUELOS, CONCRETO Y ASFALTO', 1, N'sys', CAST(N'2024-06-22T16:09:56.433' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (438, N'TECNOLÓGICA', 397, N'PROFESIONAL TÉCNICO', 3, N'000531025', N'LABORATORIO QUÍMICO Y METALÚRGICO', 1, N'sys', CAST(N'2024-06-22T16:09:56.433' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (438, N'TECNOLÓGICA', 397, N'PROFESIONAL TÉCNICO', 3, N'000531025', N'LABORATORIO QUÍMICO Y METALÚRGICO', 1, N'sys', CAST(N'2024-06-22T16:09:56.433' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (439, N'TECNOLÓGICA', 398, N'PROFESIONAL TÉCNICO', 3, N'003215003', N'LOCUCIÓN Y COMUNICACIÓN RADIAL Y TELEVISIVA', 1, N'sys', CAST(N'2024-06-22T16:09:56.433' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (439, N'TECNOLÓGICA', 398, N'PROFESIONAL TÉCNICO', 3, N'003215003', N'LOCUCIÓN Y COMUNICACIÓN RADIAL Y TELEVISIVA', 1, N'sys', CAST(N'2024-06-22T16:09:56.433' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (440, N'TECNOLÓGICA', 399, N'PROFESIONAL TÉCNICO', 3, N'000321015', N'LOCUCIÓN, COMUNICACIÓN RADIAL Y TELEVISIVA', 1, N'sys', CAST(N'2024-06-22T16:09:56.433' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (440, N'TECNOLÓGICA', 399, N'PROFESIONAL TÉCNICO', 3, N'000321015', N'LOCUCIÓN, COMUNICACIÓN RADIAL Y TELEVISIVA', 1, N'sys', CAST(N'2024-06-22T16:09:56.433' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (441, N'TECNOLÓGICA', 400, N'PROFESIONAL TÉCNICO', 3, N'000416065', N'LOGÍSTICA DEL COMERCIO INTERNACIONAL', 1, N'sys', CAST(N'2024-06-22T16:09:56.433' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (441, N'TECNOLÓGICA', 400, N'PROFESIONAL TÉCNICO', 3, N'000416065', N'LOGÍSTICA DEL COMERCIO INTERNACIONAL', 1, N'sys', CAST(N'2024-06-22T16:09:56.433' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (442, N'TECNOLÓGICA', 401, N'PROFESIONAL TÉCNICO', 3, N'M29702006', N'LOGÍSTICA INTEGRAL Y GESTIÓN DE OPERACIONES', 1, N'sys', CAST(N'2024-06-22T16:09:56.433' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (442, N'TECNOLÓGICA', 401, N'PROFESIONAL TÉCNICO', 3, N'M29702006', N'LOGÍSTICA INTEGRAL Y GESTIÓN DE OPERACIONES', 1, N'sys', CAST(N'2024-06-22T16:09:56.433' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (443, N'TECNOLÓGICA', 402, N'PROFESIONAL TÉCNICO', 3, N'000522015', N'MANEJO DE CUENCAS Y GESTIÓN AMBIENTAL', 1, N'sys', CAST(N'2024-06-22T16:09:56.433' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (443, N'TECNOLÓGICA', 402, N'PROFESIONAL TÉCNICO', 3, N'000522015', N'MANEJO DE CUENCAS Y GESTIÓN AMBIENTAL', 1, N'sys', CAST(N'2024-06-22T16:09:56.433' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (444, N'TECNOLÓGICA', 403, N'PROFESIONAL TÉCNICO', 3, N'A01023001', N'MANEJO FORESTAL', 1, N'sys', CAST(N'2024-06-22T16:09:56.433' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (444, N'TECNOLÓGICA', 403, N'PROFESIONAL TÉCNICO', 3, N'A01023001', N'MANEJO FORESTAL', 1, N'sys', CAST(N'2024-06-22T16:09:56.433' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (445, N'TECNOLÓGICA', 404, N'PROFESIONAL TÉCNICO', 3, N'000031085', N'MANIOBRAS', 1, N'sys', CAST(N'2024-06-22T16:09:56.437' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (445, N'TECNOLÓGICA', 404, N'PROFESIONAL TÉCNICO', 3, N'000031085', N'MANIOBRAS', 1, N'sys', CAST(N'2024-06-22T16:09:56.437' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (446, N'TECNOLÓGICA', 405, N'PROFESIONAL TÉCNICO', 3, N'000714065', N'MANTENIMIENTO AERONÁUTICO', 1, N'sys', CAST(N'2024-06-22T16:09:56.437' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (446, N'TECNOLÓGICA', 405, N'PROFESIONAL TÉCNICO', 3, N'000714065', N'MANTENIMIENTO AERONÁUTICO', 1, N'sys', CAST(N'2024-06-22T16:09:56.437' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (447, N'TECNOLÓGICA', 406, N'PROFESIONAL TÉCNICO', 3, N'000714075', N'MANTENIMIENTO DE AERONAVES', 1, N'sys', CAST(N'2024-06-22T16:09:56.437' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (447, N'TECNOLÓGICA', 406, N'PROFESIONAL TÉCNICO', 3, N'000714075', N'MANTENIMIENTO DE AERONAVES', 1, N'sys', CAST(N'2024-06-22T16:09:56.437' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (448, N'TECNOLÓGICA', 407, N'PROFESIONAL TÉCNICO', 3, N'000713045', N'MANTENIMIENTO DE EQUIPO PESADO', 1, N'sys', CAST(N'2024-06-22T16:09:56.437' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (448, N'TECNOLÓGICA', 407, N'PROFESIONAL TÉCNICO', 3, N'000713045', N'MANTENIMIENTO DE EQUIPO PESADO', 1, N'sys', CAST(N'2024-06-22T16:09:56.437' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (449, N'TECNOLÓGICA', 408, N'PROFESIONAL TÉCNICO', 3, N'000713055', N'MANTENIMIENTO DE ESTRUCTURAS', 1, N'sys', CAST(N'2024-06-22T16:09:56.437' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (449, N'TECNOLÓGICA', 408, N'PROFESIONAL TÉCNICO', 3, N'000713055', N'MANTENIMIENTO DE ESTRUCTURAS', 1, N'sys', CAST(N'2024-06-22T16:09:56.437' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (450, N'TECNOLÓGICA', 409, N'PROFESIONAL TÉCNICO', 3, N'000713065', N'MANTENIMIENTO DE MAQUINARIA', 1, N'sys', CAST(N'2024-06-22T16:09:56.437' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (450, N'TECNOLÓGICA', 409, N'PROFESIONAL TÉCNICO', 3, N'000713065', N'MANTENIMIENTO DE MAQUINARIA', 1, N'sys', CAST(N'2024-06-22T16:09:56.437' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (451, N'TECNOLÓGICA', 410, N'PROFESIONAL TÉCNICO', 3, N'000713075', N'MANTENIMIENTO DE MAQUINARIA DE PLANTA', 1, N'sys', CAST(N'2024-06-22T16:09:56.437' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (451, N'TECNOLÓGICA', 410, N'PROFESIONAL TÉCNICO', 3, N'000713075', N'MANTENIMIENTO DE MAQUINARIA DE PLANTA', 1, N'sys', CAST(N'2024-06-22T16:09:56.437' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (452, N'TECNOLÓGICA', 411, N'PROFESIONAL TÉCNICO', 3, N'000713085', N'MANTENIMIENTO DE MAQUINARIA PESADA', 1, N'sys', CAST(N'2024-06-22T16:09:56.437' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (452, N'TECNOLÓGICA', 411, N'PROFESIONAL TÉCNICO', 3, N'000713085', N'MANTENIMIENTO DE MAQUINARIA PESADA', 1, N'sys', CAST(N'2024-06-22T16:09:56.437' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (453, N'TECNOLÓGICA', 412, N'PROFESIONAL TÉCNICO', 3, N'000713095', N'MANTENIMIENTO DE MAQUINARIA PESADA PARA CONSTRUCCIÓN', 1, N'sys', CAST(N'2024-06-22T16:09:56.437' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (453, N'TECNOLÓGICA', 412, N'PROFESIONAL TÉCNICO', 3, N'000713095', N'MANTENIMIENTO DE MAQUINARIA PESADA PARA CONSTRUCCIÓN', 1, N'sys', CAST(N'2024-06-22T16:09:56.437' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (454, N'TECNOLÓGICA', 413, N'PROFESIONAL TÉCNICO', 3, N'000714085', N'MANTENIMIENTO DE MOTORES, HÉLICES Y UNIDAD DE POTENCIA AUXILIAR', 1, N'sys', CAST(N'2024-06-22T16:09:56.437' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (454, N'TECNOLÓGICA', 413, N'PROFESIONAL TÉCNICO', 3, N'000714085', N'MANTENIMIENTO DE MOTORES, HÉLICES Y UNIDAD DE POTENCIA AUXILIAR', 1, N'sys', CAST(N'2024-06-22T16:09:56.437' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (455, N'TECNOLÓGICA', 414, N'PROFESIONAL TÉCNICO', 3, N'000811065', N'MANTENIMIENTO DE PLANTAS AGROINDUSTRIALES', 1, N'sys', CAST(N'2024-06-22T16:09:56.437' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (455, N'TECNOLÓGICA', 414, N'PROFESIONAL TÉCNICO', 3, N'000811065', N'MANTENIMIENTO DE PLANTAS AGROINDUSTRIALES', 1, N'sys', CAST(N'2024-06-22T16:09:56.437' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (456, N'TECNOLÓGICA', 415, N'PROFESIONAL TÉCNICO', 3, N'000714095', N'MANTENIMIENTO DE VEHÍCULOS MOTORIZADOS Y EQUIPOS CONTRA INCENDIO', 1, N'sys', CAST(N'2024-06-22T16:09:56.437' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (456, N'TECNOLÓGICA', 415, N'PROFESIONAL TÉCNICO', 3, N'000714095', N'MANTENIMIENTO DE VEHÍCULOS MOTORIZADOS Y EQUIPOS CONTRA INCENDIO', 1, N'sys', CAST(N'2024-06-22T16:09:56.437' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (457, N'TECNOLÓGICA', 416, N'PROFESIONAL TÉCNICO', 3, N'G21452002', N'MANTENIMIENTO DE VEHÍCULOS MOTORIZADOS Y EQUIPOS CONTRAINCENDIOS', 1, N'sys', CAST(N'2024-06-22T16:09:56.437' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (457, N'TECNOLÓGICA', 416, N'PROFESIONAL TÉCNICO', 3, N'G21452002', N'MANTENIMIENTO DE VEHÍCULOS MOTORIZADOS Y EQUIPOS CONTRAINCENDIOS', 1, N'sys', CAST(N'2024-06-22T16:09:56.437' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (458, N'TECNOLÓGICA', 417, N'PROFESIONAL TÉCNICO', 3, N'000713105', N'MANTENIMIENTO INDUSTRIAL', 1, N'sys', CAST(N'2024-06-22T16:09:56.437' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (458, N'TECNOLÓGICA', 417, N'PROFESIONAL TÉCNICO', 3, N'000713105', N'MANTENIMIENTO INDUSTRIAL', 1, N'sys', CAST(N'2024-06-22T16:09:56.437' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (459, N'TECNOLÓGICA', 418, N'PROFESIONAL TÉCNICO', 3, N'005265006', N'MANTENIMIENTO Y GESTIÓN DE EQUIPO PESADO', 1, N'sys', CAST(N'2024-06-22T16:09:56.437' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (459, N'TECNOLÓGICA', 418, N'PROFESIONAL TÉCNICO', 3, N'005265006', N'MANTENIMIENTO Y GESTIÓN DE EQUIPO PESADO', 1, N'sys', CAST(N'2024-06-22T16:09:56.437' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (460, N'TECNOLÓGICA', 419, N'PROFESIONAL TÉCNICO', 3, N'000713115', N'MANTENIMIENTO Y OPERACIÓN DE ARMAMENTO Y EQUIPOS AUXILIARES', 1, N'sys', CAST(N'2024-06-22T16:09:56.437' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (460, N'TECNOLÓGICA', 419, N'PROFESIONAL TÉCNICO', 3, N'000713115', N'MANTENIMIENTO Y OPERACIÓN DE ARMAMENTO Y EQUIPOS AUXILIARES', 1, N'sys', CAST(N'2024-06-22T16:09:56.437' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (461, N'TECNOLÓGICA', 420, N'PROFESIONAL TÉCNICO', 3, N'005265008', N'MANTENIMIENTO Y REPARACIÓN DE MAQUINARIA PESADA', 1, N'sys', CAST(N'2024-06-22T16:09:56.437' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (461, N'TECNOLÓGICA', 420, N'PROFESIONAL TÉCNICO', 3, N'005265008', N'MANTENIMIENTO Y REPARACIÓN DE MAQUINARIA PESADA', 1, N'sys', CAST(N'2024-06-22T16:09:56.437' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (462, N'TECNOLÓGICA', 421, N'PROFESIONAL TÉCNICO', 3, N'000714105', N'MAQUINAS NAVALES', 1, N'sys', CAST(N'2024-06-22T16:09:56.437' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (462, N'TECNOLÓGICA', 421, N'PROFESIONAL TÉCNICO', 3, N'000714105', N'MAQUINAS NAVALES', 1, N'sys', CAST(N'2024-06-22T16:09:56.437' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (463, N'TECNOLÓGICA', 422, N'PROFESIONAL TÉCNICO', 3, N'000414015', N'MARKETING', 1, N'sys', CAST(N'2024-06-22T16:09:56.440' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (463, N'TECNOLÓGICA', 422, N'PROFESIONAL TÉCNICO', 3, N'000414015', N'MARKETING', 1, N'sys', CAST(N'2024-06-22T16:09:56.440' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (464, N'TECNOLÓGICA', 423, N'PROFESIONAL TÉCNICO', 3, N'000414025', N'MARKETING CON MENCIÓN EN COMERCIALIZACIÓN INTERNACIONAL', 1, N'sys', CAST(N'2024-06-22T16:09:56.440' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (464, N'TECNOLÓGICA', 423, N'PROFESIONAL TÉCNICO', 3, N'000414025', N'MARKETING CON MENCIÓN EN COMERCIALIZACIÓN INTERNACIONAL', 1, N'sys', CAST(N'2024-06-22T16:09:56.440' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (465, N'TECNOLÓGICA', 424, N'PROFESIONAL TÉCNICO', 3, N'000414035', N'MARKETING CON MENCIÓN EN ENTORNOS DIGITALES', 1, N'sys', CAST(N'2024-06-22T16:09:56.440' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (465, N'TECNOLÓGICA', 424, N'PROFESIONAL TÉCNICO', 3, N'000414035', N'MARKETING CON MENCIÓN EN ENTORNOS DIGITALES', 1, N'sys', CAST(N'2024-06-22T16:09:56.440' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (466, N'TECNOLÓGICA', 425, N'PROFESIONAL TÉCNICO', 3, N'000414045', N'MARKETING CON MENCIÓN EN MEDIOS DIGITALES', 1, N'sys', CAST(N'2024-06-22T16:09:56.440' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (466, N'TECNOLÓGICA', 425, N'PROFESIONAL TÉCNICO', 3, N'000414045', N'MARKETING CON MENCIÓN EN MEDIOS DIGITALES', 1, N'sys', CAST(N'2024-06-22T16:09:56.440' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (467, N'TECNOLÓGICA', 426, N'PROFESIONAL TÉCNICO', 3, N'000414055', N'MARKETING EMPRESARIAL', 1, N'sys', CAST(N'2024-06-22T16:09:56.440' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (467, N'TECNOLÓGICA', 426, N'PROFESIONAL TÉCNICO', 3, N'000414055', N'MARKETING EMPRESARIAL', 1, N'sys', CAST(N'2024-06-22T16:09:56.440' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (468, N'TECNOLÓGICA', 427, N'PROFESIONAL TÉCNICO', 3, N'000414065', N'MARKETING INTEGRAL', 1, N'sys', CAST(N'2024-06-22T16:09:56.440' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (468, N'TECNOLÓGICA', 427, N'PROFESIONAL TÉCNICO', 3, N'000414065', N'MARKETING INTEGRAL', 1, N'sys', CAST(N'2024-06-22T16:09:56.440' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (469, N'TECNOLÓGICA', 428, N'PROFESIONAL TÉCNICO', 3, N'M29732005', N'MARKETING INTERNACIONAL', 1, N'sys', CAST(N'2024-06-22T16:09:56.440' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (469, N'TECNOLÓGICA', 428, N'PROFESIONAL TÉCNICO', 3, N'M29732005', N'MARKETING INTERNACIONAL', 1, N'sys', CAST(N'2024-06-22T16:09:56.440' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (470, N'TECNOLÓGICA', 429, N'PROFESIONAL TÉCNICO', 3, N'000414075', N'MARKETING VISUAL', 1, N'sys', CAST(N'2024-06-22T16:09:56.440' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (470, N'TECNOLÓGICA', 429, N'PROFESIONAL TÉCNICO', 3, N'000414075', N'MARKETING VISUAL', 1, N'sys', CAST(N'2024-06-22T16:09:56.440' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (471, N'TECNOLÓGICA', 430, N'PROFESIONAL TÉCNICO', 3, N'M29732007', N'MARKETING Y COMUNICACIÓN DE LA MODA', 1, N'sys', CAST(N'2024-06-22T16:09:56.440' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (471, N'TECNOLÓGICA', 430, N'PROFESIONAL TÉCNICO', 3, N'M29732007', N'MARKETING Y COMUNICACIÓN DE LA MODA', 1, N'sys', CAST(N'2024-06-22T16:09:56.440' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (472, N'TECNOLÓGICA', 431, N'PROFESIONAL TÉCNICO', 3, N'EST000730', N'MARKETING Y GESTIÓN DE EQUIPOS', 1, N'sys', CAST(N'2024-06-22T16:09:56.440' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (472, N'TECNOLÓGICA', 431, N'PROFESIONAL TÉCNICO', 3, N'EST000730', N'MARKETING Y GESTIÓN DE EQUIPOS', 1, N'sys', CAST(N'2024-06-22T16:09:56.440' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (473, N'TECNOLÓGICA', 432, N'PROFESIONAL TÉCNICO', 3, N'EST000731', N'MARKETING Y GESTIÓN DE MEDIOS DIGITALES', 1, N'sys', CAST(N'2024-06-22T16:09:56.440' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (473, N'TECNOLÓGICA', 432, N'PROFESIONAL TÉCNICO', 3, N'EST000731', N'MARKETING Y GESTIÓN DE MEDIOS DIGITALES', 1, N'sys', CAST(N'2024-06-22T16:09:56.440' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (474, N'TECNOLÓGICA', 433, N'PROFESIONAL TÉCNICO', 3, N'EST000732', N'MARKETING Y GESTIÓN DE MODA', 1, N'sys', CAST(N'2024-06-22T16:09:56.440' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (474, N'TECNOLÓGICA', 433, N'PROFESIONAL TÉCNICO', 3, N'EST000732', N'MARKETING Y GESTIÓN DE MODA', 1, N'sys', CAST(N'2024-06-22T16:09:56.440' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (475, N'TECNOLÓGICA', 434, N'PROFESIONAL TÉCNICO', 3, N'003335008', N'MARKETING Y GESTIÓN DE VENTAS', 1, N'sys', CAST(N'2024-06-22T16:09:56.440' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (475, N'TECNOLÓGICA', 434, N'PROFESIONAL TÉCNICO', 3, N'003335008', N'MARKETING Y GESTIÓN DE VENTAS', 1, N'sys', CAST(N'2024-06-22T16:09:56.440' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (476, N'TECNOLÓGICA', 435, N'PROFESIONAL TÉCNICO', 3, N'EST000733', N'MARKETING Y NUEVAS TECNOLOGÍAS', 1, N'sys', CAST(N'2024-06-22T16:09:56.440' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (476, N'TECNOLÓGICA', 435, N'PROFESIONAL TÉCNICO', 3, N'EST000733', N'MARKETING Y NUEVAS TECNOLOGÍAS', 1, N'sys', CAST(N'2024-06-22T16:09:56.440' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (477, N'TECNOLÓGICA', 436, N'PROFESIONAL TÉCNICO', 3, N'000414085', N'MARKETING Y PUBLICIDAD', 1, N'sys', CAST(N'2024-06-22T16:09:56.440' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (477, N'TECNOLÓGICA', 436, N'PROFESIONAL TÉCNICO', 3, N'000414085', N'MARKETING Y PUBLICIDAD', 1, N'sys', CAST(N'2024-06-22T16:09:56.440' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (478, N'TECNOLÓGICA', 437, N'PROFESIONAL TÉCNICO', 3, N'000414095', N'MARKETING Y VENTAS', 1, N'sys', CAST(N'2024-06-22T16:09:56.440' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (478, N'TECNOLÓGICA', 437, N'PROFESIONAL TÉCNICO', 3, N'000414095', N'MARKETING Y VENTAS', 1, N'sys', CAST(N'2024-06-22T16:09:56.440' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (479, N'TECNOLÓGICA', 438, N'PROFESIONAL TÉCNICO', 3, N'000713125', N'MATRICERÍA', 1, N'sys', CAST(N'2024-06-22T16:09:56.440' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (479, N'TECNOLÓGICA', 438, N'PROFESIONAL TÉCNICO', 3, N'000713125', N'MATRICERÍA', 1, N'sys', CAST(N'2024-06-22T16:09:56.440' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (480, N'TECNOLÓGICA', 439, N'PROFESIONAL TÉCNICO', 3, N'000714115', N'MECÁNICA AERONÁUTICA', 1, N'sys', CAST(N'2024-06-22T16:09:56.440' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (480, N'TECNOLÓGICA', 439, N'PROFESIONAL TÉCNICO', 3, N'000714115', N'MECÁNICA AERONÁUTICA', 1, N'sys', CAST(N'2024-06-22T16:09:56.440' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (481, N'TECNOLÓGICA', 440, N'PROFESIONAL TÉCNICO', 3, N'000714125', N'MECÁNICA AERONAVAL', 1, N'sys', CAST(N'2024-06-22T16:09:56.440' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (481, N'TECNOLÓGICA', 440, N'PROFESIONAL TÉCNICO', 3, N'000714125', N'MECÁNICA AERONAVAL', 1, N'sys', CAST(N'2024-06-22T16:09:56.440' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (482, N'TECNOLÓGICA', 441, N'PROFESIONAL TÉCNICO', 3, N'000713135', N'MECÁNICA AGRÍCOLA', 1, N'sys', CAST(N'2024-06-22T16:09:56.440' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (482, N'TECNOLÓGICA', 441, N'PROFESIONAL TÉCNICO', 3, N'000713135', N'MECÁNICA AGRÍCOLA', 1, N'sys', CAST(N'2024-06-22T16:09:56.440' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (483, N'TECNOLÓGICA', 442, N'PROFESIONAL TÉCNICO', 3, N'000713145', N'MECÁNICA AUTOMOTRIZ', 1, N'sys', CAST(N'2024-06-22T16:09:56.440' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (483, N'TECNOLÓGICA', 442, N'PROFESIONAL TÉCNICO', 3, N'000713145', N'MECÁNICA AUTOMOTRIZ', 1, N'sys', CAST(N'2024-06-22T16:09:56.440' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (484, N'TECNOLÓGICA', 443, N'PROFESIONAL TÉCNICO', 3, N'005265005', N'MECÁNICA AUTOMOTRIZ Y AUTOTRÓNICA', 1, N'sys', CAST(N'2024-06-22T16:09:56.440' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (484, N'TECNOLÓGICA', 443, N'PROFESIONAL TÉCNICO', 3, N'005265005', N'MECÁNICA AUTOMOTRIZ Y AUTOTRÓNICA', 1, N'sys', CAST(N'2024-06-22T16:09:56.440' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (485, N'TECNOLÓGICA', 444, N'PROFESIONAL TÉCNICO', 3, N'000526355', N'MECÁNICA DE EQUIPO PESADO', 1, N'sys', CAST(N'2024-06-22T16:09:56.440' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (485, N'TECNOLÓGICA', 444, N'PROFESIONAL TÉCNICO', 3, N'000526355', N'MECÁNICA DE EQUIPO PESADO', 1, N'sys', CAST(N'2024-06-22T16:09:56.440' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (486, N'TECNOLÓGICA', 445, N'PROFESIONAL TÉCNICO', 3, N'000713155', N'MECÁNICA DE MANTENIMIENTO', 1, N'sys', CAST(N'2024-06-22T16:09:56.440' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (486, N'TECNOLÓGICA', 445, N'PROFESIONAL TÉCNICO', 3, N'000713155', N'MECÁNICA DE MANTENIMIENTO', 1, N'sys', CAST(N'2024-06-22T16:09:56.440' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (487, N'TECNOLÓGICA', 446, N'PROFESIONAL TÉCNICO', 3, N'000713245', N'MECÁNICA DE MAQUINARIA PESADA', 1, N'sys', CAST(N'2024-06-22T16:09:56.440' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (487, N'TECNOLÓGICA', 446, N'PROFESIONAL TÉCNICO', 3, N'000713245', N'MECÁNICA DE MAQUINARIA PESADA', 1, N'sys', CAST(N'2024-06-22T16:09:56.440' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (488, N'TECNOLÓGICA', 447, N'PROFESIONAL TÉCNICO', 3, N'000713165', N'MECÁNICA DE PRODUCCIÓN', 1, N'sys', CAST(N'2024-06-22T16:09:56.440' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (488, N'TECNOLÓGICA', 447, N'PROFESIONAL TÉCNICO', 3, N'000713165', N'MECÁNICA DE PRODUCCIÓN', 1, N'sys', CAST(N'2024-06-22T16:09:56.440' AS DateTime), NULL, NULL)
 GO
-INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_acto], [fecha_act]) VALUES (489, N'TECNOLÓGICA', 448, N'PROFESIONAL TÉCNICO', 3, N'C17283002', N'MECÁNICA DE PRODUCCIÓN INDUSTRIAL', 1, N'sys', CAST(N'2024-06-22T16:09:56.440' AS DateTime), NULL, NULL)
+INSERT [dbo].[PROFESION] ([profesion_id], [categoria], [numero], [nivel_formativo], [anios_estudio], [codigo], [descripcion], [estado], [usuario_reg], [fecha_reg], [usuario_act], [fecha_act]) VALUES (489, N'TECNOLÓGICA', 448, N'PROFESIONAL TÉCNICO', 3, N'C17283002', N'MECÁNICA DE PRODUCCIÓN INDUSTRIAL', 1, N'sys', CAST(N'2024-06-22T16:09:56.440' AS DateTime), NULL, NULL)
 GO
 SET IDENTITY_INSERT [dbo].[PROFESION] OFF
 GO
@@ -5223,17 +5306,35 @@ ALTER TABLE [dbo].[DOCUMENTOESTRUCTURA] ADD  CONSTRAINT [DF__DOCUMENTO__usuar__3
 GO
 ALTER TABLE [dbo].[DOCUMENTOESTRUCTURA] ADD  CONSTRAINT [DF__DOCUMENTO__fecha__339FAB6E]  DEFAULT (getdate()) FOR [fecha_reg]
 GO
+ALTER TABLE [dbo].[ENTIDAD] ADD  CONSTRAINT [DF_entidad_generalidades]  DEFAULT ((0)) FOR [generalidades]
+GO
 ALTER TABLE [dbo].[ENTIDAD] ADD  CONSTRAINT [DF__ENTIDAD__estado__76969D2E]  DEFAULT ((1)) FOR [estado]
 GO
 ALTER TABLE [dbo].[ENTIDAD] ADD  CONSTRAINT [DF__ENTIDAD__usuario__778AC167]  DEFAULT ('sys') FOR [usuario_reg]
 GO
 ALTER TABLE [dbo].[ENTIDAD] ADD  CONSTRAINT [DF__ENTIDAD__fecha_r__787EE5A0]  DEFAULT (getdate()) FOR [fecha_reg]
 GO
+ALTER TABLE [dbo].[ENTIDADCOORDINADOR] ADD  DEFAULT ((0)) FOR [actual]
+GO
+ALTER TABLE [dbo].[ENTIDADCOORDINADOR] ADD  DEFAULT ((1)) FOR [estado]
+GO
+ALTER TABLE [dbo].[ENTIDADCOORDINADOR] ADD  DEFAULT ('sys') FOR [usuario_reg]
+GO
+ALTER TABLE [dbo].[ENTIDADCOORDINADOR] ADD  DEFAULT (getdate()) FOR [fecha_reg]
+GO
 ALTER TABLE [dbo].[ENTIDADGRUPO] ADD  DEFAULT ((1)) FOR [estado]
 GO
 ALTER TABLE [dbo].[ENTIDADGRUPO] ADD  DEFAULT ('sys') FOR [usuario_reg]
 GO
 ALTER TABLE [dbo].[ENTIDADGRUPO] ADD  DEFAULT (getdate()) FOR [fecha_reg]
+GO
+ALTER TABLE [dbo].[ENTIDADOFICIAL] ADD  DEFAULT ((0)) FOR [actual]
+GO
+ALTER TABLE [dbo].[ENTIDADOFICIAL] ADD  DEFAULT ((1)) FOR [estado]
+GO
+ALTER TABLE [dbo].[ENTIDADOFICIAL] ADD  DEFAULT ('sys') FOR [usuario_reg]
+GO
+ALTER TABLE [dbo].[ENTIDADOFICIAL] ADD  DEFAULT (getdate()) FOR [fecha_reg]
 GO
 ALTER TABLE [dbo].[ENTIDADSECTOR] ADD  CONSTRAINT [DF__ENTIDADSE__estad__4CA06362]  DEFAULT ((1)) FOR [estado]
 GO
@@ -5296,6 +5397,24 @@ REFERENCES [dbo].[UBIGEO] ([ubigeo_id])
 GO
 ALTER TABLE [dbo].[ENTIDAD] CHECK CONSTRAINT [FK_ENTIDAD_UBIGEO]
 GO
+ALTER TABLE [dbo].[ENTIDADCOORDINADOR]  WITH CHECK ADD FOREIGN KEY([entidad_id])
+REFERENCES [dbo].[ENTIDAD] ([entidad_id])
+GO
+ALTER TABLE [dbo].[ENTIDADCOORDINADOR]  WITH CHECK ADD FOREIGN KEY([modalidad_id])
+REFERENCES [dbo].[MODALIDAD] ([modalidad_id])
+GO
+ALTER TABLE [dbo].[ENTIDADCOORDINADOR]  WITH CHECK ADD FOREIGN KEY([profesion_id])
+REFERENCES [dbo].[PROFESION] ([profesion_id])
+GO
+ALTER TABLE [dbo].[ENTIDADOFICIAL]  WITH CHECK ADD FOREIGN KEY([entidad_id])
+REFERENCES [dbo].[ENTIDAD] ([entidad_id])
+GO
+ALTER TABLE [dbo].[ENTIDADOFICIAL]  WITH CHECK ADD FOREIGN KEY([modalidad_id])
+REFERENCES [dbo].[MODALIDAD] ([modalidad_id])
+GO
+ALTER TABLE [dbo].[ENTIDADOFICIAL]  WITH CHECK ADD FOREIGN KEY([profesion_id])
+REFERENCES [dbo].[PROFESION] ([profesion_id])
+GO
 ALTER TABLE [dbo].[ENTIDADSECTOR]  WITH CHECK ADD  CONSTRAINT [FK_ENTIDADSECTOR_TIPOSECTOR] FOREIGN KEY([tiposector_id])
 REFERENCES [dbo].[TIPOSECTOR] ([tiposector_id])
 GO
@@ -5306,7 +5425,7 @@ REFERENCES [dbo].[ENTIDAD] ([entidad_id])
 GO
 ALTER TABLE [dbo].[PERSONA] CHECK CONSTRAINT [FK_PERSONA_ENTIDAD]
 GO
-/****** Object:  StoredProcedure [dbo].[USP_DEL_ENTIDAD]    Script Date: 23/06/2024 02:00:00 ******/
+/****** Object:  StoredProcedure [dbo].[USP_DEL_ENTIDAD]    Script Date: 26/06/2024 23:23:02 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -5351,7 +5470,54 @@ BEGIN
 END
 
 GO
-/****** Object:  StoredProcedure [dbo].[USP_DEL_ENTIDADGRUPO]    Script Date: 23/06/2024 02:00:00 ******/
+/****** Object:  StoredProcedure [dbo].[USP_DEL_ENTIDADCOORDINADOR]    Script Date: 26/06/2024 23:23:02 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE     PROCEDURE [dbo].[USP_DEL_ENTIDADCOORDINADOR](
+	@entidadcoordinador_id int = NULL,
+	@usuario_act varchar(20) = NULL,
+	@error BIT = NULL OUTPUT,
+	@message NVARCHAR(500) = NULL OUTPUT
+)
+AS
+BEGIN
+	SET @error = 0;
+
+	-- validamos si existe la persona que desea eliminar
+	IF NOT EXISTS(SELECT TOP(1) t1.* FROM [dbo].[ENTIDADCOORDINADOR] AS t1 WITH(NOLOCK) WHERE t1.entidadcoordinador_id = @entidadcoordinador_id) 
+	BEGIN
+		SET @error = 1;
+		SET @message = 'La Persona que desea Eliminar no existe';
+	END
+	
+	IF(@error = 0)
+	BEGIN
+
+		--Se elimina el perfil actualizando sus datos de auditoria
+
+		UPDATE 
+			[dbo].[ENTIDADCOORDINADOR]
+		SET 
+			actual = 0,
+			estado = 0,
+			usuario_act = @usuario_act,
+			fecha_act = GETDATE()
+		WHERE
+			entidadcoordinador_id = @entidadcoordinador_id
+
+		-- setemos el mensaje de salida
+		set @message = 'Información eliminada satisfactoriamente';
+
+	END
+
+
+END
+
+GO
+/****** Object:  StoredProcedure [dbo].[USP_DEL_ENTIDADGRUPO]    Script Date: 26/06/2024 23:23:02 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -5396,7 +5562,54 @@ BEGIN
 END
 
 GO
-/****** Object:  StoredProcedure [dbo].[USP_DEL_PERSONA]    Script Date: 23/06/2024 02:00:00 ******/
+/****** Object:  StoredProcedure [dbo].[USP_DEL_ENTIDADOFICIAL]    Script Date: 26/06/2024 23:23:02 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE     PROCEDURE [dbo].[USP_DEL_ENTIDADOFICIAL](
+	@entidadoficial_id int = NULL,
+	@usuario_act varchar(20) = NULL,
+	@error BIT = NULL OUTPUT,
+	@message NVARCHAR(500) = NULL OUTPUT
+)
+AS
+BEGIN
+	SET @error = 0;
+
+	-- validamos si existe la persona que desea eliminar
+	IF NOT EXISTS(SELECT TOP(1) t1.* FROM [dbo].[ENTIDADOFICIAL] AS t1 WITH(NOLOCK) WHERE t1.entidadoficial_id = @entidadoficial_id) 
+	BEGIN
+		SET @error = 1;
+		SET @message = 'El Oficial de integridad que desea Eliminar no existe';
+	END
+	
+	IF(@error = 0)
+	BEGIN
+
+		--Se elimina el perfil actualizando sus datos de auditoria
+
+		UPDATE 
+			[dbo].[ENTIDADOFICIAL]
+		SET 
+			actual = 0,
+			estado = 0,
+			usuario_act = @usuario_act,
+			fecha_act = GETDATE()
+		WHERE
+			entidadoficial_id = @entidadoficial_id
+
+		-- setemos el mensaje de salida
+		set @message = 'Información eliminada satisfactoriamente';
+
+	END
+
+
+END
+
+GO
+/****** Object:  StoredProcedure [dbo].[USP_DEL_PERSONA]    Script Date: 26/06/2024 23:23:02 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -5428,7 +5641,8 @@ BEGIN
 			[dbo].[PERSONA]
 		SET 
 			estado = 0,
-			usuario_act = @usuario_act
+			usuario_act = @usuario_act,
+			fecha_act = GETDATE()
 		WHERE
 			persona_id = @persona_id
 
@@ -5441,7 +5655,7 @@ BEGIN
 END
 
 GO
-/****** Object:  StoredProcedure [dbo].[USP_GET_ENTIDAD]    Script Date: 23/06/2024 02:00:00 ******/
+/****** Object:  StoredProcedure [dbo].[USP_GET_ENTIDAD]    Script Date: 26/06/2024 23:23:02 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -5501,7 +5715,155 @@ BEGIN
 END
 
 GO
-/****** Object:  StoredProcedure [dbo].[USP_GET_ENTIDADGRUPO]    Script Date: 23/06/2024 02:00:00 ******/
+/****** Object:  StoredProcedure [dbo].[USP_GET_ENTIDAD_GENERALIDADES]    Script Date: 26/06/2024 23:23:02 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE           PROCEDURE [dbo].[USP_GET_ENTIDAD_GENERALIDADES](
+	@entidad_id INT,
+	@error BIT = NULL OUTPUT,
+	@message NVARCHAR(500) = NULL OUTPUT
+)
+AS
+BEGIN
+
+	set @error = 0
+
+	-- validamos si existe la persona que desea modificar
+	IF NOT EXISTS(SELECT TOP(1) t1.* FROM [dbo].[ENTIDAD] AS t1 WITH(NOLOCK) WHERE t1.entidad_id = @entidad_id) 
+	BEGIN
+		SET @error = 1;
+		SET @message = 'La entidad que desea consultar no existe';
+	END
+	
+	IF(@error = 0)
+	BEGIN
+		SELECT 
+			  T1.[entidad_id]
+			, T1.[entidadgrupo_id]
+			, T1.[entidadsector_id]
+			, T1.[modalidadintegridad_id]
+			, T1.[documentoestructura_id]
+			, T1.[ubigeo_id]
+			, T1.[numero_ruc]
+			, T1.[codigo]
+			, T1.[acronimo]
+			, T1.[nombre]
+			, T1.[generalidades]
+			, T1.[documentoestructura_doc]
+			, T1.[modalidadintegridad_doc]
+			, T1.[modalidadintegridad_anterior]
+			, T1.[documentointegridad_desc]
+			, T1.[documentointegridad_doc]
+			, T1.[num_servidores]
+			, T1.[estado]
+			, T1.[usuario_reg]
+			, T1.[fecha_reg]
+			, T1.[usuario_act]
+			, T1.[fecha_act]
+			, T2.[codigo]				as	entidadgrupo_codigo
+			, T2.[descripcion]			as	entidadgrupo_descripcion
+			, T2.[abreviatura]			as	entidadgrupo_abreviatura
+			, T3.[codigo]				as	entidadsector_codigo
+			, T3.[descripcion]			as	entidadsector_descripcion
+			, T3.[abreviatura]			as	entidadsector_abreviatura
+			, T4.[departamento_inei]	as	ubigeo_departamento_inei
+			, T4.[departamento]			as	ubigeo_departamento
+			, T4.[provincia_inei]		as	ubigeo_provincia_inei
+			, T4.[provincia]			as	ubigeo_provincia
+			, T4.[distrito]				as	ubigeo_distrito
+			, T5.[codigo]				as	doccumentoestructura_codigo
+			, T5.[abreviatura]			as	doccumentoestructura_abreviatura
+			, T5.[descripcion]			as	doccumentoestructura_descripcion
+			, T6.[codigo]				as	modalidadintegridad_codigo
+			, T6.[abreviatura]			as	modalidadintegridad_abreviatura
+			, T6.[descripcion]			as	modalidadintegridad_descripcion
+	  FROM 
+				   [dbo].[ENTIDAD]				T1	WITH(NOLOCK)
+		LEFT JOIN [dbo].[ENTIDADGRUPO]			T2	WITH(NOLOCK) ON T1.entidadgrupo_id			= T2.entidadgrupo_id
+		LEFT JOIN [dbo].[ENTIDADSECTOR]			T3	WITH(NOLOCK) ON T1.entidadsector_id			= T3.entidadsector_id
+		LEFT JOIN [dbo].[UBIGEO]				T4  WITH(NOLOCK) ON T1.ubigeo_id				= T4.ubigeo_id
+		LEFT JOIN [dbo].[DOCUMENTOESTRUCTURA]	T5	WITH(NOLOCK) ON T1.documentoestructura_id	= T5.documentoestructura_id
+		LEFT JOIN [dbo].[MODALIDADINTEGRIDAD]	T6	WITH(NOLOCK) ON T1.modalidadintegridad_id	= T6.modalidadintegridad_id
+	  WHERE
+		T1.entidad_id = @entidad_id;
+
+		set @message = 'Consulta exitosa';
+	END
+
+
+END
+
+GO
+/****** Object:  StoredProcedure [dbo].[USP_GET_ENTIDADCOORDINADOR]    Script Date: 26/06/2024 23:23:02 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE         PROCEDURE [dbo].[USP_GET_ENTIDADCOORDINADOR](
+	@entidadcoordinador_id INT,
+	@error BIT = NULL OUTPUT,
+	@message NVARCHAR(500) = NULL OUTPUT
+)
+AS
+BEGIN
+
+	set @error = 0
+
+	-- validamos si existe la persona que desea modificar
+	IF NOT EXISTS(SELECT TOP(1) t1.* FROM [dbo].[ENTIDADCOORDINADOR] AS t1 WITH(NOLOCK) WHERE t1.entidadcoordinador_id = @entidadcoordinador_id) 
+	BEGIN
+		SET @error = 1;
+		SET @message = 'El coordinador que desea consultar no existe';
+	END
+	
+	IF(@error = 0)
+	BEGIN
+		SELECT
+			T1.[entidadcoordinador_id], 
+			T1.[entidad_id], 
+			T1.[modalidad_id], 
+			T1.[profesion_id], 
+			T1.[nombres], 
+			T1.[apellidos], 
+			T1.[numero_celular], 
+			T1.[correo_institucional], 
+			T1.[fecha_inicio], 
+			T1.[fecha_fin], 
+			T1.[designacion_doc], 
+			T1.[actual], 
+			T1.[estado], 
+			T1.[usuario_reg], 
+			T1.[fecha_reg], 
+			T1.[usuario_act], 
+			T1.[fecha_act],
+			T2.[nombre]			as entidad_nombre,
+			T2.[acronimo]		as entidad_acronimo,
+			T2.[numero_ruc]		as entidad_ruc,
+			T3.[codigo]			as profesion_codigo,
+			T3.[descripcion]	as profesion_descripcion,
+			T4.[codigo]			as modalidad_codigo,
+			T4.[descripcion]	as modalidad_descripcion,
+			T4.[abreviatura]	as modalidad_abreviatura
+		FROM 
+						[dbo].[ENTIDADCOORDINADOR]  T1 WITH(NOLOCK)
+			INNER JOIN  [dbo].[ENTIDAD]				T2 WITH(NOLOCK) on T1.entidad_id	=	 T2.entidad_id
+			INNER JOIN  [dbo].[PROFESION]			T3 WITH(NOLOCK) on T1.profesion_id	=	 T3.profesion_id
+			INNER JOIN  [dbo].[MODALIDAD]			T4 WITH(NOLOCK) on T1.modalidad_id	=	 T4.modalidad_id
+		WHERE
+			T1.[entidadcoordinador_id] = @entidadcoordinador_id;
+
+		set @message = 'Consulta exitosa';
+	END
+
+
+END
+
+GO
+/****** Object:  StoredProcedure [dbo].[USP_GET_ENTIDADGRUPO]    Script Date: 26/06/2024 23:23:02 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -5548,7 +5910,73 @@ BEGIN
 END
 
 GO
-/****** Object:  StoredProcedure [dbo].[USP_GET_PERSONA]    Script Date: 23/06/2024 02:00:00 ******/
+/****** Object:  StoredProcedure [dbo].[USP_GET_ENTIDADOFICIAL]    Script Date: 26/06/2024 23:23:02 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE         PROCEDURE [dbo].[USP_GET_ENTIDADOFICIAL](
+	@entidadoficial_id INT,
+	@error BIT = NULL OUTPUT,
+	@message NVARCHAR(500) = NULL OUTPUT
+)
+AS
+BEGIN
+
+	set @error = 0
+
+	-- validamos si existe la persona que desea modificar
+	IF NOT EXISTS(SELECT TOP(1) t1.* FROM [dbo].[ENTIDADOFICIAL] AS t1 WITH(NOLOCK) WHERE t1.entidadoficial_id = @entidadoficial_id) 
+	BEGIN
+		SET @error = 1;
+		SET @message = 'El oficial que desea consultar no existe';
+	END
+	
+	IF(@error = 0)
+	BEGIN
+		SELECT
+			T1.[entidadoficial_id], 
+			T1.[entidad_id], 
+			T1.[modalidad_id], 
+			T1.[profesion_id], 
+			T1.[nombres], 
+			T1.[apellidos], 
+			T1.[numero_celular], 
+			T1.[correo_institucional], 
+			T1.[fecha_inicio], 
+			T1.[fecha_fin], 
+			T1.[designacion_doc], 
+			T1.[actual], 
+			T1.[estado], 
+			T1.[usuario_reg], 
+			T1.[fecha_reg], 
+			T1.[usuario_act], 
+			T1.[fecha_act],
+			T2.[nombre]			as entidad_nombre,
+			T2.[acronimo]		as entidad_acronimo,
+			T2.[numero_ruc]		as entidad_ruc,
+			T3.[codigo]			as profesion_codigo,
+			T3.[descripcion]	as profesion_descripcion,
+			T4.[codigo]			as modalidad_codigo,
+			T4.[descripcion]	as modalidad_descripcion,
+			T4.[abreviatura]	as modalidad_abreviatura
+		FROM 
+					[dbo].[ENTIDADOFICIAL]  T1 WITH(NOLOCK)
+		INNER JOIN  [dbo].[ENTIDAD]			T2 WITH(NOLOCK) on T1.entidad_id	=	 T2.entidad_id
+		INNER JOIN  [dbo].[PROFESION]		T3 WITH(NOLOCK) on T1.profesion_id	=	 T3.profesion_id
+		INNER JOIN  [dbo].[MODALIDAD]		T4 WITH(NOLOCK) on T1.modalidad_id	=	 T4.modalidad_id
+		WHERE
+			T1.[entidadoficial_id] = @entidadoficial_id;
+
+		set @message = 'Consulta exitosa';
+	END
+
+
+END
+
+GO
+/****** Object:  StoredProcedure [dbo].[USP_GET_PERSONA]    Script Date: 26/06/2024 23:23:02 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -5599,7 +6027,7 @@ BEGIN
 END
 
 GO
-/****** Object:  StoredProcedure [dbo].[USP_INS_ENTIDAD]    Script Date: 23/06/2024 02:00:00 ******/
+/****** Object:  StoredProcedure [dbo].[USP_INS_ENTIDAD]    Script Date: 26/06/2024 23:23:02 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -5684,7 +6112,79 @@ BEGIN
 END
 
 GO
-/****** Object:  StoredProcedure [dbo].[USP_INS_ENTIDADGRUPO]    Script Date: 23/06/2024 02:00:00 ******/
+/****** Object:  StoredProcedure [dbo].[USP_INS_ENTIDADCOORDINADOR]    Script Date: 26/06/2024 23:23:02 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE     PROCEDURE [dbo].[USP_INS_ENTIDADCOORDINADOR]	
+	@entidad_id int = null,
+	@modalidad_id int = null,
+	@profesion_id int = null,
+	@nombres varchar(150) = null,
+	@apellidos varchar(150) = null,
+	@numero_celular varchar(20) = null,
+	@correo_institucional varchar(50) = null,
+	@fecha_inicio datetime = null,
+	@fecha_fin datetime = null,
+	@designacion_doc varchar(250) = null,
+	@actual bit = null,
+	@usuario_reg varchar(20) = null,
+	@persona_id int = null OUTPUT,
+	@error bit = null OUTPUT,
+	@message nvarchar(500) = null OUTPUT
+AS
+BEGIN
+	
+	--Inicializa como false
+	SET @error = 0;
+ 
+	IF(@error = 0) 
+	BEGIN
+	
+		-- insertamos el grupo de la entidad
+		INSERT INTO dbo.[ENTIDADCOORDINADOR] (
+			[entidad_id], 
+			[modalidad_id], 
+			[profesion_id], 
+			[nombres], 
+			[apellidos], 
+			[numero_celular], 
+			[correo_institucional], 
+			[fecha_inicio], 
+			[fecha_fin], 
+			[designacion_doc], 
+			[actual], 
+			[usuario_reg], 
+			[fecha_reg]			
+		)
+		VALUES (
+			@entidad_id, 
+			@modalidad_id, 
+			@profesion_id, 
+			TRIM(@nombres), 
+			TRIM(@apellidos), 
+			TRIM(@numero_celular), 
+			LOWER(TRIM(@correo_institucional)), 
+			@fecha_inicio, 
+			@fecha_fin, 
+			@designacion_doc, 
+			@actual, 
+			case when @usuario_reg is null then 'sys' else @usuario_reg end,
+			GETDATE()
+		);
+
+		-- seteamos el id de la persona como variable de salida 
+		set @persona_id = @@IDENTITY;
+
+		-- setemos el mensaje de salida
+		set @message = 'Información registrada satisfactoriamente';
+
+	END
+END
+
+GO
+/****** Object:  StoredProcedure [dbo].[USP_INS_ENTIDADGRUPO]    Script Date: 26/06/2024 23:23:02 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -5741,7 +6241,79 @@ BEGIN
 END
 
 GO
-/****** Object:  StoredProcedure [dbo].[USP_INS_PERSONA]    Script Date: 23/06/2024 02:00:00 ******/
+/****** Object:  StoredProcedure [dbo].[USP_INS_ENTIDADOFICIAL]    Script Date: 26/06/2024 23:23:02 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE     PROCEDURE [dbo].[USP_INS_ENTIDADOFICIAL]	
+	@entidad_id int = null,
+	@modalidad_id int = null,
+	@profesion_id int = null,
+	@nombres varchar(150) = null,
+	@apellidos varchar(150) = null,
+	@numero_celular varchar(20) = null,
+	@correo_institucional varchar(50) = null,
+	@fecha_inicio datetime = null,
+	@fecha_fin datetime = null,
+	@designacion_doc varchar(250) = null,
+	@actual bit = null,
+	@usuario_reg varchar(20) = null,
+	@persona_id int = null OUTPUT,
+	@error bit = null OUTPUT,
+	@message nvarchar(500) = null OUTPUT
+AS
+BEGIN
+	
+	--Inicializa como false
+	SET @error = 0;
+ 
+	IF(@error = 0) 
+	BEGIN
+	
+		-- insertamos el grupo de la entidad
+		INSERT INTO dbo.[ENTIDADOFICIAL] (
+			[entidad_id], 
+			[modalidad_id], 
+			[profesion_id], 
+			[nombres], 
+			[apellidos], 
+			[numero_celular], 
+			[correo_institucional], 
+			[fecha_inicio], 
+			[fecha_fin], 
+			[designacion_doc], 
+			[actual], 
+			[usuario_reg], 
+			[fecha_reg]			
+		)
+		VALUES (
+			@entidad_id, 
+			@modalidad_id, 
+			@profesion_id, 
+			TRIM(@nombres), 
+			TRIM(@apellidos), 
+			TRIM(@numero_celular), 
+			LOWER(TRIM(@correo_institucional)), 
+			@fecha_inicio, 
+			@fecha_fin, 
+			@designacion_doc, 
+			@actual, 
+			case when @usuario_reg is null then 'sys' else @usuario_reg end,
+			GETDATE()
+		);
+
+		-- seteamos el id de la persona como variable de salida 
+		set @persona_id = @@IDENTITY;
+
+		-- setemos el mensaje de salida
+		set @message = 'Información registrada satisfactoriamente';
+
+	END
+END
+
+GO
+/****** Object:  StoredProcedure [dbo].[USP_INS_PERSONA]    Script Date: 26/06/2024 23:23:02 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -5808,7 +6380,50 @@ BEGIN
 END
 
 GO
-/****** Object:  StoredProcedure [dbo].[USP_SEL_ENTIDAD]    Script Date: 23/06/2024 02:00:00 ******/
+/****** Object:  StoredProcedure [dbo].[USP_SEL_DOCUMENTOESTRUCTURA]    Script Date: 26/06/2024 23:23:02 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE     PROCEDURE [dbo].[USP_SEL_DOCUMENTOESTRUCTURA](
+	@documentoestructura_id int = null,
+	@filtro varchar(max) = null,
+	@error BIT = NULL OUTPUT,
+	@message NVARCHAR(500) = NULL OUTPUT
+)
+AS
+BEGIN
+
+	set @error = 0;
+
+	SELECT
+		T1.documentoestructura_id, 
+		T1.codigo, 
+		T1.abreviatura, 
+		T1.descripcion,
+		T1.estado, 
+		T1.usuario_reg, 
+		T1.fecha_reg, 
+		T1.usuario_act, 
+		T1.fecha_act
+	FROM 
+		[dbo].[DOCUMENTOESTRUCTURA]  T1 WITH(NOLOCK)
+	WHERE
+		T1.estado = 1 AND
+		(@documentoestructura_id IS NULL OR T1.documentoestructura_id = @documentoestructura_id) AND
+		(@filtro IS NULL OR (RTRIM(LTRIM(ISNULL(T1.codigo, ''))) + ' ' +
+			RTRIM(LTRIM(ISNULL(T1.abreviatura, ''))) + ' ' +
+			RTRIM(LTRIM(ISNULL(T1.descripcion, '')))) LIKE '%' + @filtro + '%' COLLATE Latin1_General_CI_AI);
+
+		-- seteamos mensaje de salida
+		set @message = 'Consulta exitosa';
+
+
+END
+
+GO
+/****** Object:  StoredProcedure [dbo].[USP_SEL_ENTIDAD]    Script Date: 26/06/2024 23:23:02 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -5867,7 +6482,181 @@ BEGIN
 END
 
 GO
-/****** Object:  StoredProcedure [dbo].[USP_SEL_ENTIDADGRUPO]    Script Date: 23/06/2024 02:00:00 ******/
+/****** Object:  StoredProcedure [dbo].[USP_SEL_ENTIDAD_GENERALIDADES]    Script Date: 26/06/2024 23:23:02 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE       PROCEDURE [dbo].[USP_SEL_ENTIDAD_GENERALIDADES](
+	@entidad_id int = null,
+	@entidadgrupo_id int = null,
+	@entidadsector_id int = null,
+	@ubigeo_id int = null,
+	@documentoestructura_id int = null,
+	@modalidadintegridad_id int = null,
+	@generalidades bit = null,
+	@filtro varchar(max) = null,
+	@error BIT = NULL OUTPUT,
+	@message NVARCHAR(500) = NULL OUTPUT
+)
+AS
+BEGIN
+
+	set @error = 0;
+
+	SELECT
+		  T1.[entidad_id]
+		, T1.[entidadgrupo_id]
+		, T1.[entidadsector_id]
+		, T1.[modalidadintegridad_id]
+		, T1.[documentoestructura_id]
+		, T1.[ubigeo_id]
+		, T1.[numero_ruc]
+		, T1.[codigo]
+		, T1.[acronimo]
+		, T1.[nombre]
+		, T1.[generalidades]
+		, T1.[documentoestructura_doc]
+		, T1.[modalidadintegridad_doc]
+		, T1.[modalidadintegridad_anterior]
+		, T1.[documentointegridad_desc]
+		, T1.[documentointegridad_doc]
+		, T1.[num_servidores]
+		, T1.[estado]
+		, T1.[usuario_reg]
+		, T1.[fecha_reg]
+		, T1.[usuario_act]
+		, T1.[fecha_act]
+		, T2.[codigo]				as	entidadgrupo_codigo
+		, T2.[descripcion]			as	entidadgrupo_descripcion
+		, T2.[abreviatura]			as	entidadgrupo_abreviatura
+		, T3.[codigo]				as	entidadsector_codigo
+		, T3.[descripcion]			as	entidadsector_descripcion
+		, T3.[abreviatura]			as	entidadsector_abreviatura
+		, T4.[departamento_inei]	as	ubigeo_departamento_inei
+		, T4.[departamento]			as	ubigeo_departamento
+		, T4.[provincia_inei]		as	ubigeo_provincia_inei
+		, T4.[provincia]			as	ubigeo_provincia
+		, T4.[distrito]				as	ubigeo_distrito
+		, T5.[codigo]				as	doccumentoestructura_codigo
+		, T5.[abreviatura]			as	doccumentoestructura_abreviatura
+		, T5.[descripcion]			as	doccumentoestructura_descripcion
+		, T6.[codigo]				as	modalidadintegridad_codigo
+		, T6.[abreviatura]			as	modalidadintegridad_abreviatura
+		, T6.[descripcion]			as	modalidadintegridad_descripcion
+	FROM 
+				   [dbo].[ENTIDAD]				T1	WITH(NOLOCK)
+		LEFT JOIN [dbo].[ENTIDADGRUPO]			T2	WITH(NOLOCK) ON T1.entidadgrupo_id			= T2.entidadgrupo_id
+		LEFT JOIN [dbo].[ENTIDADSECTOR]			T3	WITH(NOLOCK) ON T1.entidadsector_id			= T3.entidadsector_id
+		LEFT JOIN [dbo].[UBIGEO]				T4  WITH(NOLOCK) ON T1.ubigeo_id				= T4.ubigeo_id
+		LEFT JOIN [dbo].[DOCUMENTOESTRUCTURA]	T5	WITH(NOLOCK) ON T1.documentoestructura_id	= T5.documentoestructura_id
+		LEFT JOIN [dbo].[MODALIDADINTEGRIDAD]	T6	WITH(NOLOCK) ON T1.modalidadintegridad_id	= T6.modalidadintegridad_id
+	WHERE
+		T1.estado = 1 AND
+		(@entidad_id IS NULL OR T1.entidad_id = @entidad_id) AND
+		(@generalidades IS NULL OR T1.generalidades = @generalidades) AND
+		(@FILTRO IS NULL OR (
+			RTRIM(LTRIM(ISNULL(T1.nombre, ''))) + ' ' +
+			RTRIM(LTRIM(ISNULL(T1.acronimo, ''))) + ' ' +
+			RTRIM(LTRIM(ISNULL(T1.codigo, ''))) + ' ' +
+			TRIM(LTRIM(ISNULL(T2.descripcion, ''))) + ' ' +
+			TRIM(LTRIM(ISNULL(T2.abreviatura, ''))) + ' ' +
+			TRIM(LTRIM(ISNULL(T3.abreviatura, ''))) + ' ' +
+			TRIM(LTRIM(ISNULL(T3.descripcion, ''))) + ' ' +
+			TRIM(LTRIM(ISNULL(T4.departamento + T4.provincia + T4.distrito, ''))) + ' ' +
+			TRIM(LTRIM(ISNULL(T5.descripcion, ''))) + ' ' +
+			TRIM(LTRIM(ISNULL(T5.abreviatura, ''))) + ' ' +
+			TRIM(LTRIM(ISNULL(T6.descripcion, ''))) + ' ' +
+			TRIM(LTRIM(ISNULL(T6.abreviatura, ''))) + ' ' +
+			RTRIM(LTRIM(ISNULL(T1.numero_ruc, '')))) LIKE '%' + @filtro + '%' COLLATE Latin1_General_CI_AI);
+
+	-- seteamos mensaje de salida
+	set @message = 'Consulta exitosa';
+
+
+END
+
+GO
+/****** Object:  StoredProcedure [dbo].[USP_SEL_ENTIDADCOORDINADOR]    Script Date: 26/06/2024 23:23:02 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE     PROCEDURE [dbo].[USP_SEL_ENTIDADCOORDINADOR](
+	@entidadcoordinador_id int = NULL,
+	@entidad_id int = null,
+	@modalidad_id int = null,
+	@profesion_id int = null,
+	@actual bit = null,
+	@filtro varchar(max) = null,
+	@error BIT = NULL OUTPUT,
+	@message NVARCHAR(500) = NULL OUTPUT
+)
+AS
+BEGIN
+
+	set @error = 0;
+
+	SELECT
+		T1.[entidadcoordinador_id], 
+		T1.[entidad_id], 
+		T1.[modalidad_id], 
+		T1.[profesion_id], 
+		T1.[nombres], 
+		T1.[apellidos], 
+		T1.[numero_celular], 
+		T1.[correo_institucional], 
+		T1.[fecha_inicio], 
+		T1.[fecha_fin], 
+		T1.[designacion_doc], 
+		T1.[actual], 
+		T1.[estado], 
+		T1.[usuario_reg], 
+		T1.[fecha_reg], 
+		T1.[usuario_act], 
+		T1.[fecha_act],
+		T2.[nombre]			as entidad_nombre,
+		T2.[acronimo]		as entidad_acronimo,
+		T2.[numero_ruc]		as entidad_ruc,
+		T3.[codigo]			as profesion_codigo,
+		T3.[descripcion]	as profesion_descripcion,
+		T4.[codigo]			as modalidad_codigo,
+		T4.[descripcion]	as modalidad_descripcion,
+		T4.[abreviatura]	as modalidad_abreviatura
+	FROM 
+				   [dbo].[ENTIDADCOORDINADOR]	T1 WITH(NOLOCK)
+		INNER JOIN [dbo].[ENTIDAD]				T2 WITH(NOLOCK) on T1.entidad_id	=	 T2.entidad_id
+		INNER JOIN [dbo].[PROFESION]			T3 WITH(NOLOCK) on T1.profesion_id	=	 T3.profesion_id
+		INNER JOIN [dbo].[MODALIDAD]			T4 WITH(NOLOCK) on T1.modalidad_id	=	 T4.modalidad_id
+	WHERE
+		T1.estado = 1 AND
+		(@entidadcoordinador_id IS NULL OR T1.entidadcoordinador_id = @entidadcoordinador_id) AND
+		(@entidad_id	IS NULL OR T1.entidad_id	= @entidad_id) AND
+		(@modalidad_id	IS NULL OR T1.modalidad_id	= @modalidad_id) AND
+		(@profesion_id	IS NULL OR T1.profesion_id	= @profesion_id) AND
+		(@actual		IS NULL OR T1.actual		= @actual) AND
+		(@FILTRO		IS NULL OR (
+			RTRIM(LTRIM(ISNULL(T1.nombres, ''))) + ' ' +
+			RTRIM(LTRIM(ISNULL(T1.apellidos, ''))) + ' ' +
+			RTRIM(LTRIM(ISNULL(T2.nombre, ''))) + ' ' +
+			RTRIM(LTRIM(ISNULL(T2.acronimo, ''))) + ' ' +
+			RTRIM(LTRIM(ISNULL(T2.numero_ruc, ''))) + ' ' +
+			RTRIM(LTRIM(ISNULL(T3.codigo, ''))) + ' ' +
+			RTRIM(LTRIM(ISNULL(T3.descripcion, ''))) + ' ' +
+			RTRIM(LTRIM(ISNULL(T4.codigo, ''))) + ' ' +
+			RTRIM(LTRIM(ISNULL(T4.descripcion, ''))) + ' ' +
+			RTRIM(LTRIM(ISNULL(T4.abreviatura, '')))) LIKE '%' + @filtro + '%' COLLATE Latin1_General_CI_AI);
+
+		-- seteamos mensaje de salida
+		set @message = 'Consulta exitosa';
+
+
+END
+
+GO
+/****** Object:  StoredProcedure [dbo].[USP_SEL_ENTIDADGRUPO]    Script Date: 26/06/2024 23:23:02 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -5908,7 +6697,85 @@ BEGIN
 END
 
 GO
-/****** Object:  StoredProcedure [dbo].[USP_SEL_ENTIDADSECTOR]    Script Date: 23/06/2024 02:00:00 ******/
+/****** Object:  StoredProcedure [dbo].[USP_SEL_ENTIDADOFICIAL]    Script Date: 26/06/2024 23:23:02 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE     PROCEDURE [dbo].[USP_SEL_ENTIDADOFICIAL](
+	@entidadoficial_id int = NULL,
+	@entidad_id int = null,
+	@modalidad_id int = null,
+	@profesion_id int = null,
+	@actual bit = null,
+	@filtro varchar(max) = null,
+	@error BIT = NULL OUTPUT,
+	@message NVARCHAR(500) = NULL OUTPUT
+)
+AS
+BEGIN
+
+	set @error = 0;
+
+	SELECT
+		T1.[entidadoficial_id], 
+		T1.[entidad_id], 
+		T1.[modalidad_id], 
+		T1.[profesion_id], 
+		T1.[nombres], 
+		T1.[apellidos], 
+		T1.[numero_celular], 
+		T1.[correo_institucional], 
+		T1.[fecha_inicio], 
+		T1.[fecha_fin], 
+		T1.[designacion_doc], 
+		T1.[actual], 
+		T1.[estado], 
+		T1.[usuario_reg], 
+		T1.[fecha_reg], 
+		T1.[usuario_act], 
+		T1.[fecha_act],
+		T2.[nombre]			as entidad_nombre,
+		T2.[acronimo]		as entidad_acronimo,
+		T2.[numero_ruc]		as entidad_ruc,
+		T3.[codigo]			as profesion_codigo,
+		T3.[descripcion]	as profesion_descripcion,
+		T4.[codigo]			as modalidad_codigo,
+		T4.[descripcion]	as modalidad_descripcion,
+		T4.[abreviatura]	as modalidad_abreviatura
+	FROM 
+				   [dbo].[ENTIDADOFICIAL]	T1 WITH(NOLOCK)
+		INNER JOIN [dbo].[ENTIDAD]			T2 WITH(NOLOCK) on T1.entidad_id	=	 T2.entidad_id
+		INNER JOIN [dbo].[PROFESION]		T3 WITH(NOLOCK) on T1.profesion_id	=	 T3.profesion_id
+		INNER JOIN [dbo].[MODALIDAD]		T4 WITH(NOLOCK) on T1.modalidad_id	=	 T4.modalidad_id
+	WHERE
+		T1.estado = 1 AND
+		(@entidadoficial_id IS NULL OR T1.entidadoficial_id = @entidadoficial_id) AND
+		(@entidad_id	IS NULL OR T1.entidad_id	= @entidad_id) AND
+		(@modalidad_id	IS NULL OR T1.modalidad_id	= @modalidad_id) AND
+		(@profesion_id	IS NULL OR T1.profesion_id	= @profesion_id) AND
+		(@actual		IS NULL OR T1.actual		= @actual) AND
+		(@FILTRO		IS NULL OR (
+			RTRIM(LTRIM(ISNULL(T1.nombres, ''))) + ' ' +
+			RTRIM(LTRIM(ISNULL(T1.apellidos, ''))) + ' ' +
+			RTRIM(LTRIM(ISNULL(T2.nombre, ''))) + ' ' +
+			RTRIM(LTRIM(ISNULL(T2.acronimo, ''))) + ' ' +
+			RTRIM(LTRIM(ISNULL(T2.numero_ruc, ''))) + ' ' +
+			RTRIM(LTRIM(ISNULL(T3.codigo, ''))) + ' ' +
+			RTRIM(LTRIM(ISNULL(T3.descripcion, ''))) + ' ' +
+			RTRIM(LTRIM(ISNULL(T4.codigo, ''))) + ' ' +
+			RTRIM(LTRIM(ISNULL(T4.descripcion, ''))) + ' ' +
+			RTRIM(LTRIM(ISNULL(T4.abreviatura, '')))) LIKE '%' + @filtro + '%' COLLATE Latin1_General_CI_AI);
+
+		-- seteamos mensaje de salida
+		set @message = 'Consulta exitosa';
+
+
+END
+
+GO
+/****** Object:  StoredProcedure [dbo].[USP_SEL_ENTIDADSECTOR]    Script Date: 26/06/2024 23:23:02 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -5953,7 +6820,49 @@ BEGIN
 END
 
 GO
-/****** Object:  StoredProcedure [dbo].[USP_SEL_MODALIDADINTEGRIDAD]    Script Date: 23/06/2024 02:00:00 ******/
+/****** Object:  StoredProcedure [dbo].[USP_SEL_MODALIDAD]    Script Date: 26/06/2024 23:23:02 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE         PROCEDURE [dbo].[USP_SEL_MODALIDAD](
+	@modalidad_id int =null,
+	@filtro varchar(max)=null,
+	@error BIT = NULL OUTPUT,
+	@message NVARCHAR(500) = NULL OUTPUT
+)
+AS
+BEGIN
+
+	set @error = 0;
+
+	SELECT
+		T1.[modalidad_id], 
+		T1.[codigo], 
+		T1.[descripcion], 
+		T1.[abreviatura],
+		T1.[estado], 
+		T1.[usuario_reg], 
+		T1.[fecha_reg], 
+		T1.[usuario_act], 
+		T1.[fecha_act] 
+	FROM
+		[dbo].[MODALIDAD] AS T1 WITH(NOLOCK)
+	WHERE
+		T1.estado = 1 AND
+		(@modalidad_id IS NULL OR T1.modalidad_id = @modalidad_id)
+	ORDER BY
+		T1.descripcion
+
+		-- seteamos mensaje de salida
+		set @message = 'Consulta exitosa';
+
+
+END
+
+GO
+/****** Object:  StoredProcedure [dbo].[USP_SEL_MODALIDADINTEGRIDAD]    Script Date: 26/06/2024 23:23:02 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -5994,7 +6903,7 @@ BEGIN
 END
 
 GO
-/****** Object:  StoredProcedure [dbo].[USP_SEL_PERSONA]    Script Date: 23/06/2024 02:00:00 ******/
+/****** Object:  StoredProcedure [dbo].[USP_SEL_PERSONA]    Script Date: 26/06/2024 23:23:02 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -6052,7 +6961,48 @@ BEGIN
 END
 
 GO
-/****** Object:  StoredProcedure [dbo].[USP_SEL_UBIGEO_DEPARTAMENTO]    Script Date: 23/06/2024 02:00:00 ******/
+/****** Object:  StoredProcedure [dbo].[USP_SEL_PROFESION]    Script Date: 26/06/2024 23:23:02 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE         PROCEDURE [dbo].[USP_SEL_PROFESION](
+	@profesion_id int =null,
+	@filtro varchar(max)=null,
+	@error BIT = NULL OUTPUT,
+	@message NVARCHAR(500) = NULL OUTPUT
+)
+AS
+BEGIN
+
+	set @error = 0;
+
+	SELECT
+		T1.[profesion_id], 
+		T1.[codigo], 
+		T1.[descripcion], 
+		T1.[estado], 
+		T1.[usuario_reg], 
+		T1.[fecha_reg], 
+		T1.[usuario_act], 
+		T1.[fecha_act] 
+	FROM
+		[dbo].[PROFESION] AS T1 WITH(NOLOCK)
+	WHERE
+		T1.estado = 1 AND
+		(@profesion_id IS NULL OR T1.profesion_id = @profesion_id)
+	ORDER BY
+		T1.descripcion
+
+		-- seteamos mensaje de salida
+		set @message = 'Consulta exitosa';
+
+
+END
+
+GO
+/****** Object:  StoredProcedure [dbo].[USP_SEL_UBIGEO_DEPARTAMENTO]    Script Date: 26/06/2024 23:23:02 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -6084,7 +7034,7 @@ BEGIN
 END
 
 GO
-/****** Object:  StoredProcedure [dbo].[USP_SEL_UBIGEO_DISTRITO]    Script Date: 23/06/2024 02:00:00 ******/
+/****** Object:  StoredProcedure [dbo].[USP_SEL_UBIGEO_DISTRITO]    Script Date: 26/06/2024 23:23:02 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -6117,7 +7067,7 @@ BEGIN
 END
 
 GO
-/****** Object:  StoredProcedure [dbo].[USP_SEL_UBIGEO_PROVINCIA]    Script Date: 23/06/2024 02:00:00 ******/
+/****** Object:  StoredProcedure [dbo].[USP_SEL_UBIGEO_PROVINCIA]    Script Date: 26/06/2024 23:23:02 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -6153,7 +7103,7 @@ BEGIN
 END
 
 GO
-/****** Object:  StoredProcedure [dbo].[USP_UPD_ENTIDAD]    Script Date: 23/06/2024 02:00:00 ******/
+/****** Object:  StoredProcedure [dbo].[USP_UPD_ENTIDAD]    Script Date: 26/06/2024 23:23:02 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -6225,7 +7175,134 @@ BEGIN
 END
 
 GO
-/****** Object:  StoredProcedure [dbo].[USP_UPD_ENTIDADGRUPO]    Script Date: 23/06/2024 02:00:00 ******/
+/****** Object:  StoredProcedure [dbo].[USP_UPD_ENTIDAD_GENERALIDADES]    Script Date: 26/06/2024 23:23:02 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE       PROCEDURE [dbo].[USP_UPD_ENTIDAD_GENERALIDADES]
+	@entidad_id int = null,
+	@ubigeo_id int = null,
+	@documentoestructura_id int = null,
+	@modalidadintegridad_id int = null,
+	@documentoestructura_doc varchar(250) = null,
+	@modalidadintegridad_doc varchar(250) = null,
+	@modalidadintegridad_anterior varchar(150) = null,
+	@documentointegridad_desc varchar(150) = null,
+	@documentointegridad_doc varchar(250) = null,
+	@num_servidores int = null,
+	@usuario_act varchar(20) = null,
+	@error BIT = null output,
+	@message NVARCHAR(500) = null output
+AS
+BEGIN
+	
+	--Inicializa como false
+	SET @error = 0;
+
+	-- validamos si existe la entidad que desea modificar
+	IF NOT EXISTS(SELECT TOP(1) t1.* FROM [dbo].ENTIDAD AS t1 WITH(NOLOCK) WHERE t1.entidad_id = @entidad_id) 
+	BEGIN
+		SET @error = 1;
+		SET @message = 'La entidad que intenta modificar no existe';
+	END
+ 
+	-- si no ocurrio ningun error
+	IF(@error = 0) 
+	BEGIN
+
+		--declaramos las variables por defult
+		declare @generalidades bit = 1;
+
+		-- actualizamos el grupo
+		UPDATE dbo.[ENTIDAD]
+		set 
+			[ubigeo_id]						=	@ubigeo_id, 
+			[documentoestructura_id]		=	@documentoestructura_id, 
+			[modalidadintegridad_id]		=	@modalidadintegridad_id, 
+			[documentoestructura_doc]		=	case when @documentoestructura_doc is NULL then documentoestructura_doc else @documentoestructura_doc end, 
+			[modalidadintegridad_doc]		=	case when @modalidadintegridad_doc is NULL then modalidadintegridad_doc else @modalidadintegridad_doc end, 
+			[modalidadintegridad_anterior]  =	@modalidadintegridad_anterior, 
+			[documentointegridad_desc]		=	@documentointegridad_desc, 
+			[documentointegridad_doc]		=	case when @documentointegridad_doc is NULL then documentointegridad_doc else @documentointegridad_doc end, 
+			[num_servidores]				=	@num_servidores,
+			[generalidades]					=	@generalidades,
+			[usuario_act]					=	@usuario_act,
+			[fecha_act]						=	GETDATE()
+		where
+			entidad_id = @entidad_id;
+
+		-- setemos el mensaje de salida
+		set @message = 'Información actualizada satisfactoriamente';
+
+	END
+END
+
+GO
+/****** Object:  StoredProcedure [dbo].[USP_UPD_ENTIDADCOORDINADOR]    Script Date: 26/06/2024 23:23:02 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE     PROCEDURE [dbo].[USP_UPD_ENTIDADCOORDINADOR]
+	@entidadcoordinador_id int = NULL,
+	@entidad_id int = null,
+	@modalidad_id int = null,
+	@profesion_id int = null,
+	@nombres varchar(150) = null,
+	@apellidos varchar(150) = null,
+	@numero_celular varchar(20) = null,
+	@correo_institucional varchar(50) = null,
+	@fecha_inicio datetime = null,
+	@fecha_fin datetime = null,
+	@designacion_doc varchar(250) = null,
+	@actual bit = null,
+	@usuario_act varchar(20) = NULL,
+	@error BIT = NULL OUTPUT,
+	@message NVARCHAR(500) = NULL OUTPUT
+AS
+BEGIN
+	
+	--Inicializa como false
+	SET @error = 0;
+
+	-- validamos si existe el oficial que desea modificar
+	IF NOT EXISTS(SELECT TOP(1) t1.* FROM [dbo].[ENTIDADCOORDINADOR] AS t1 WITH(NOLOCK) WHERE t1.entidadcoordinador_id = @entidadcoordinador_id) 
+	BEGIN
+		SET @error = 1;
+		SET @message = 'El Oficial de integridad que desea actualizar no existe';
+	END
+ 
+	-- si no ocurrio ningun error
+	IF(@error = 0) 
+	BEGIN
+		-- actualizamos el grupo
+		UPDATE dbo.[ENTIDADCOORDINADOR]
+		set 
+			entidad_id				=   @entidad_id,		
+			modalidad_id			=   @modalidad_id,
+			profesion_id			=   @profesion_id,		
+			nombres					=   TRIM(@nombres),	
+			apellidos				=   TRIM(@apellidos),		
+			numero_celular			=   TRIM(@numero_celular),		
+			correo_institucional	=   LOWER(TRIM(@correo_institucional)),
+			fecha_inicio			=   @fecha_inicio,
+			fecha_fin				=   @fecha_fin,
+			designacion_doc			=   case when @designacion_doc is null then designacion_doc else TRIM(@designacion_doc) end,
+			actual					=   @actual,
+			usuario_act				=   @usuario_act,
+			fecha_act				=   GETDATE()
+		where
+			entidadcoordinador_id = @entidadcoordinador_id;
+
+		-- setemos el mensaje de salida
+		set @message = 'Información actualizada satisfactoriamente';
+
+	END
+END
+
+GO
+/****** Object:  StoredProcedure [dbo].[USP_UPD_ENTIDADGRUPO]    Script Date: 26/06/2024 23:23:02 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -6277,7 +7354,70 @@ BEGIN
 END
 
 GO
-/****** Object:  StoredProcedure [dbo].[USP_UPD_PERSONA]    Script Date: 23/06/2024 02:00:00 ******/
+/****** Object:  StoredProcedure [dbo].[USP_UPD_ENTIDADOFICIAL]    Script Date: 26/06/2024 23:23:02 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE     PROCEDURE [dbo].[USP_UPD_ENTIDADOFICIAL]
+	@entidadoficial_id int = NULL,
+	@entidad_id int = null,
+	@modalidad_id int = null,
+	@profesion_id int = null,
+	@nombres varchar(150) = null,
+	@apellidos varchar(150) = null,
+	@numero_celular varchar(20) = null,
+	@correo_institucional varchar(50) = null,
+	@fecha_inicio datetime = null,
+	@fecha_fin datetime = null,
+	@designacion_doc varchar(250) = null,
+	@actual bit = null,
+	@usuario_act varchar(20) = NULL,
+	@error BIT = NULL OUTPUT,
+	@message NVARCHAR(500) = NULL OUTPUT
+AS
+BEGIN
+	
+	--Inicializa como false
+	SET @error = 0;
+
+	-- validamos si existe el oficial que desea modificar
+	IF NOT EXISTS(SELECT TOP(1) t1.* FROM [dbo].[ENTIDADOFICIAL] AS t1 WITH(NOLOCK) WHERE t1.entidadoficial_id = @entidadoficial_id) 
+	BEGIN
+		SET @error = 1;
+		SET @message = 'El Oficial de integridad que desea actualizar no existe';
+	END
+ 
+	-- si no ocurrio ningun error
+	IF(@error = 0) 
+	BEGIN
+		-- actualizamos el grupo
+		UPDATE dbo.[ENTIDADOFICIAL]
+		set 
+			entidad_id				=   @entidad_id,		
+			modalidad_id			=   @modalidad_id,
+			profesion_id			=   @profesion_id,		
+			nombres					=   TRIM(@nombres),	
+			apellidos				=   TRIM(@apellidos),		
+			numero_celular			=   TRIM(@numero_celular),		
+			correo_institucional	=   LOWER(TRIM(@correo_institucional)),
+			fecha_inicio			=   @fecha_inicio,
+			fecha_fin				=   @fecha_fin,
+			designacion_doc			=   case when @designacion_doc is null then designacion_doc else TRIM(@designacion_doc) end,
+			actual					=   @actual,
+			usuario_act				=   @usuario_act,
+			fecha_act				=   GETDATE()
+		where
+			entidadoficial_id = @entidadoficial_id;
+
+		-- setemos el mensaje de salida
+		set @message = 'Información actualizada satisfactoriamente';
+
+	END
+END
+
+GO
+/****** Object:  StoredProcedure [dbo].[USP_UPD_PERSONA]    Script Date: 26/06/2024 23:23:02 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
